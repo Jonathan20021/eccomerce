@@ -14,7 +14,7 @@
     </div>
     <?php endif; ?>
 
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;">
+    <div class="stat-cards-grid-auto">
         <div class="stat-card">
             <div class="stat-icon blue"><i class="fas fa-boxes"></i></div>
             <div>

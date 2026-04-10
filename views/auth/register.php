@@ -14,6 +14,7 @@ $plan = isset($_GET['plan']) ? $_GET['plan'] : 'starter';
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="<?= ASSETS_PATH ?>css/style.css">
+    <link rel="stylesheet" href="<?= ASSETS_PATH ?>css/mobile-pro.css">
     <style>
         html, body { height: 100%; }
         body { font-family: 'Inter', sans-serif; background: #fff; }
@@ -103,7 +104,7 @@ $plan = isset($_GET['plan']) ? $_GET['plan'] : 'starter';
 
             <form method="POST" style="display:flex;flex-direction:column;gap:15px;">
                 <!-- Name + Phone -->
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                <div class="auth-form-grid-2">
                     <div>
                         <label class="form-label" for="name">Nombre completo <span style="color:#ef4444;">*</span></label>
                         <input type="text" id="name" name="name" required class="form-input" placeholder="Juan Pérez">
@@ -121,7 +122,7 @@ $plan = isset($_GET['plan']) ? $_GET['plan'] : 'starter';
                 </div>
 
                 <!-- Passwords -->
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                <div class="auth-form-grid-2">
                     <div>
                         <label class="form-label" for="password">Contraseña <span style="color:#ef4444;">*</span></label>
                         <div style="position:relative;">

@@ -16,7 +16,7 @@ foreach ($dailyRevenue as $value) {
 ?>
 <div style="display:flex;flex-direction:column;gap:20px;">
 
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;">
+    <div class="stat-cards-grid-auto">
         <div class="stat-card">
             <div class="stat-icon green"><i class="fas fa-money-bill-trend-up"></i></div>
             <div>
@@ -71,7 +71,7 @@ foreach ($dailyRevenue as $value) {
         <div class="card-header">
             <h3><i class="fas fa-chart-column" style="color:#0f766e;margin-right:7px;"></i>Ingresos últimos 7 días</h3>
         </div>
-        <div class="card-body" style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px;align-items:end;min-height:180px;">
+        <div class="card-body finance-bar-chart" style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px;align-items:end;min-height:180px;">
             <?php foreach ($dailyRevenue as $day => $amount):
                 $height = intval(($amount / $maxDaily) * 120);
             ?>

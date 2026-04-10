@@ -2,7 +2,7 @@
 <div style="display:flex;flex-direction:column;gap:24px;">
 
     <!-- Stat Cards -->
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;">
+    <div class="stat-cards-grid-auto">
         <div class="stat-card">
             <div class="stat-icon indigo"><i class="fas fa-store"></i></div>
             <div>
@@ -73,10 +73,10 @@
                 <thead>
                     <tr>
                         <th>Tienda</th>
-                        <th>Propietario</th>
-                        <th>Plan</th>
+                        <th class="col-hide-sm">Propietario</th>
+                        <th class="col-hide-sm">Plan</th>
                         <th>Estado</th>
-                        <th>Creada</th>
+                        <th class="col-hide-sm">Creada</th>
                         <th>Acción</th>
                     </tr>
                 </thead>
@@ -96,8 +96,8 @@
                                 <span style="font-size:13.5px;font-weight:600;color:#1e293b;"><?= htmlspecialchars($store['name']) ?></span>
                             </div>
                         </td>
-                        <td><span style="font-size:13px;color:#64748b;">ID #<?= $store['owner_id'] ?></span></td>
-                        <td>
+                        <td class="col-hide-sm"><span style="font-size:13px;color:#64748b;">ID #<?= $store['owner_id'] ?></span></td>
+                        <td class="col-hide-sm">
                             <span class="badge badge-indigo">
                                 <?= $planNames[($store['plan_id'] - 1)] ?? 'Plan ' . $store['plan_id'] ?>
                             </span>
@@ -107,7 +107,7 @@
                                 <?= $store['is_active'] ? 'Activa' : 'Inactiva' ?>
                             </span>
                         </td>
-                        <td><span style="font-size:13px;color:#64748b;"><?= Helper::formatDate($store['created_at']) ?></span></td>
+                        <td class="col-hide-sm"><span style="font-size:13px;color:#64748b;"><?= Helper::formatDate($store['created_at']) ?></span></td>
                         <td>
                             <a href="<?= BASE_URL ?>superadmin/stores/<?= $store['id'] ?>" class="btn btn-ghost btn-sm">
                                 <i class="fas fa-eye"></i> Ver
@@ -139,11 +139,11 @@
                 <thead>
                     <tr>
                         <th>Código</th>
-                        <th>Plan</th>
-                        <th>Tienda</th>
-                        <th>Tipo</th>
+                        <th class="col-hide-sm">Plan</th>
+                        <th class="col-hide-sm">Tienda</th>
+                        <th class="col-hide-xs">Tipo</th>
                         <th>Estado</th>
-                        <th>Creada</th>
+                        <th class="col-hide-sm">Creada</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -161,8 +161,8 @@
                                 <?= htmlspecialchars($license['code']) ?>
                             </code>
                         </td>
-                        <td><span style="font-size:13.5px;color:#1e293b;"><?= $planNames[($license['plan_id'] - 1)] ?? 'Plan ' . $license['plan_id'] ?></span></td>
-                        <td>
+                        <td class="col-hide-sm"><span style="font-size:13.5px;color:#1e293b;"><?= $planNames[($license['plan_id'] - 1)] ?? 'Plan ' . $license['plan_id'] ?></span></td>
+                        <td class="col-hide-sm">
                             <?php if ($license['store_id']): ?>
                                 <a href="<?= BASE_URL ?>superadmin/stores/<?= $license['store_id'] ?>" style="color:#4f46e5;font-size:13px;font-weight:600;text-decoration:none;">
                                     Tienda #<?= $license['store_id'] ?>
@@ -171,13 +171,13 @@
                                 <span style="color:#94a3b8;font-size:13px;">Sin asignar</span>
                             <?php endif; ?>
                         </td>
-                        <td>
+                        <td class="col-hide-xs">
                             <span class="badge <?= $license['is_trial'] ? 'badge-yellow' : 'badge-blue' ?>">
                                 <?= $license['is_trial'] ? 'Prueba' : 'Pago' ?>
                             </span>
                         </td>
                         <td><span class="badge <?= $sb[0] ?>"><?= $sb[1] ?></span></td>
-                        <td><span style="font-size:13px;color:#64748b;"><?= Helper::formatDate($license['created_at']) ?></span></td>
+                        <td class="col-hide-sm"><span style="font-size:13px;color:#64748b;"><?= Helper::formatDate($license['created_at']) ?></span></td>
                     </tr>
                     <?php endforeach; else: ?>
                     <tr>

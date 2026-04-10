@@ -33,7 +33,7 @@
         <span class="badge <?= $sb[0] ?>" style="font-size:13px;padding:6px 14px;"><?= $sb[1] ?></span>
     </div>
 
-    <div style="display:grid;grid-template-columns:1fr 340px;gap:20px;align-items:start;">
+    <div class="store-checkout-grid" style="align-items:start;">
 
         <!-- Left column -->
         <div style="display:flex;flex-direction:column;gap:16px;">

@@ -20,7 +20,7 @@
             <h2 style="font-size:22px;font-weight:800;color:#1e293b;letter-spacing:-0.5px;">Productos</h2>
             <p style="font-size:13.5px;color:#64748b;margin-top:3px;"><?= $totalProducts ?> producto<?= $totalProducts !== 1 ? 's' : '' ?> en tu catálogo</p>
         </div>
-        <div style="display:flex;align-items:center;gap:8px;">
+        <div class="page-header-actions">
             <a href="<?= BASE_URL ?>admin/categories" class="btn btn-ghost">
                 <i class="fas fa-folder"></i> Categorias
             </a>
@@ -49,11 +49,11 @@
                 <thead>
                     <tr>
                         <th>Producto</th>
-                        <th>Categoria</th>
-                        <th>SKU</th>
+                        <th class="col-hide-sm">Categoria</th>
+                        <th class="col-hide-sm">SKU</th>
                         <th>Precio</th>
                         <th>Stock</th>
-                        <th>Estado</th>
+                        <th class="col-hide-xs">Estado</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -81,12 +81,12 @@
                                 </div>
                             </div>
                         </td>
-                        <td>
+                        <td class="col-hide-sm">
                             <span class="badge badge-indigo" style="font-size:11px;">
                                 <?= htmlspecialchars($product['category_name'] ?? 'Sin categoria') ?>
                             </span>
                         </td>
-                        <td>
+                        <td class="col-hide-sm">
                             <span style="font-family:monospace;font-size:12.5px;color:#64748b;background:#f8fafc;padding:3px 7px;border-radius:5px;">
                                 <?= htmlspecialchars($product['sku'] ?? '—') ?>
                             </span>
@@ -110,7 +110,7 @@
                                 <span class="badge badge-red"><i class="fas fa-circle" style="font-size:7px;"></i> Agotado</span>
                             <?php endif; ?>
                         </td>
-                        <td>
+                        <td class="col-hide-xs">
                             <span class="badge <?= $product['is_active'] ? 'badge-green' : 'badge-slate' ?>">
                                 <?= $product['is_active'] ? 'Activo' : 'Inactivo' ?>
                             </span>

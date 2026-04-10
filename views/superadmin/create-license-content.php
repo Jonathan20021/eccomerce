@@ -55,7 +55,7 @@
                     <p class="form-help">Starter: Inventario. Professional y Enterprise: Inventario + Finanzas.</p>
                 </div>
 
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+                <div class="form-grid-2" style="gap:14px;">
                     <div class="form-group" style="margin-bottom:0;">
                         <label class="form-label" for="trial_days">Días de Prueba</label>
                         <input type="number" id="trial_days" name="trial_days" value="15" required

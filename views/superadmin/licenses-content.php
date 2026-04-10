@@ -82,13 +82,13 @@ $statusMap  = ['active'=>['badge-green','Activa'], 'expired'=>['badge-red','Expi
                 <thead>
                     <tr>
                         <th>Código</th>
-                        <th>Plan</th>
-                        <th>Espacio</th>
-                        <th>Módulos</th>
-                        <th>Tienda</th>
-                        <th>Tipo</th>
+                        <th class="col-hide-sm">Plan</th>
+                        <th class="col-hide-sm">Espacio</th>
+                        <th class="col-hide-sm">Módulos</th>
+                        <th class="col-hide-sm">Tienda</th>
+                        <th class="col-hide-xs">Tipo</th>
                         <th>Estado</th>
-                        <th>Creada</th>
+                        <th class="col-hide-sm">Creada</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -103,17 +103,17 @@ $statusMap  = ['active'=>['badge-green','Activa'], 'expired'=>['badge-red','Expi
                                 <?= htmlspecialchars($license['code']) ?>
                             </code>
                         </td>
-                        <td>
+                        <td class="col-hide-sm">
                             <span style="font-size:13.5px;font-weight:600;color:#1e293b;">
                                 <?= $planNames[($license['plan_id'] - 1)] ?? 'Plan ' . $license['plan_id'] ?>
                             </span>
                         </td>
-                        <td>
+                        <td class="col-hide-sm">
                             <div style="display:flex;align-items:center;gap:8px;">
                                 <span class="badge badge-blue" style="font-size:11px;"><?= number_format(floatval($license['storage_gb'] ?? 0), 1) ?> GB</span>
                             </div>
                         </td>
-                        <td>
+                        <td class="col-hide-sm">
                             <form method="POST" action="<?= BASE_URL ?>superadmin/licenses/modules/<?= intval($license['id']) ?>" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
                                 <label style="display:flex;align-items:center;gap:4px;font-size:12px;color:#334155;">
                                     <input type="checkbox" name="module_inventory" <?= !empty($license['module_inventory']) ? 'checked' : '' ?> style="accent-color:#0ea5e9;">
@@ -128,7 +128,7 @@ $statusMap  = ['active'=>['badge-green','Activa'], 'expired'=>['badge-red','Expi
                                 </button>
                             </form>
                         </td>
-                        <td>
+                        <td class="col-hide-sm">
                             <?php if ($license['store_id']): ?>
                                 <a href="<?= BASE_URL ?>superadmin/stores/<?= $license['store_id'] ?>"
                                    style="color:#4f46e5;font-size:13.5px;font-weight:600;text-decoration:none;">
@@ -138,13 +138,13 @@ $statusMap  = ['active'=>['badge-green','Activa'], 'expired'=>['badge-red','Expi
                                 <span style="color:#94a3b8;font-size:13px;font-style:italic;">Sin asignar</span>
                             <?php endif; ?>
                         </td>
-                        <td>
+                        <td class="col-hide-xs">
                             <span class="badge <?= $license['is_trial'] ? 'badge-yellow' : 'badge-blue' ?>">
-                                <?= $license['is_trial'] ? '🧪 Prueba' : '💳 Pago' ?>
+                                <?= $license['is_trial'] ? 'Prueba' : 'Pago' ?>
                             </span>
                         </td>
                         <td><span class="badge <?= $sb[0] ?>"><?= $sb[1] ?></span></td>
-                        <td><span style="font-size:13px;color:#64748b;"><?= Helper::formatDate($license['created_at']) ?></span></td>
+                        <td class="col-hide-sm"><span style="font-size:13px;color:#64748b;"><?= Helper::formatDate($license['created_at']) ?></span></td>
                         <td>
                             <div style="display:flex;align-items:center;gap:6px;">
                                 <form method="POST" action="<?= BASE_URL ?>superadmin/licenses/storage/<?= intval($license['id']) ?>" style="display:flex;align-items:center;gap:4px;">

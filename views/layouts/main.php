@@ -10,6 +10,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="<?= ASSETS_PATH ?>css/style.css">
+    <link rel="stylesheet" href="<?= ASSETS_PATH ?>css/mobile-pro.css">
     <style>
         :root { --primary: #4f46e5; --primary-hover: #4338ca; }
         .nav-link { font-size: 14px; font-weight: 500; color: #475569; padding: 6px 10px; border-radius: 7px; transition: all 0.15s; text-decoration: none; }

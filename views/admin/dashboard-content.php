@@ -203,7 +203,7 @@
                         <th>Cliente</th>
                         <th>Total</th>
                         <th>Estado</th>
-                        <th>Fecha</th>
+                        <th class="col-hide-sm">Fecha</th>
                         <th>Acción</th>
                     </tr>
                 </thead>
@@ -222,7 +222,7 @@
                     ?>
                     <tr>
                         <td>
-                            <span style="font-size:13px;font-weight:700;color:#4f46e5;"><?= htmlspecialchars($order['order_number']) ?></span>
+                            <span class="order-num-cell"><?= htmlspecialchars($order['order_number']) ?></span>
                         </td>
                         <td>
                             <div style="display:flex;align-items:center;gap:9px;">
@@ -234,7 +234,7 @@
                         </td>
                         <td><span style="font-size:14px;font-weight:700;"><?= Helper::formatPrice($order['total'], $storeData['currency']) ?></span></td>
                         <td><span class="badge <?= $sb[0] ?>"><?= $sb[1] ?></span></td>
-                        <td><span style="color:#64748b;font-size:13px;"><?= Helper::formatDate($order['created_at']) ?></span></td>
+                        <td class="col-hide-sm"><span style="color:#64748b;font-size:13px;"><?= Helper::formatDate($order['created_at']) ?></span></td>
                         <td>
                             <a href="<?= BASE_URL ?>admin/orders/<?= $order['id'] ?>"
                                class="btn btn-ghost btn-sm">

@@ -1,0 +1,348 @@
+/* ============================================================
+   PROFESSIONAL MOBILE RESPONSIVE SYSTEM — KYROS COMMERCE
+   Breakpoints: 1024px | 768px | 640px | 480px | 360px
+   ============================================================ */
+
+/* ── PAGE HEADER ── */
+.page-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+@media (max-width: 640px) {
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .page-header-actions {
+        width: 100%;
+    }
+    .page-header-actions .btn {
+        flex: 1;
+        justify-content: center;
+        min-width: 0;
+    }
+    .page-header input[type="search"],
+    .page-header input[type="text"] {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box;
+    }
+    .page-header > div:last-child,
+    .page-header > a {
+        width: 100%;
+    }
+}
+
+/* ── QUICK ACTIONS: 2-col grid on mobile ── */
+@media (max-width: 640px) {
+    .quick-actions {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+    .action-chip {
+        justify-content: center !important;
+        padding: 11px 8px !important;
+        font-size: 12.5px !important;
+        text-align: center;
+    }
+}
+@media (max-width: 360px) {
+    .quick-actions { grid-template-columns: 1fr !important; }
+}
+
+/* ── ADMIN TOPBAR EXTREME NARROW ── */
+@media (max-width: 360px) {
+    .admin-topbar { padding: 0 10px; }
+    .topbar-right { gap: 6px; }
+    .admin-topbar h1 { max-width: 80px; font-size: 12px; }
+    .mobile-menu-btn span { display: none; }
+    .mobile-menu-btn { padding: 6px 8px; }
+}
+
+/* ── TABLE COLUMN VISIBILITY ── */
+@media (max-width: 768px) {
+    .col-hide-sm { display: none !important; }
+}
+@media (max-width: 480px) {
+    .col-hide-xs { display: none !important; }
+}
+
+/* ── IMPROVED TABLE STYLES ON MOBILE ── */
+@media (max-width: 768px) {
+    .data-table thead th { padding: 8px 10px; font-size: 10.5px; }
+    .data-table tbody td { padding: 10px 10px; font-size: 12.5px; }
+    .data-table .btn.btn-sm { padding: 5px 8px; font-size: 11.5px; }
+}
+@media (max-width: 480px) {
+    .data-table thead th { padding: 7px 8px; }
+    .data-table tbody td { padding: 9px 8px; }
+}
+
+/* ── CARD & CONTENT PADDING ON MOBILE ── */
+@media (max-width: 480px) {
+    .card-body { padding: 14px; }
+    .card-header { padding: 12px 14px; }
+    .table-card-header { padding: 12px 14px; }
+    .empty-state { padding: 32px 14px; }
+    .empty-icon { width: 56px; height: 56px; font-size: 22px; }
+    .empty-state h3 { font-size: 15px; }
+    .empty-state p { font-size: 13px; }
+}
+
+/* ── BUTTONS: mobile sizing ── */
+@media (max-width: 480px) {
+    .btn { padding: 8px 14px; font-size: 13px; }
+    .btn-lg { padding: 11px 20px; font-size: 14px; }
+}
+
+/* ── PAGINATION ── */
+@media (max-width: 480px) {
+    .pagination { flex-wrap: wrap; gap: 4px; }
+    .page-item { width: 30px; height: 30px; font-size: 12px; border-radius: 6px; }
+}
+
+/* ── FORM ELEMENTS ON MOBILE ── */
+@media (max-width: 480px) {
+    .form-input { padding: 9px 12px; font-size: 14px; }
+    .form-label { font-size: 12.5px; }
+    .form-help, .form-error { font-size: 11.5px; }
+    .form-section { padding-bottom: 20px; margin-bottom: 20px; }
+    .form-section-title { font-size: 13px; }
+}
+
+/* ── AUTH PAGES: form field grids ── */
+.auth-form-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+@media (max-width: 560px) {
+    .auth-form-grid-2 { grid-template-columns: 1fr; }
+}
+
+/* ── ADMIN MAX-WIDTH CONTAINERS: full width on mobile ── */
+@media (max-width: 768px) {
+    .admin-page-wrap > div[style*="max-width:720px"],
+    .admin-page-wrap > div[style*="max-width: 720px"] {
+        max-width: 100% !important;
+    }
+}
+
+/* ── STORE HERO: mobile layout ── */
+@media (max-width: 640px) {
+    .store-hero-inner {
+        padding: 28px 16px !important;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px !important;
+    }
+    .store-hero-actions {
+        align-items: flex-start !important;
+        width: 100%;
+    }
+    .store-hero-wa { width: 100%; justify-content: center; }
+    .store-hero-logo-wrap { width: 52px !important; height: 52px !important; }
+    .store-hero-name { font-size: 22px !important; }
+}
+
+/* ── STORE PRODUCT GRID: 2 cols on mobile ── */
+@media (max-width: 480px) {
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+        padding: 0 !important;
+    }
+    .sf-product-name { font-size: 13px; }
+    .sf-price { font-size: 15px; }
+    .sf-product-info { padding: 10px 4px 4px; }
+}
+@media (max-width: 320px) {
+    .products-grid { grid-template-columns: 1fr !important; }
+}
+
+/* ── STORE SUMMARY: no sticky on mobile ── */
+@media (max-width: 768px) {
+    .store-summary-col,
+    .store-summary-col > div {
+        position: static !important;
+        top: auto !important;
+    }
+}
+
+/* ── PRODUCT DETAIL IMAGE: height on mobile ── */
+@media (max-width: 768px) {
+    .store-product-grid > div:first-child img {
+        height: 260px !important;
+    }
+    .store-product-grid > div:first-child > div[style*="height:460px"],
+    .store-product-grid > div:first-child > div[style*="height: 460px"] {
+        height: 260px !important;
+    }
+}
+
+/* ── STORE FOOTER: responsive grid ── */
+@media (max-width: 768px) {
+    .store-footer-main {
+        grid-template-columns: 1fr 1fr !important;
+        padding: 32px 20px 24px !important;
+        gap: 24px !important;
+    }
+    .store-footer-bottom {
+        padding: 14px 20px !important;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+}
+@media (max-width: 480px) {
+    .store-footer-main { grid-template-columns: 1fr !important; }
+}
+
+/* ── STORE NAV CART BUTTON: icon only on small mobile ── */
+@media (max-width: 380px) {
+    .store-cart-btn span:not(.store-cart-badge) { display: none; }
+    .store-cart-btn { padding: 8px 12px !important; }
+}
+
+/* ── TOAST ON MOBILE ── */
+@media (max-width: 480px) {
+    .toast-container { bottom: 16px; right: 16px; left: 16px; }
+    .toast { min-width: unset; width: 100%; max-width: 100%; }
+}
+
+/* ── LANDING PAGE ── */
+@media (max-width: 640px) {
+    .main-nav .nav-inner { padding: 0 16px; height: 56px; }
+    .nav-logo-text { font-size: 16px; }
+    .hero { padding: 48px 0 56px !important; }
+    .hero-inner { padding: 0 16px !important; }
+    .section { padding: 52px 0 !important; }
+    .section-inner { padding: 0 16px !important; }
+    .section-title { font-size: 24px !important; letter-spacing: -0.5px; }
+    .section-subtitle { font-size: 14.5px !important; }
+    .cta-dark { padding: 56px 0 !important; }
+}
+@media (max-width: 768px) {
+    /* Remove scale on pricing cards */
+    .pricing-card { transform: none !important; }
+    .pricing-card.featured { transform: none !important; }
+}
+@media (max-width: 480px) {
+    .feature-card { padding: 20px; }
+    .feature-icon { width: 42px; height: 42px; font-size: 18px; border-radius: 11px; }
+    .feature-title { font-size: 14.5px; }
+    .feature-text { font-size: 13.5px; }
+    .pricing-card { padding: 20px 14px; }
+    .testimonial-card { padding: 18px; }
+    .testimonial-text { font-size: 13.5px; }
+    .faq-question { font-size: 14px; padding: 13px 14px; }
+    .faq-answer { padding: 0 14px 12px; font-size: 13.5px; }
+    .step-circle { width: 44px; height: 44px; font-size: 16px; }
+}
+
+/* ── SUPERADMIN STORES GRID ── */
+@media (max-width: 640px) {
+    #storesGrid { grid-template-columns: 1fr !important; }
+}
+@media (max-width: 768px) {
+    #storesGrid { grid-template-columns: 1fr 1fr !important; }
+}
+
+/* ── GLOBAL OVERFLOW PROTECTION ── */
+.admin-wrapper,
+.admin-page-wrap {
+    overflow-x: hidden;
+}
+@media (max-width: 768px) {
+    img { max-width: 100%; }
+    .badge { white-space: nowrap; }
+}
+@media (max-width: 360px) {
+    body { font-size: 14px; }
+}
+
+/* ── ORDER NUMBER: truncate with monospace ── */
+.order-num-cell {
+    font-family: monospace;
+    font-size: 12px;
+    font-weight: 700;
+    color: #4f46e5;
+    display: block;
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+@media (min-width: 769px) {
+    .order-num-cell { max-width: none; font-size: 13px; }
+}
+
+/* ── STAT CARDS: responsive ── */
+@media (max-width: 640px) {
+    .stat-cards-grid-auto,
+    .stat-cards-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 12px;
+    }
+}
+@media (max-width: 480px) {
+    .stat-card { padding: 14px 12px; gap: 10px; }
+    .stat-icon { width: 38px; height: 38px; font-size: 15px; border-radius: 10px; }
+    .stat-value { font-size: 20px; }
+    .stat-label { font-size: 10.5px; }
+    .stat-meta { font-size: 10.5px; }
+}
+
+/* ── BADGE: mobile ── */
+@media (max-width: 480px) {
+    .badge { font-size: 10.5px; padding: 3px 7px; }
+}
+
+/* ── ADMIN FORM PAGES: max-width on mobile ── */
+@media (max-width: 768px) {
+    div[style*="max-width:720px"],
+    div[style*="max-width: 720px"],
+    div[style*="max-width:960px"],
+    div[style*="max-width: 960px"] {
+        max-width: 100% !important;
+    }
+}
+
+/* ── FINANCE CHART: scrollable on mobile ── */
+@media (max-width: 640px) {
+    .finance-bar-chart {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+/* ── ADMIN GRID: tablet adjustments ── */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .admin-grid-2-1 { grid-template-columns: 1.5fr 1fr; }
+    .admin-grid-form-table { grid-template-columns: 1fr 1.5fr; }
+    .stat-cards-grid-auto { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ── INVENTORY: filter form on mobile ── */
+@media (max-width: 480px) {
+    .admin-filter-form { gap: 8px; }
+    .admin-filter-form .form-input { font-size: 14px; }
+}
+
+/* ── CREATE/EDIT PRODUCT FORM ── */
+@media (max-width: 480px) {
+    .form-grid-2-1 { grid-template-columns: 1fr !important; }
+    .form-grid-3 { grid-template-columns: 1fr !important; }
+    .form-grid-2 { grid-template-columns: 1fr !important; }
+}
+
+/* ── STORE TRUST STRIP: hide on mobile ── */
+@media (max-width: 640px) {
+    .store-trust { display: none; }
+    .cat-strip { padding: 14px 14px 0; gap: 6px; }
+    .cat-chip { padding: 6px 12px; font-size: 12.5px; }
+    .products-wrap { padding: 18px 14px 40px; }
+}

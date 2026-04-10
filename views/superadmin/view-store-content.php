@@ -45,12 +45,12 @@ $storePublicUrl = BASE_URL . 'shop/' . ($storeData['slug'] ?? '');
         </div>
     </div>
 
-    <div style="display:grid;grid-template-columns:2fr 1fr;gap:16px;" class="max-lg:grid-cols-1">
+    <div class="admin-grid-2-1">
         <div class="card">
             <div class="card-header">
                 <h3><i class="fas fa-store" style="margin-right:7px;color:#4f46e5;"></i>Informacion General</h3>
             </div>
-            <div class="card-body" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;" class="max-md:grid-cols-1">
+            <div class="card-body form-grid-2" style="gap:12px;">
                 <div>
                     <div style="font-size:12px;color:#94a3b8;font-weight:700;text-transform:uppercase;letter-spacing:.7px;">Nombre</div>
                     <div style="font-size:14px;color:#1e293b;font-weight:700;margin-top:3px;"><?= htmlspecialchars($storeData['name'] ?? '') ?></div>
@@ -117,10 +117,10 @@ $storePublicUrl = BASE_URL . 'shop/' . ($storeData['slug'] ?? '');
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th class="col-hide-sm">ID</th>
                         <th>Nombre</th>
-                        <th>Email</th>
-                        <th>Rol</th>
+                        <th class="col-hide-sm">Email</th>
+                        <th class="col-hide-xs">Rol</th>
                         <th>Activo</th>
                     </tr>
                 </thead>
@@ -128,10 +128,10 @@ $storePublicUrl = BASE_URL . 'shop/' . ($storeData['slug'] ?? '');
                     <?php if (!empty($storeUsers)): ?>
                         <?php foreach ($storeUsers as $u): ?>
                         <tr>
-                            <td>#<?= intval($u['id']) ?></td>
+                            <td class="col-hide-sm">#<?= intval($u['id']) ?></td>
                             <td><?= htmlspecialchars($u['name'] ?? '') ?></td>
-                            <td><?= htmlspecialchars($u['email'] ?? '') ?></td>
-                            <td><span class="badge badge-indigo"><?= htmlspecialchars($u['role'] ?? '') ?></span></td>
+                            <td class="col-hide-sm"><?= htmlspecialchars($u['email'] ?? '') ?></td>
+                            <td class="col-hide-xs"><span class="badge badge-indigo"><?= htmlspecialchars($u['role'] ?? '') ?></span></td>
                             <td>
                                 <span class="badge <?= !empty($u['is_active']) ? 'badge-green' : 'badge-red' ?>">
                                     <?= !empty($u['is_active']) ? 'Si' : 'No' ?>

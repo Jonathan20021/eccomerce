@@ -47,8 +47,8 @@ $paymentBadge = [
                         <th>Cliente</th>
                         <th>Total</th>
                         <th>Estado</th>
-                        <th>Pago</th>
-                        <th>Fecha</th>
+                        <th class="col-hide-sm">Pago</th>
+                        <th class="col-hide-sm">Fecha</th>
                         <th>Acción</th>
                     </tr>
                 </thead>
@@ -59,7 +59,7 @@ $paymentBadge = [
                     ?>
                     <tr>
                         <td>
-                            <span style="font-size:13px;font-weight:700;color:#4f46e5;font-family:monospace;">
+                            <span class="order-num-cell">
                                 <?= htmlspecialchars($order['order_number']) ?>
                             </span>
                         </td>
@@ -73,8 +73,8 @@ $paymentBadge = [
                             <span style="font-size:14px;font-weight:700;color:#1e293b;">$<?= number_format($order['total'], 2) ?></span>
                         </td>
                         <td><span class="badge <?= $sb[0] ?>"><?= $sb[1] ?></span></td>
-                        <td><span class="badge <?= $pb[0] ?>"><?= $pb[1] ?></span></td>
-                        <td><span style="font-size:13px;color:#64748b;"><?= Helper::formatDate($order['created_at']) ?></span></td>
+                        <td class="col-hide-sm"><span class="badge <?= $pb[0] ?>"><?= $pb[1] ?></span></td>
+                        <td class="col-hide-sm"><span style="font-size:13px;color:#64748b;"><?= Helper::formatDate($order['created_at']) ?></span></td>
                         <td>
                             <a href="<?= BASE_URL ?>admin/orders/<?= $order['id'] ?>" class="btn btn-ghost btn-sm">
                                 <i class="fas fa-eye"></i> Ver
