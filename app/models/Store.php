@@ -159,4 +159,13 @@ class Store {
 
         return $stmt->execute();
     }
+
+    public function setOwner($store_id, $owner_id) {
+        $query = "UPDATE " . $this->table . " SET owner_id = :owner_id, updated_at = CURRENT_TIMESTAMP WHERE id = :id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':owner_id', $owner_id, PDO::PARAM_INT);
+        $stmt->bindParam(':id', $store_id, PDO::PARAM_INT);
+
+        return $stmt->execute();
+    }
 }

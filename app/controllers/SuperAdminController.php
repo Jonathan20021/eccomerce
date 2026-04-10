@@ -20,6 +20,10 @@ class SuperAdminController {
         $license = new License();
         $licenses = $license->getAllLicenses(10, 0);
 
+        $user = new User();
+        $totalUsers = $user->countAll();
+        $totalSuperAdmins = $user->countAll(['role' => ROLE_SUPERADMIN]);
+
         include VIEWS_PATH . 'superadmin/dashboard.php';
     }
 
@@ -221,6 +225,264 @@ class SuperAdminController {
         $stores = $store->getAll($limit, $offset);
 
         include VIEWS_PATH . 'superadmin/stores.php';
+    }
+
+    public static function manageUsers() {
+        Auth::requireSuperAdmin();
+
+        $page = max(1, intval($_GET['page'] ?? 1));
+        $limit = 25;
+        $offset = ($page - 1) * $limit;
+
+        $roleFilter = Helper::sanitizeInput($_GET['role'] ?? '');
+        $searchFilter = Helper::sanitizeInput($_GET['q'] ?? '');
+        $storeFilterId = intval($_GET['store_id'] ?? 0);
+
+        $filters = [];
+        if (in_array($roleFilter, [ROLE_SUPERADMIN, ROLE_STORE_OWNER, ROLE_STORE_STAFF, ROLE_CUSTOMER], true)) {
+            $filters['role'] = $roleFilter;
+        } else {
+            $roleFilter = '';
+        }
+        if ($storeFilterId > 0) {
+            $filters['store_id'] = $storeFilterId;
+        }
+        if ($searchFilter !== '') {
+            $filters['search'] = $searchFilter;
+        }
+
+        $store = new Store();
+        $stores = $store->getAll(1000, 0);
+
+        $user = new User();
+        $users = $user->getAllWithStore($limit, $offset, $filters);
+        $totalUsers = $user->countAll($filters);
+        $totalPages = max(1, intval(ceil($totalUsers / $limit)));
+
+        include VIEWS_PATH . 'superadmin/users.php';
+    }
+
+    public static function createSuperAdmin() {
+        Auth::requireSuperAdmin();
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            include VIEWS_PATH . 'superadmin/create-superadmin.php';
+            return;
+        }
+
+        $name = Helper::sanitizeInput($_POST['name'] ?? '');
+        $email = Helper::sanitizeInput($_POST['email'] ?? '');
+        $phone = Helper::sanitizeInput($_POST['phone'] ?? '');
+        $password = $_POST['password'] ?? '';
+        $passwordConfirm = $_POST['password_confirm'] ?? '';
+
+        if ($name === '' || $email === '' || $password === '' || $passwordConfirm === '') {
+            Helper::redirect(BASE_URL . 'superadmin/users/create-superadmin?error=' . urlencode('Nombre, email y contraseña son obligatorios'));
+        }
+
+        if (!Helper::validateEmail($email)) {
+            Helper::redirect(BASE_URL . 'superadmin/users/create-superadmin?error=' . urlencode('Email no válido'));
+        }
+
+        if (strlen($password) < 8) {
+            Helper::redirect(BASE_URL . 'superadmin/users/create-superadmin?error=' . urlencode('La contraseña debe tener al menos 8 caracteres'));
+        }
+
+        if ($password !== $passwordConfirm) {
+            Helper::redirect(BASE_URL . 'superadmin/users/create-superadmin?error=' . urlencode('Las contraseñas no coinciden'));
+        }
+
+        $user = new User();
+        if ($user->findByEmail($email)) {
+            Helper::redirect(BASE_URL . 'superadmin/users/create-superadmin?error=' . urlencode('Ese correo ya existe en la plataforma'));
+        }
+
+        $user->name = $name;
+        $user->email = $email;
+        $user->password = $password;
+        $user->phone = $phone;
+        $user->role = ROLE_SUPERADMIN;
+        $user->store_id = null;
+        $user->is_active = 1;
+        $user->email_verified = 1;
+
+        if ($user->create()) {
+            Helper::redirect(BASE_URL . 'superadmin/users?success=' . urlencode('Superadmin creado exitosamente'));
+        }
+
+        Helper::redirect(BASE_URL . 'superadmin/users/create-superadmin?error=' . urlencode('No se pudo crear el superadmin'));
+    }
+
+    public static function updateUser($user_id) {
+        Auth::requireSuperAdmin();
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            Helper::redirect(BASE_URL . 'superadmin/users');
+        }
+
+        $user = new User();
+        $store = new Store();
+        $targetUser = $user->findById($user_id);
+
+        if (!$targetUser) {
+            Helper::redirect(BASE_URL . 'superadmin/users?error=' . urlencode('Usuario no encontrado'));
+        }
+
+        $name = Helper::sanitizeInput($_POST['name'] ?? '');
+        $email = Helper::sanitizeInput($_POST['email'] ?? '');
+        $phone = Helper::sanitizeInput($_POST['phone'] ?? '');
+        $role = Helper::sanitizeInput($_POST['role'] ?? '');
+        $storeIdRaw = intval($_POST['store_id'] ?? 0);
+        $newPassword = trim($_POST['new_password'] ?? '');
+        $isActive = isset($_POST['is_active']) ? 1 : 0;
+
+        if ($name === '' || $email === '' || $role === '') {
+            Helper::redirect(BASE_URL . 'superadmin/users?error=' . urlencode('Nombre, correo y rol son obligatorios'));
+        }
+
+        if (!Helper::validateEmail($email)) {
+            Helper::redirect(BASE_URL . 'superadmin/users?error=' . urlencode('Correo electrónico no válido'));
+        }
+
+        if (!in_array($role, [ROLE_SUPERADMIN, ROLE_STORE_OWNER, ROLE_STORE_STAFF, ROLE_CUSTOMER], true)) {
+            Helper::redirect(BASE_URL . 'superadmin/users?error=' . urlencode('Rol no válido'));
+        }
+
+        if ($user->emailExistsExceptId($email, $user_id)) {
+            Helper::redirect(BASE_URL . 'superadmin/users?error=' . urlencode('Ya existe otro usuario con ese correo'));
+        }
+
+        $storeId = $storeIdRaw > 0 ? $storeIdRaw : null;
+        if ($role === ROLE_SUPERADMIN) {
+            $storeId = null;
+        } else if ($storeId === null) {
+            Helper::redirect(BASE_URL . 'superadmin/users?error=' . urlencode('Debes asignar una tienda para este rol'));
+        }
+
+        if ($storeId !== null && !$store->findById($storeId)) {
+            Helper::redirect(BASE_URL . 'superadmin/users?error=' . urlencode('La tienda seleccionada no existe'));
+        }
+
+        $isSelf = intval($_SESSION['user_id'] ?? 0) === intval($user_id);
+        if ($isSelf && $role !== ROLE_SUPERADMIN) {
+            Helper::redirect(BASE_URL . 'superadmin/users?error=' . urlencode('No puedes quitarte el rol de superadmin'));
+        }
+        if ($isSelf && !$isActive) {
+            Helper::redirect(BASE_URL . 'superadmin/users?error=' . urlencode('No puedes desactivar tu propia cuenta'));
+        }
+
+        $superAdminCount = $user->countAll(['role' => ROLE_SUPERADMIN, 'is_active' => 1]);
+        if ($targetUser['role'] === ROLE_SUPERADMIN && $superAdminCount <= 1) {
+            if ($role !== ROLE_SUPERADMIN || !$isActive) {
+                Helper::redirect(BASE_URL . 'superadmin/users?error=' . urlencode('Debe existir al menos un superadmin activo'));
+            }
+        }
+
+        if ($targetUser['role'] === ROLE_STORE_OWNER && $role !== ROLE_STORE_OWNER) {
+            $ownedStores = $store->findByOwnerId($user_id);
+            if (!empty($ownedStores)) {
+                Helper::redirect(BASE_URL . 'superadmin/users?error=' . urlencode('Primero reasigna las tiendas de este propietario antes de cambiar su rol'));
+            }
+        }
+
+        $payload = [
+            'name' => $name,
+            'email' => $email,
+            'phone' => $phone,
+            'role' => $role,
+            'store_id' => $storeId,
+            'is_active' => $isActive
+        ];
+
+        if (!$user->updateByAdmin($user_id, $payload)) {
+            Helper::redirect(BASE_URL . 'superadmin/users?error=' . urlencode('No se pudo actualizar el usuario'));
+        }
+
+        if ($role === ROLE_STORE_OWNER && $storeId !== null) {
+            $store->setOwner($storeId, $user_id);
+        }
+
+        if ($newPassword !== '') {
+            if (strlen($newPassword) < 8) {
+                Helper::redirect(BASE_URL . 'superadmin/users?error=' . urlencode('La nueva contraseña debe tener al menos 8 caracteres'));
+            }
+
+            if (!$user->updatePassword($user_id, $newPassword)) {
+                Helper::redirect(BASE_URL . 'superadmin/users?error=' . urlencode('No se pudo actualizar la contraseña'));
+            }
+        }
+
+        if ($isSelf) {
+            $_SESSION['user_name'] = $name;
+            $_SESSION['user_email'] = $email;
+            $_SESSION['store_id'] = $storeId;
+        }
+
+        Helper::redirect(BASE_URL . 'superadmin/users?success=' . urlencode('Usuario actualizado exitosamente'));
+    }
+
+    public static function toggleUserStatus($user_id) {
+        Auth::requireSuperAdmin();
+
+        $user = new User();
+        $targetUser = $user->findById($user_id);
+        if (!$targetUser) {
+            Helper::redirect(BASE_URL . 'superadmin/users?error=' . urlencode('Usuario no encontrado'));
+        }
+
+        if (intval($_SESSION['user_id'] ?? 0) === intval($user_id)) {
+            Helper::redirect(BASE_URL . 'superadmin/users?error=' . urlencode('No puedes inactivar tu propia cuenta'));
+        }
+
+        if ($targetUser['role'] === ROLE_SUPERADMIN && !empty($targetUser['is_active'])) {
+            $superAdminCount = $user->countAll(['role' => ROLE_SUPERADMIN, 'is_active' => 1]);
+            if ($superAdminCount <= 1) {
+                Helper::redirect(BASE_URL . 'superadmin/users?error=' . urlencode('Debe existir al menos un superadmin activo'));
+            }
+        }
+
+        $newStatus = empty($targetUser['is_active']) ? 1 : 0;
+        if ($user->setActiveStatus($user_id, $newStatus)) {
+            $text = $newStatus ? 'activado' : 'inactivado';
+            Helper::redirect(BASE_URL . 'superadmin/users?success=' . urlencode('Usuario ' . $text . ' exitosamente'));
+        }
+
+        Helper::redirect(BASE_URL . 'superadmin/users?error=' . urlencode('No se pudo cambiar el estado del usuario'));
+    }
+
+    public static function deleteUser($user_id) {
+        Auth::requireSuperAdmin();
+
+        $user = new User();
+        $store = new Store();
+        $targetUser = $user->findById($user_id);
+        if (!$targetUser) {
+            Helper::redirect(BASE_URL . 'superadmin/users?error=' . urlencode('Usuario no encontrado'));
+        }
+
+        if (intval($_SESSION['user_id'] ?? 0) === intval($user_id)) {
+            Helper::redirect(BASE_URL . 'superadmin/users?error=' . urlencode('No puedes eliminar tu propia cuenta'));
+        }
+
+        if ($targetUser['role'] === ROLE_SUPERADMIN) {
+            $superAdminCount = $user->countAll(['role' => ROLE_SUPERADMIN, 'is_active' => 1]);
+            if ($superAdminCount <= 1) {
+                Helper::redirect(BASE_URL . 'superadmin/users?error=' . urlencode('No puedes eliminar el último superadmin'));
+            }
+        }
+
+        if ($targetUser['role'] === ROLE_STORE_OWNER) {
+            $ownedStores = $store->findByOwnerId($user_id);
+            if (!empty($ownedStores)) {
+                Helper::redirect(BASE_URL . 'superadmin/users?error=' . urlencode('No se puede eliminar: el usuario aún es propietario de una tienda'));
+            }
+        }
+
+        if ($user->deleteById($user_id)) {
+            Helper::redirect(BASE_URL . 'superadmin/users?success=' . urlencode('Usuario eliminado exitosamente'));
+        }
+
+        Helper::redirect(BASE_URL . 'superadmin/users?error=' . urlencode('No se pudo eliminar el usuario'));
     }
 
     public static function viewStore($store_id) {

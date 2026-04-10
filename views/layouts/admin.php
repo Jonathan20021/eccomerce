@@ -93,6 +93,11 @@ if (!$isSuperAdmin && !empty($_SESSION['store_id'])) {
                class="nav-item <?= strpos($currentUri, '/licenses') !== false ? 'active' : '' ?>">
                 <i class="fas fa-certificate"></i><span class="nav-label"> Licencias</span>
             </a>
+            <a href="<?= BASE_URL ?>superadmin/users"
+               data-tooltip="Usuarios"
+               class="nav-item <?= strpos($currentUri, '/users') !== false ? 'active' : '' ?>">
+                <i class="fas fa-users-cog"></i><span class="nav-label"> Usuarios</span>
+            </a>
 
             <div class="nav-section-label" style="margin-top:8px;">Plataforma</div>
             <a href="<?= BASE_URL ?>superadmin/settings"

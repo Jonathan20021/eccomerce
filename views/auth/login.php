@@ -1,5 +1,5 @@
 <?php
-$page_title = "Iniciar Sesión — Kyros Commerce";
+$page_title = "Iniciar Sesion - Kyros Commerce";
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -15,200 +15,317 @@ $page_title = "Iniciar Sesión — Kyros Commerce";
     <link rel="stylesheet" href="<?= ASSETS_PATH ?>css/style.css">
     <link rel="stylesheet" href="<?= ASSETS_PATH ?>css/mobile-pro.css">
     <style>
-        html, body { height: 100%; }
-        body { font-family: 'Inter', sans-serif; background: #f8fafc; }
+        :root {
+            --bg-soft: #f4f7fb;
+            --ink-900: #0f172a;
+            --ink-700: #334155;
+            --ink-500: #64748b;
+            --line: #dbe5f1;
+            --brand: #1f7a53;
+            --brand-dark: #166241;
+            --navy: #12314d;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-soft);
+        }
+
+        .auth-shell {
+            width: 100%;
+            max-width: 420px;
+            background: #fff;
+            border: 1px solid #e6edf5;
+            border-radius: 18px;
+            padding: 24px;
+            box-shadow: 0 18px 38px rgba(15, 23, 42, 0.08);
+        }
+
+        .demo-panel {
+            margin-top: 18px;
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            overflow: hidden;
+            background: #f7fbff;
+        }
+
+        .demo-panel-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            padding: 11px 13px;
+            background: linear-gradient(135deg, #15324c 0%, #20486b 100%);
+        }
+
+        .demo-panel-body {
+            padding: 12px;
+        }
+
+        .demo-list {
+            margin-top: 10px;
+            display: grid;
+            gap: 9px;
+        }
+
+        .demo-item {
+            border: 1px solid #d8e4f2;
+            border-radius: 11px;
+            background: #fff;
+            padding: 11px;
+            transition: all .18s ease;
+        }
+
+        .demo-item:hover {
+            border-color: #bbcee4;
+            box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
+            transform: translateY(-1px);
+        }
+
+        .demo-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .demo-role {
+            font-size: 10px;
+            font-weight: 800;
+            color: #166534;
+            background: #dcfce7;
+            border: 1px solid #86efac;
+            border-radius: 999px;
+            padding: 2px 8px;
+            white-space: nowrap;
+        }
+
+        .demo-meta {
+            margin-top: 5px;
+            color: var(--ink-500);
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .demo-meta span {
+            min-width: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .demo-actions {
+            margin-top: 9px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .demo-btn {
+            border-radius: 9px;
+            padding: 8px 10px;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all .16s ease;
+        }
+
+        .demo-btn-light {
+            border: 1px solid #cbd5e1;
+            color: var(--ink-700);
+            background: #f8fafc;
+        }
+
+        .demo-btn-light:hover {
+            border-color: #94a3b8;
+            background: #f1f5f9;
+        }
+
+        .demo-btn-main {
+            border: 1px solid var(--brand);
+            color: #fff;
+            background: linear-gradient(135deg, var(--brand) 0%, var(--brand-dark) 100%);
+            box-shadow: 0 5px 14px rgba(31, 122, 83, 0.25);
+        }
+
+        .demo-btn-main:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 18px rgba(31, 122, 83, 0.34);
+        }
+
+        @media (max-width: 640px) {
+            .demo-actions {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
 
 <div class="auth-split-layout">
 
-    <!-- ====== LEFT PANEL (brand) ====== -->
-    <div class="auth-brand-panel" style="background:linear-gradient(145deg,#0c1f12 0%,#1a4a2e 40%,#2a7a52 72%,#1f5c3d 100%);
-                position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;padding:48px;">
+    <div class="auth-brand-panel" style="background:linear-gradient(145deg,#0f2234 0%,#12314d 42%,#1f7a53 78%,#166241 100%);position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;padding:48px;">
+        <div style="position:absolute;top:-20%;right:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(98,190,151,.24) 0%,transparent 60%);border-radius:50%;pointer-events:none;"></div>
+        <div style="position:absolute;bottom:-20%;left:-10%;width:400px;height:400px;background:radial-gradient(circle,rgba(255,255,255,.15) 0%,transparent 60%);border-radius:50%;pointer-events:none;"></div>
 
-        <!-- Background decorations -->
-        <div style="position:absolute;top:-20%;right:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(212,151,58,.22) 0%,transparent 60%);border-radius:50%;pointer-events:none;"></div>
-        <div style="position:absolute;bottom:-20%;left:-10%;width:400px;height:400px;background:radial-gradient(circle,rgba(42,122,82,.25) 0%,transparent 60%);border-radius:50%;pointer-events:none;"></div>
-
-        <!-- Logo -->
         <a href="<?= BASE_URL ?>" style="display:flex;align-items:center;gap:10px;text-decoration:none;position:relative;z-index:1;">
             <div style="width:36px;height:36px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;color:#fff;">K</div>
-            <span style="font-size:20px;font-weight:800;color:#fff;letter-spacing:-0.5px;">Kyros Commerce</span>
+            <span style="font-size:20px;font-weight:800;color:#fff;letter-spacing:-0.4px;">Kyros Commerce</span>
         </a>
 
-        <!-- Center content -->
         <div style="position:relative;z-index:1;">
-            <div style="font-size:clamp(28px,3vw,40px);font-weight:900;color:#fff;line-height:1.15;letter-spacing:-1px;margin-bottom:18px;">
-                Tu negocio online,<br>
-                <span style="background:linear-gradient(135deg,#86efac,#fde68a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">sin complicaciones</span>
+            <div style="font-size:clamp(28px,3vw,40px);font-weight:900;color:#fff;line-height:1.15;letter-spacing:-1px;margin-bottom:16px;">
+                Vende online con
+                <span style="color:#c9f7e1;">control total</span>
             </div>
-            <p style="font-size:16px;color:rgba(255,255,255,0.65);line-height:1.7;max-width:340px;">
-                Miles de emprendedores ya confían en Kyros Commerce para vender online y hacer crecer su negocio.
+            <p style="font-size:16px;color:rgba(255,255,255,0.78);line-height:1.7;max-width:360px;">
+                Plataforma SaaS para crear, gestionar y escalar tu tienda sin friccion.
             </p>
-
-            <!-- Proof dots -->
-            <div style="display:flex;align-items:center;gap:12px;margin-top:32px;">
-                <div style="display:flex;">
-                    <?php
-                    $colors = ['#2a7a52','#1f5c3d','#059669','#d4973a','#f59e0b'];
-                    foreach ($colors as $c):
-                    ?>
-                    <div style="width:30px;height:30px;border-radius:50%;background:<?= $c ?>;border:2px solid rgba(255,255,255,.3);margin-left:-8px;first:margin-left:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;"></div>
-                    <?php endforeach; ?>
-                    <div style="width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.3);margin-left:-8px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:rgba(255,255,255,.8);">+5K</div>
-                </div>
-                <span style="font-size:13px;color:rgba(255,255,255,.6);">más de 5,000 tiendas activas</span>
-            </div>
         </div>
 
-        <!-- Bottom quote -->
-        <div style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:14px;padding:20px;position:relative;z-index:1;">
-            <p style="font-size:14px;color:rgba(255,255,255,.75);line-height:1.6;margin-bottom:14px;">
-                "Kyros Commerce me permitió lanzar mi tienda en un fin de semana. Ahora vendo todos los días sin preocupaciones técnicas."
+        <div style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:14px;padding:18px;position:relative;z-index:1;">
+            <p style="font-size:13px;color:rgba(255,255,255,0.82);line-height:1.55;margin-bottom:10px;">
+                "Con Kyros lanzamos en dias y ahora operamos con procesos claros y reportes en tiempo real."
             </p>
-            <div style="display:flex;align-items:center;gap:10px;">
-                <div style="width:34px;height:34px;border-radius:50%;background:#2a7a52;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:800;">AV</div>
-                <div>
-                    <div style="font-size:13px;font-weight:700;color:#fff;">Ana Vargas</div>
-                    <div style="font-size:11px;color:rgba(255,255,255,.45);">Tienda de Bisutería</div>
-                </div>
-            </div>
+            <div style="font-size:12px;color:rgba(255,255,255,.6);font-weight:700;">Equipo Operativo - Cliente Kyros</div>
         </div>
     </div>
 
-    <!-- ====== RIGHT PANEL (form) ====== -->
     <div class="auth-form-panel" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 24px;background:#fff;min-height:100vh;">
 
-        <!-- Mobile logo (hidden on desktop via CSS since left panel is visible there) -->
-        <a href="<?= BASE_URL ?>" class="auth-mobile-logo" style="display:flex;align-items:center;gap:9px;text-decoration:none;margin-bottom:40px;">
-            <div style="width:32px;height:32px;background:linear-gradient(135deg,#2a7a52,#d4973a);border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;color:#fff;">K</div>
+        <a href="<?= BASE_URL ?>" class="auth-mobile-logo" style="display:flex;align-items:center;gap:9px;text-decoration:none;margin-bottom:38px;">
+            <div style="width:32px;height:32px;background:linear-gradient(135deg,#1f7a53,#12314d);border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;color:#fff;">K</div>
             <span style="font-size:17px;font-weight:800;color:#1e293b;">Kyros Commerce</span>
         </a>
 
-        <div style="width:100%;max-width:400px;background:#fff;border:1px solid #eef2f7;border-radius:16px;padding:24px;box-shadow:0 12px 28px rgba(15,23,42,0.06);">
-            <!-- Header -->
-            <div style="margin-bottom:32px;">
-                <h1 style="font-size:26px;font-weight:800;color:#1e293b;letter-spacing:-0.7px;margin-bottom:7px;">Bienvenido de vuelta</h1>
-                <p style="font-size:14.5px;color:#64748b;">Inicia sesión en tu cuenta de Kyros Commerce</p>
+        <div class="auth-shell">
+            <div style="margin-bottom:28px;">
+                <h1 style="font-size:30px;font-weight:900;color:var(--ink-900);letter-spacing:-0.7px;margin-bottom:7px;">Bienvenido de vuelta</h1>
+                <p style="font-size:14px;color:var(--ink-500);">Inicia sesion en tu cuenta de Kyros Commerce.</p>
             </div>
 
-            <!-- Error message -->
             <?php if (isset($_GET['error'])): ?>
-            <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:12px 16px;margin-bottom:22px;display:flex;align-items:center;gap:10px;">
+            <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:12px 16px;margin-bottom:20px;display:flex;align-items:center;gap:10px;">
                 <i class="fas fa-exclamation-circle" style="color:#dc2626;font-size:14px;flex-shrink:0;"></i>
-                <p style="font-size:13.5px;color:#dc2626;font-weight:500;"><?= htmlspecialchars($_GET['error']) ?></p>
+                <p style="font-size:13px;color:#b91c1c;font-weight:600;"><?= htmlspecialchars($_GET['error']) ?></p>
             </div>
             <?php endif; ?>
 
             <?php if (isset($_GET['success'])): ?>
-            <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:12px 16px;margin-bottom:22px;display:flex;align-items:center;gap:10px;">
+            <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:12px 16px;margin-bottom:20px;display:flex;align-items:center;gap:10px;">
                 <i class="fas fa-check-circle" style="color:#16a34a;font-size:14px;flex-shrink:0;"></i>
-                <p style="font-size:13.5px;color:#15803d;font-weight:500;"><?= htmlspecialchars($_GET['success']) ?></p>
+                <p style="font-size:13px;color:#166534;font-weight:600;"><?= htmlspecialchars($_GET['success']) ?></p>
             </div>
             <?php endif; ?>
 
-            <!-- Form -->
-            <form method="POST" id="login-form" style="display:flex;flex-direction:column;gap:18px;">
+            <form method="POST" id="login-form" style="display:flex;flex-direction:column;gap:16px;">
                 <input type="hidden" name="demo_login_key" id="demo_login_key" value="">
+
                 <div class="form-group" style="margin-bottom:0;">
-                    <label class="form-label" for="email">Correo electrónico</label>
-                    <input type="email" id="email" name="email" required
-                           class="form-input"
-                           placeholder="tu@email.com"
-                           autocomplete="email">
+                    <label class="form-label" for="email">Correo electronico</label>
+                    <input type="email" id="email" name="email" required class="form-input" placeholder="tu@email.com" autocomplete="email">
                 </div>
 
                 <div class="form-group" style="margin-bottom:0;">
-                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
-                        <label class="form-label" for="password" style="margin-bottom:0;">Contraseña</label>
-                        <a href="<?= BASE_URL ?>auth/forgot-password" style="font-size:12.5px;color:#2a7a52;font-weight:600;text-decoration:none;">¿Olvidaste tu contraseña?</a>
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;gap:10px;">
+                        <label class="form-label" for="password" style="margin-bottom:0;">Contrasena</label>
+                        <a href="<?= BASE_URL ?>auth/forgot-password" style="font-size:12px;color:#2a7a52;font-weight:700;text-decoration:none;">Olvidaste tu contrasena?</a>
                     </div>
                     <div style="position:relative;">
-                        <input type="password" id="password" name="password" required
-                               class="form-input"
-                               placeholder="••••••••"
-                               autocomplete="current-password"
-                               style="padding-right:44px;">
-                        <button type="button" onclick="togglePasswordVisibility('password', this)"
-                                style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:#94a3b8;cursor:pointer;padding:4px;">
+                        <input type="password" id="password" name="password" required class="form-input" placeholder="********" autocomplete="current-password" style="padding-right:44px;">
+                        <button type="button" onclick="togglePasswordVisibility('password', this)" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:#94a3b8;cursor:pointer;padding:4px;">
                             <i class="fas fa-eye text-sm" id="password-eye"></i>
                         </button>
                     </div>
                 </div>
 
-                <button type="submit"
-                        style="width:100%;padding:13px;border-radius:10px;background:linear-gradient(135deg,#2a7a52,#1f5c3d);color:#fff;font-size:15px;font-weight:700;border:none;cursor:pointer;box-shadow:0 4px 16px rgba(42,122,82,0.3);transition:all .2s;"
-                        onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 6px 22px rgba(42,122,82,0.4)'"
-                        onmouseout="this.style.transform='none';this.style.boxShadow='0 4px 16px rgba(42,122,82,0.3)'">
-                    Iniciar Sesión
+                <button type="submit" style="width:100%;padding:13px;border-radius:10px;background:linear-gradient(135deg,#1f7a53,#166241);color:#fff;font-size:15px;font-weight:800;border:none;cursor:pointer;box-shadow:0 6px 18px rgba(31,122,83,0.26);transition:all .2s;" onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 9px 24px rgba(31,122,83,0.34)'" onmouseout="this.style.transform='none';this.style.boxShadow='0 6px 18px rgba(31,122,83,0.26)'">
+                    Iniciar Sesion
                 </button>
             </form>
 
             <?php if (!empty($showDemoBlock) && !empty($demoAccounts) && is_array($demoAccounts)): ?>
-            <div style="margin-top:18px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:14px;">
-                <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
-                    <p style="font-size:12px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;color:#475569;">Usuarios demo para pruebas</p>
-                    <span style="font-size:11px;color:#64748b;">autocompletar o entrar directo</span>
+            <div class="demo-panel">
+                <div class="demo-panel-head">
+                    <p style="font-size:12px;font-weight:800;letter-spacing:.45px;text-transform:uppercase;color:#e2e8f0;">Accesos Demo</p>
+                    <span style="font-size:11px;color:#e2e8f0;background:rgba(255,255,255,0.14);padding:3px 8px;border-radius:999px;font-weight:700;border:1px solid rgba(255,255,255,0.2);">
+                        <?= count($demoAccounts) ?> cuentas
+                    </span>
                 </div>
-                <div style="display:grid;gap:8px;margin-top:10px;">
+                <div class="demo-panel-body">
+                    <p style="font-size:12px;color:var(--ink-500);line-height:1.45;">Usa cuentas de prueba para entrar rapido y validar el flujo.</p>
+
+                    <div class="demo-list">
                     <?php foreach ($demoAccounts as $account): ?>
-                    <div style="text-align:left;background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:10px;transition:all .15s;"
-                         onmouseover="this.style.borderColor='#cbd5e1';this.style.transform='translateY(-1px)'"
-                         onmouseout="this.style.borderColor='#e2e8f0';this.style.transform='none'">
-                        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
-                            <span style="font-size:13px;font-weight:700;color:#1e293b;"><?= htmlspecialchars($account['name']) ?></span>
-                            <span style="font-size:11px;font-weight:700;color:#475569;background:#eef2ff;border-radius:999px;padding:3px 8px;"><?= htmlspecialchars($account['role']) ?></span>
+                    <?php
+                        $roleText = ($account['role'] ?? '') === ROLE_STORE_OWNER ? 'Propietario de tienda' : ucfirst(str_replace('_', ' ', strval($account['role'] ?? '')));
+                    ?>
+                        <div class="demo-item">
+                            <div class="demo-row">
+                                <span style="font-size:13px;font-weight:800;color:var(--ink-900);"><?= htmlspecialchars($account['name']) ?></span>
+                                <span class="demo-role"><?= htmlspecialchars($roleText) ?></span>
+                            </div>
+
+                            <div class="demo-meta">
+                                <i class="fas fa-envelope" style="font-size:10px;color:#94a3b8;"></i>
+                                <span><?= htmlspecialchars($account['email']) ?></span>
+                            </div>
+
+                            <?php if (!empty($showDemoPasswords)): ?>
+                            <div class="demo-meta">
+                                <i class="fas fa-key" style="font-size:10px;color:#94a3b8;"></i>
+                                <span><?= htmlspecialchars($account['password']) ?></span>
+                            </div>
+                            <?php endif; ?>
+
+                            <div class="demo-actions">
+                                <button type="button" class="demo-btn demo-btn-light" onclick="fillDemoCredentials('<?= htmlspecialchars($account['email']) ?>', '<?= htmlspecialchars($account['password']) ?>')">
+                                    Autocompletar
+                                </button>
+                                <button type="button" class="demo-btn demo-btn-main" onclick="demoDirectLogin('<?= htmlspecialchars($account['key']) ?>')">
+                                    Entrar como demo
+                                </button>
+                            </div>
                         </div>
-                        <div style="font-size:12px;color:#64748b;margin-top:4px;"><?= htmlspecialchars($account['email']) ?></div>
-                        <?php if (!empty($showDemoPasswords)): ?>
-                        <div style="font-size:12px;color:#334155;margin-top:2px;">Pass: <?= htmlspecialchars($account['password']) ?></div>
-                        <?php endif; ?>
-                        <div style="display:flex;gap:8px;margin-top:8px;">
-                            <button type="button"
-                                    onclick="fillDemoCredentials('<?= htmlspecialchars($account['email']) ?>', '<?= htmlspecialchars($account['password']) ?>')"
-                                    style="border:1px solid #cbd5e1;background:#fff;color:#334155;border-radius:8px;padding:6px 10px;font-size:12px;font-weight:600;cursor:pointer;">
-                                Autocompletar
-                            </button>
-                                <button type="button"
-                                    onclick="demoDirectLogin('<?= htmlspecialchars($account['key']) ?>')"
-                                    style="border:1px solid #2a7a52;background:#2a7a52;color:#fff;border-radius:8px;padding:6px 10px;font-size:12px;font-weight:700;cursor:pointer;">
-                                Entrar como demo
-                            </button>
-                        </div>
-                    </div>
                     <?php endforeach; ?>
+                    </div>
+
+                    <div style="margin-top:10px;font-size:11px;color:var(--ink-500);display:flex;align-items:center;gap:6px;">
+                        <i class="fas fa-shield-alt" style="font-size:10px;color:#94a3b8;"></i>
+                        <span>Cuentas temporales para pruebas, sujetas a reinicio.</span>
+                    </div>
                 </div>
             </div>
             <?php endif; ?>
 
-            <!-- Divider -->
             <div style="display:flex;align-items:center;gap:12px;margin:24px 0;">
-                <div style="flex:1;height:1px;background:#f1f5f9;"></div>
-                <span style="font-size:12px;color:#94a3b8;font-weight:500;">o continúa con</span>
-                <div style="flex:1;height:1px;background:#f1f5f9;"></div>
+                <div style="flex:1;height:1px;background:#e8eef5;"></div>
+                <span style="font-size:12px;color:#94a3b8;font-weight:600;">o continua con</span>
+                <div style="flex:1;height:1px;background:#e8eef5;"></div>
             </div>
 
-            <!-- Register link -->
-            <p style="text-align:center;font-size:14px;color:#64748b;">
-                ¿No tienes una cuenta?
-                <a href="<?= BASE_URL ?>auth/register" style="color:#2a7a52;font-weight:700;text-decoration:none;margin-left:4px;">
-                    Regístrate gratis
-                </a>
+            <p style="text-align:center;font-size:14px;color:var(--ink-500);">
+                No tienes una cuenta?
+                <a href="<?= BASE_URL ?>auth/register" style="color:#1f7a53;font-weight:800;text-decoration:none;margin-left:4px;">Registrate gratis</a>
             </p>
         </div>
 
-        <!-- Footer -->
-        <div style="margin-top:40px;text-align:center;">
+        <div style="margin-top:34px;text-align:center;">
             <p style="font-size:12px;color:#94a3b8;">
-                &copy; <?= date('Y') ?> Kyros Commerce ·
-                <a href="<?= BASE_URL ?>terms" style="color:#94a3b8;text-decoration:none;">Términos</a> ·
+                &copy; <?= date('Y') ?> Kyros Commerce |
+                <a href="<?= BASE_URL ?>terms" style="color:#94a3b8;text-decoration:none;">Terminos</a> |
                 <a href="<?= BASE_URL ?>privacy" style="color:#94a3b8;text-decoration:none;">Privacidad</a>
             </p>
         </div>
     </div>
 
-</div><!-- /grid -->
+</div>
 
 <script>
 function togglePasswordVisibility(inputId, btn) {
@@ -216,10 +333,10 @@ function togglePasswordVisibility(inputId, btn) {
     const icon  = btn.querySelector('i');
     if (input.type === 'password') {
         input.type = 'text';
-        icon.classList.replace('fa-eye','fa-eye-slash');
+        icon.classList.replace('fa-eye', 'fa-eye-slash');
     } else {
         input.type = 'password';
-        icon.classList.replace('fa-eye-slash','fa-eye');
+        icon.classList.replace('fa-eye-slash', 'fa-eye');
     }
 }
 

@@ -46,16 +46,6 @@ class AuthController {
     private static function getDemoAccountsConfig() {
         return [
             [
-                'key' => 'demo_superadmin',
-                'name' => 'Demo SuperAdmin',
-                'email' => 'demo.admin@kyros.com',
-                'password' => 'DemoAdmin123!',
-                'phone' => '+57 300 000 0001',
-                'role' => ROLE_SUPERADMIN,
-                'store_name' => '',
-                'plan_id' => 1
-            ],
-            [
                 'key' => 'demo_starter',
                 'name' => 'Demo Tienda Starter',
                 'email' => 'demo.starter@kyros.com',
@@ -87,6 +77,15 @@ class AuthController {
 
         $createdAccounts = [];
         $user = new User();
+
+        // Remove legacy demo superadmin account if it exists and another superadmin remains active.
+        $legacyDemoSuperAdmin = $user->findByEmail('demo.admin@kyros.com');
+        if ($legacyDemoSuperAdmin && ($legacyDemoSuperAdmin['role'] ?? '') === ROLE_SUPERADMIN) {
+            $activeSuperAdmins = $user->countAll(['role' => ROLE_SUPERADMIN, 'is_active' => 1]);
+            if ($activeSuperAdmins > 1) {
+                $user->deleteById(intval($legacyDemoSuperAdmin['id']));
+            }
+        }
 
         foreach ($accounts as $account) {
             $existing = $user->findByEmail($account['email']);

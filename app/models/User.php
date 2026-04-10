@@ -112,6 +112,149 @@ class User {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getAllWithStore($limit = 50, $offset = 0, $filters = []) {
+        $query = "SELECT u.*, s.name AS store_name, s.slug AS store_slug
+                  FROM " . $this->table . " u
+                  LEFT JOIN stores s ON s.id = u.store_id
+                  WHERE 1=1";
+
+        $params = [];
+
+        if (!empty($filters['role'])) {
+            $query .= " AND u.role = :role";
+            $params[':role'] = $filters['role'];
+        }
+
+        if (!empty($filters['store_id'])) {
+            $query .= " AND u.store_id = :store_id";
+            $params[':store_id'] = intval($filters['store_id']);
+        }
+
+        if (!empty($filters['search'])) {
+            $query .= " AND (u.name LIKE :search OR u.email LIKE :search)";
+            $params[':search'] = '%' . $filters['search'] . '%';
+        }
+
+        $query .= " ORDER BY u.created_at DESC LIMIT :limit OFFSET :offset";
+        $stmt = $this->db->prepare($query);
+
+        foreach ($params as $key => $value) {
+            $stmt->bindValue($key, $value);
+        }
+
+        $stmt->bindValue(':limit', intval($limit), PDO::PARAM_INT);
+        $stmt->bindValue(':offset', intval($offset), PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function emailExistsExceptId($email, $excludeId) {
+        $query = "SELECT id FROM " . $this->table . " WHERE email = :email AND id != :id LIMIT 1";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':id', $excludeId, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return (bool) $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function updateByAdmin($id, $data) {
+        $query = "UPDATE " . $this->table . "
+                  SET name = :name,
+                      email = :email,
+                      phone = :phone,
+                      role = :role,
+                      store_id = :store_id,
+                      is_active = :is_active,
+                      updated_at = CURRENT_TIMESTAMP
+                  WHERE id = :id";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':id', intval($id), PDO::PARAM_INT);
+        $stmt->bindValue(':name', $data['name']);
+        $stmt->bindValue(':email', $data['email']);
+        $stmt->bindValue(':phone', $data['phone']);
+        $stmt->bindValue(':role', $data['role']);
+        if ($data['store_id'] === null) {
+            $stmt->bindValue(':store_id', null, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':store_id', intval($data['store_id']), PDO::PARAM_INT);
+        }
+        $stmt->bindValue(':is_active', !empty($data['is_active']) ? 1 : 0, PDO::PARAM_INT);
+
+        return $stmt->execute();
+    }
+
+    public function updatePassword($id, $newPassword) {
+        $query = "UPDATE " . $this->table . "
+                  SET password = :password,
+                      updated_at = CURRENT_TIMESTAMP
+                  WHERE id = :id";
+
+        $stmt = $this->db->prepare($query);
+        $hash = password_hash($newPassword, PASSWORD_BCRYPT);
+        $stmt->bindValue(':password', $hash);
+        $stmt->bindValue(':id', intval($id), PDO::PARAM_INT);
+
+        return $stmt->execute();
+    }
+
+    public function setActiveStatus($id, $isActive) {
+        $query = "UPDATE " . $this->table . " SET is_active = :is_active, updated_at = CURRENT_TIMESTAMP WHERE id = :id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':id', intval($id), PDO::PARAM_INT);
+        $stmt->bindValue(':is_active', $isActive ? 1 : 0, PDO::PARAM_INT);
+
+        return $stmt->execute();
+    }
+
+    public function deleteById($id) {
+        $query = "DELETE FROM " . $this->table . " WHERE id = :id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':id', intval($id), PDO::PARAM_INT);
+
+        return $stmt->execute();
+    }
+
+    public function countAll($filters = []) {
+        $query = "SELECT COUNT(*) AS total FROM " . $this->table . " WHERE 1=1";
+        $params = [];
+
+        if (!empty($filters['role'])) {
+            $query .= " AND role = :role";
+            $params[':role'] = $filters['role'];
+        }
+
+        if (!empty($filters['store_id'])) {
+            $query .= " AND store_id = :store_id";
+            $params[':store_id'] = intval($filters['store_id']);
+        }
+
+        if (array_key_exists('is_active', $filters)) {
+            $query .= " AND is_active = :is_active";
+            $params[':is_active'] = !empty($filters['is_active']) ? 1 : 0;
+        }
+
+        if (!empty($filters['search'])) {
+            $query .= " AND (name LIKE :search OR email LIKE :search)";
+            $params[':search'] = '%' . $filters['search'] . '%';
+        }
+
+        $stmt = $this->db->prepare($query);
+        foreach ($params as $key => $value) {
+            if ($key === ':is_active' || $key === ':store_id') {
+                $stmt->bindValue($key, intval($value), PDO::PARAM_INT);
+            } else {
+                $stmt->bindValue($key, $value);
+            }
+        }
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return intval($row['total'] ?? 0);
+    }
+
     public function delete() {
         $query = "DELETE FROM " . $this->table . " WHERE id = :id";
         $stmt = $this->db->prepare($query);

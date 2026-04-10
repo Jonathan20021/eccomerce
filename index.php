@@ -132,6 +132,19 @@ else if ($parts[0] == 'superadmin') {
             SuperAdminController::manageStores();
         }
     }
+    else if (isset($parts[1]) && $parts[1] == 'users') {
+        if (isset($parts[2]) && $parts[2] == 'create-superadmin') {
+            SuperAdminController::createSuperAdmin();
+        } else if (isset($parts[2]) && $parts[2] == 'update' && isset($parts[3])) {
+            SuperAdminController::updateUser(intval($parts[3]));
+        } else if (isset($parts[2]) && $parts[2] == 'toggle' && isset($parts[3])) {
+            SuperAdminController::toggleUserStatus(intval($parts[3]));
+        } else if (isset($parts[2]) && $parts[2] == 'delete' && isset($parts[3])) {
+            SuperAdminController::deleteUser(intval($parts[3]));
+        } else {
+            SuperAdminController::manageUsers();
+        }
+    }
     else if (isset($parts[1]) && $parts[1] == 'settings') {
         SuperAdminController::settings();
     }

@@ -31,7 +31,7 @@
             <div class="stat-icon amber"><i class="fas fa-users"></i></div>
             <div>
                 <div class="stat-label">Usuarios</div>
-                <div class="stat-value">0</div>
+                <div class="stat-value"><?= intval($totalUsers ?? 0) ?></div>
                 <div class="stat-meta">usuarios activos</div>
             </div>
         </div>
@@ -52,6 +52,9 @@
                 </a>
                 <a href="<?= BASE_URL ?>superadmin/stores" class="action-chip" style="background:#fffbeb;color:#b45309;">
                     <i class="fas fa-store"></i> Ver Tiendas
+                </a>
+                <a href="<?= BASE_URL ?>superadmin/users" class="action-chip" style="background:#eef2ff;color:#3730a3;">
+                    <i class="fas fa-users-cog"></i> Gestionar Usuarios
                 </a>
                 <a href="<?= BASE_URL ?>superadmin/settings" class="action-chip" style="background:#f8fafc;color:#475569;">
                     <i class="fas fa-cog"></i> Configuración
