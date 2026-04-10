@@ -94,6 +94,13 @@ else if ($parts[0] == 'admin') {
             AdminController::orders();
         }
     }
+    else if (isset($parts[1]) && $parts[1] == 'customers') {
+        if (isset($parts[2])) {
+            AdminController::customerDetail(intval($parts[2]));
+        } else {
+            AdminController::customers();
+        }
+    }
     else if (isset($parts[1]) && $parts[1] == 'settings') {
         AdminController::storeSettings();
     }
@@ -177,6 +184,7 @@ else if ($parts[0] == 'superadmin') {
 }
 else if ($parts[0] == 'shop') {
     require_once __DIR__ . '/app/controllers/PublicController.php';
+    require_once __DIR__ . '/app/controllers/CustomerController.php';
     
     if (isset($parts[1])) {
         $store_slug = $parts[1];
@@ -187,9 +195,37 @@ else if ($parts[0] == 'shop') {
         else if (isset($parts[2]) && $parts[2] == 'cart') {
             PublicController::cart($store_slug);
         }
+        else if (isset($parts[2]) && $parts[2] == 'customer' && isset($parts[3]) && $parts[3] == 'register') {
+            CustomerController::register($store_slug);
+        }
+        else if (isset($parts[2]) && $parts[2] == 'customer' && isset($parts[3]) && $parts[3] == 'login') {
+            CustomerController::login($store_slug);
+        }
         else {
             PublicController::storeFront($store_slug);
         }
+    }
+}
+else if ($parts[0] == 'customer') {
+    require_once __DIR__ . '/app/controllers/CustomerController.php';
+
+    if (!isset($parts[1]) || $parts[1] == 'panel') {
+        CustomerController::dashboard();
+    }
+    else if ($parts[1] == 'profile') {
+        CustomerController::profile();
+    }
+    else if ($parts[1] == 'addresses') {
+        CustomerController::addresses();
+    }
+    else if ($parts[1] == 'orders' && isset($parts[2])) {
+        CustomerController::orderDetail(intval($parts[2]));
+    }
+    else if ($parts[1] == 'logout') {
+        CustomerController::logout();
+    }
+    else {
+        header('Location: ' . BASE_URL . 'customer/panel');
     }
 }
 else if ($parts[0] == 'checkout') {
@@ -232,7 +268,10 @@ else if ($parts[0] == 'api') {
     if (isset($parts[1]) && $parts[1] == 'cart') {
         require_once __DIR__ . '/app/controllers/PublicController.php';
         
-        if (isset($parts[2]) && $parts[2] == 'add') {
+        if (isset($parts[2]) && $parts[2] == 'count') {
+            PublicController::cartCount();
+        }
+        else if (isset($parts[2]) && $parts[2] == 'add') {
             PublicController::addToCart();
         }
         else if (isset($parts[2]) && $parts[2] == 'update') {

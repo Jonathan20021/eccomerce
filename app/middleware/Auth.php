@@ -54,6 +54,31 @@ class Auth {
         return true;
     }
 
+    public static function loginCustomer($customerData) {
+        if (empty($customerData) || ($customerData['role'] ?? null) !== ROLE_CUSTOMER) {
+            return false;
+        }
+
+        if (empty($customerData['is_active'])) {
+            return 'user_inactive';
+        }
+
+        $_SESSION['customer_id'] = intval($customerData['id']);
+        $_SESSION['customer_email'] = $customerData['email'];
+        $_SESSION['customer_name'] = $customerData['name'];
+        $_SESSION['customer_store_id'] = intval($customerData['store_id'] ?? 0);
+
+        return true;
+    }
+
+    public static function logoutCustomer() {
+        unset($_SESSION['customer_id']);
+        unset($_SESSION['customer_email']);
+        unset($_SESSION['customer_name']);
+        unset($_SESSION['customer_store_id']);
+        return true;
+    }
+
     public static function isLoggedIn() {
         return isset($_SESSION['user_id']);
     }
@@ -98,6 +123,28 @@ class Auth {
         return $_SESSION['user_role'] ?? null;
     }
 
+    public static function isCustomerLoggedIn() {
+        return isset($_SESSION['customer_id']);
+    }
+
+    public static function getCustomerId() {
+        return $_SESSION['customer_id'] ?? null;
+    }
+
+    public static function getCustomerStoreId() {
+        return $_SESSION['customer_store_id'] ?? null;
+    }
+
+    public static function getCurrentCustomer() {
+        if (!self::isCustomerLoggedIn()) {
+            return null;
+        }
+
+        require_once __DIR__ . '/../models/User.php';
+        $user = new User();
+        return $user->findById(intval($_SESSION['customer_id']));
+    }
+
     public static function requireLogin() {
         if (!self::isLoggedIn()) {
             header('Location: ' . BASE_URL . 'login');
@@ -136,6 +183,13 @@ class Auth {
 
         if (!$activeLicense) {
             header('Location: ' . BASE_URL . 'auth/login?error=' . urlencode('Tu licencia no está activa o ha expirado'));
+            exit;
+        }
+    }
+
+    public static function requireCustomer() {
+        if (!self::isCustomerLoggedIn()) {
+            header('Location: ' . BASE_URL);
             exit;
         }
     }

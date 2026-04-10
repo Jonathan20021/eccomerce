@@ -500,6 +500,7 @@ $storeSlug    = $storeData['slug']  ?? '';
 $storeName    = $storeData['name']  ?? 'Tienda';
 $storeInitial = strtoupper(substr($storeName, 0, 1));
 $hasWhatsApp  = !empty($storeData['whatsapp_number']);
+$isCustomerInThisStore = Auth::isCustomerLoggedIn() && intval(Auth::getCustomerStoreId()) === intval($storeData['id'] ?? 0);
 ?>
 
 <!-- Announcement bar (optional) -->
@@ -548,6 +549,25 @@ $hasWhatsApp  = !empty($storeData['whatsapp_number']);
                            value="<?= htmlspecialchars($_GET['q'] ?? '') ?>">
                 </form>
             </div>
+
+            <?php if ($isCustomerInThisStore): ?>
+            <a href="<?= BASE_URL ?>customer/panel"
+               style="display:inline-flex;align-items:center;gap:7px;padding:9px 12px;border:1.5px solid #e2e8f0;border-radius:10px;color:#334155;text-decoration:none;font-size:13px;font-weight:700;white-space:nowrap;">
+                <i class="fas fa-user" style="font-size:12px;"></i>
+                Mi cuenta
+            </a>
+            <a href="<?= BASE_URL ?>customer/logout"
+               style="display:inline-flex;align-items:center;gap:7px;padding:9px 12px;border:1.5px solid #fee2e2;border-radius:10px;color:#dc2626;text-decoration:none;font-size:13px;font-weight:700;white-space:nowrap;">
+                <i class="fas fa-sign-out-alt" style="font-size:12px;"></i>
+                Salir
+            </a>
+            <?php else: ?>
+            <a href="<?= BASE_URL ?>shop/<?= htmlspecialchars($storeSlug) ?>/customer/login"
+               style="display:inline-flex;align-items:center;gap:7px;padding:9px 12px;border:1.5px solid #e2e8f0;border-radius:10px;color:#334155;text-decoration:none;font-size:13px;font-weight:700;white-space:nowrap;">
+                <i class="fas fa-sign-in-alt" style="font-size:12px;"></i>
+                Ingresar
+            </a>
+            <?php endif; ?>
 
             <!-- Cart -->
             <a href="<?= BASE_URL ?>shop/<?= htmlspecialchars($storeSlug) ?>/cart" class="store-cart-btn">
@@ -705,6 +725,21 @@ $hasWhatsApp  = !empty($storeData['whatsapp_number']);
         <a href="<?= BASE_URL ?>shop/<?= htmlspecialchars($storeSlug) ?>/cart" class="store-mobile-link">
             <i class="fas fa-shopping-bag"></i> Mi Carrito
         </a>
+        <?php if ($isCustomerInThisStore): ?>
+        <a href="<?= BASE_URL ?>customer/panel" class="store-mobile-link">
+            <i class="fas fa-user"></i> Mi cuenta
+        </a>
+        <a href="<?= BASE_URL ?>customer/logout" class="store-mobile-link" style="color:#dc2626;">
+            <i class="fas fa-sign-out-alt" style="color:#dc2626;"></i> Cerrar sesión
+        </a>
+        <?php else: ?>
+        <a href="<?= BASE_URL ?>shop/<?= htmlspecialchars($storeSlug) ?>/customer/login" class="store-mobile-link">
+            <i class="fas fa-sign-in-alt"></i> Ingresar
+        </a>
+        <a href="<?= BASE_URL ?>shop/<?= htmlspecialchars($storeSlug) ?>/customer/register" class="store-mobile-link">
+            <i class="fas fa-user-plus"></i> Crear cuenta
+        </a>
+        <?php endif; ?>
         <?php foreach ($menuLinks as $item): ?>
             <?php if (!empty($item['label']) && !empty($item['url'])): ?>
             <a href="<?= htmlspecialchars($item['url']) ?>" class="store-mobile-link">

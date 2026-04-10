@@ -749,7 +749,7 @@ $page_title = "Kyros Commerce — Crea tu Tienda Online Profesional";
         <div class="text-center" style="margin-bottom:64px;">
             <div class="section-label"><i class="fas fa-leaf"></i> Características</div>
             <h2 class="section-title">Todo lo que necesitas para vender online</h2>
-            <p class="section-subtitle">Una plataforma completa con todas las herramientas que tu negocio necesita para crecer desde el primer día.</p>
+            <p class="section-subtitle">Una plataforma completa con carrito, portal de clientes y automatizaciones para crecer desde el primer día.</p>
         </div>
 
         <div class="grid md:grid-cols-3 gap-6">
@@ -758,9 +758,10 @@ $page_title = "Kyros Commerce — Crea tu Tienda Online Profesional";
                 ['icon'=>'fas fa-shopping-cart','bg'=>'#ecfdf5','color'=>'#2a7a52','title'=>'Carrito de Compras Avanzado',   'desc'=>'Carrito robusto y seguro con múltiples opciones. Tus clientes compran sin fricción, en segundos.'],
                 ['icon'=>'fab fa-whatsapp',     'bg'=>'#f0fdf4','color'=>'#16a34a','title'=>'Contacto por wa.me',            'desc'=>'Comparte enlaces wa.me para que tus clientes te escriban y coordinen su compra rápidamente.'],
                 ['icon'=>'fas fa-images',       'bg'=>'#fefce8','color'=>'#d97706','title'=>'Galerías de Productos HD',       'desc'=>'Sube fotos de alta calidad sin límite. Muestra tu catálogo de manera profesional y atractiva.'],
-                ['icon'=>'fas fa-chart-line',   'bg'=>'#eff6ff','color'=>'#2563eb','title'=>'Analytics en Tiempo Real',      'desc'=>'Visualiza ventas, clientes y productos más vendidos. Métricas claras para tomar mejores decisiones.'],
+                ['icon'=>'fas fa-users-cog',    'bg'=>'#eff6ff','color'=>'#2563eb','title'=>'Portal de Clientes',            'desc'=>'Tus compradores crean cuenta por tienda, gestionan perfil, direcciones y revisan su historial de pedidos.'],
                 ['icon'=>'fas fa-mobile-alt',   'bg'=>'#fdf4ff','color'=>'#9333ea','title'=>'100% Responsivo',               'desc'=>'Tu tienda luce perfecta en todos los dispositivos: desktop, tablet y smartphones modernos.'],
                 ['icon'=>'fas fa-box',          'bg'=>'#fff7ed','color'=>'#ea580c','title'=>'Gestión de Inventario',         'desc'=>'Controla tu stock en tiempo real. Recibe alertas de stock bajo y evita vender lo que no tienes.'],
+                ['icon'=>'fas fa-chart-line',   'bg'=>'#ecfeff','color'=>'#0891b2','title'=>'Analytics en Tiempo Real',      'desc'=>'Visualiza ventas, clientes recurrentes y productos más vendidos. Métricas claras para tomar mejores decisiones.'],
                 ['icon'=>'fas fa-search',       'bg'=>'#f0fdf4','color'=>'#059669','title'=>'SEO Optimizado',                'desc'=>'Tu tienda está optimizada para aparecer en Google. Atrae tráfico orgánico sin esfuerzo extra.'],
                 ['icon'=>'fas fa-lock',         'bg'=>'#fef2f2','color'=>'#dc2626','title'=>'Seguridad SSL Incluida',        'desc'=>'Certificado SSL gratuito en todos los planes. Tus clientes compran con total confianza y seguridad.'],
                 ['icon'=>'fas fa-headset',      'bg'=>'#f8fafc','color'=>'#475569','title'=>'Soporte en Español 24/7',       'desc'=>'Nuestro equipo siempre disponible en tu idioma para ayudarte con cualquier duda o problema.'],
@@ -906,6 +907,7 @@ $page_title = "Kyros Commerce — Crea tu Tienda Online Profesional";
                 ['feat'=>'Soporte en español 24/7',     'kyros'=>true,  'other'=>false],
                 ['feat'=>'15 días de prueba gratis',    'kyros'=>true,  'other'=>false],
                 ['feat'=>'Panel multitienda incluido',  'kyros'=>true,  'other'=>true],
+                ['feat'=>'Portal de clientes por tienda','kyros'=>true,  'other'=>false],
                 ['feat'=>'Analytics integrado',         'kyros'=>true,  'other'=>true],
             ];
             foreach ($compare as $i => $row): ?>
@@ -929,7 +931,7 @@ $page_title = "Kyros Commerce — Crea tu Tienda Online Profesional";
         <div class="text-center" style="margin-bottom:64px;">
             <div class="section-label"><i class="fas fa-tags"></i> Precios</div>
             <h2 class="section-title">Planes para cada etapa de tu negocio</h2>
-            <p class="section-subtitle">Empieza gratis y escala cuando lo necesites. Sin contratos, sin sorpresas.</p>
+            <p class="section-subtitle">Empieza gratis y escala cuando lo necesites. Todos los planes incluyen portal de clientes.</p>
         </div>
 
         <div class="grid md:grid-cols-3 gap-8 items-start">
@@ -943,7 +945,7 @@ $page_title = "Kyros Commerce — Crea tu Tienda Online Profesional";
                 <div style="font-size:12.5px;color:#94a3b8;margin-bottom:24px;">Perfecto para comenzar</div>
                 <hr style="border-color:#f1f5f9;margin-bottom:24px;">
                 <ul style="list-style:none;margin-bottom:28px;display:flex;flex-direction:column;gap:10px;">
-                    <?php foreach (['50 productos activos','5 GB de almacenamiento','Módulo de Inventario','Carrito de compras','Contacto por wa.me','Soporte por email'] as $feat): ?>
+                    <?php foreach (['50 productos activos','5 GB de almacenamiento','Portal de clientes (perfil, direcciones y pedidos)','Módulo de Inventario','Carrito de compras','Contacto por wa.me','Soporte por email'] as $feat): ?>
                     <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:#334155;">
                         <i class="fas fa-check-circle" style="color:#2a7a52;font-size:13px;flex-shrink:0;"></i><?= $feat ?>
                     </li>
@@ -966,7 +968,7 @@ $page_title = "Kyros Commerce — Crea tu Tienda Online Profesional";
                 <div style="font-size:12.5px;color:#94a3b8;margin-bottom:24px;">Primeros 30 días con 50% off</div>
                 <hr style="border-color:#bbf7d0;margin-bottom:24px;">
                 <ul style="list-style:none;margin-bottom:28px;display:flex;flex-direction:column;gap:10px;">
-                    <?php foreach (['500 productos activos','50 GB almacenamiento','Módulo de Inventario','Módulo de Finanzas','Carrito avanzado + upsell','Analytics completo','SEO avanzado','API REST acceso','Soporte prioritario'] as $feat): ?>
+                    <?php foreach (['500 productos activos','50 GB almacenamiento','Portal de clientes + checkout autocompletado','Módulo de Inventario','Módulo de Finanzas','Carrito avanzado + upsell','Analytics completo','SEO avanzado','API REST acceso','Soporte prioritario'] as $feat): ?>
                     <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:#334155;">
                         <i class="fas fa-check-circle" style="color:#2a7a52;font-size:13px;flex-shrink:0;"></i><?= $feat ?>
                     </li>
@@ -988,7 +990,7 @@ $page_title = "Kyros Commerce — Crea tu Tienda Online Profesional";
                 <div style="font-size:12.5px;color:#94a3b8;margin-bottom:24px;">Para grandes operaciones</div>
                 <hr style="border-color:#f1f5f9;margin-bottom:24px;">
                 <ul style="list-style:none;margin-bottom:28px;display:flex;flex-direction:column;gap:10px;">
-                    <?php foreach (['Productos ilimitados','500 GB almacenamiento','Todo el plan Professional','Personalización completa','Webhooks e integraciones','White label disponible','Consultoría incluida','SLA garantizado','Soporte dedicado 24/7'] as $feat): ?>
+                    <?php foreach (['Productos ilimitados','500 GB almacenamiento','Portal de clientes + experiencia personalizada','Todo el plan Professional','Personalización completa','Webhooks e integraciones','White label disponible','Consultoría incluida','SLA garantizado','Soporte dedicado 24/7'] as $feat): ?>
                     <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:#334155;">
                         <i class="fas fa-check-circle" style="color:#10b981;font-size:13px;flex-shrink:0;"></i><?= $feat ?>
                     </li>

@@ -69,6 +69,7 @@
                             Nombre Completo <span style="color:#ef4444;">*</span>
                         </label>
                         <input type="text" id="name" name="name" required
+                               value="<?= htmlspecialchars($prefill['name'] ?? '') ?>"
                                placeholder="Tu nombre completo"
                                style="width:100%;box-sizing:border-box;padding:10px 14px;border:1.5px solid #e2e8f0;border-radius:9px;font-size:14px;font-family:'Inter',sans-serif;color:#1e293b;outline:none;transition:border-color .15s;"
                                onfocus="this.style.borderColor='#2a7a52';this.style.boxShadow='0 0 0 3px rgba(42,122,82,.1)'" onblur="this.style.borderColor='#e2e8f0';this.style.boxShadow='none'">
@@ -79,6 +80,7 @@
                                 Email <span style="color:#ef4444;">*</span>
                             </label>
                             <input type="email" id="email" name="email" required
+                                   value="<?= htmlspecialchars($prefill['email'] ?? '') ?>"
                                    placeholder="tu@email.com"
                                    style="width:100%;box-sizing:border-box;padding:10px 14px;border:1.5px solid #e2e8f0;border-radius:9px;font-size:14px;font-family:'Inter',sans-serif;color:#1e293b;outline:none;transition:border-color .15s;"
                                    onfocus="this.style.borderColor='#2a7a52';this.style.boxShadow='0 0 0 3px rgba(42,122,82,.1)'" onblur="this.style.borderColor='#e2e8f0';this.style.boxShadow='none'">
@@ -88,6 +90,7 @@
                                 Teléfono <span style="color:#ef4444;">*</span>
                             </label>
                             <input type="tel" id="phone" name="phone" required
+                                   value="<?= htmlspecialchars($prefill['phone'] ?? '') ?>"
                                    placeholder="+1 234 567 8900"
                                    style="width:100%;box-sizing:border-box;padding:10px 14px;border:1.5px solid #e2e8f0;border-radius:9px;font-size:14px;font-family:'Inter',sans-serif;color:#1e293b;outline:none;transition:border-color .15s;"
                                    onfocus="this.style.borderColor='#2a7a52';this.style.boxShadow='0 0 0 3px rgba(42,122,82,.1)'" onblur="this.style.borderColor='#e2e8f0';this.style.boxShadow='none'">
@@ -111,9 +114,18 @@
                     <textarea id="address" name="address" required rows="3"
                               placeholder="Calle, número, colonia, ciudad, estado, código postal"
                               style="width:100%;box-sizing:border-box;padding:10px 14px;border:1.5px solid #e2e8f0;border-radius:9px;font-size:14px;font-family:'Inter',sans-serif;color:#1e293b;outline:none;resize:vertical;transition:border-color .15s;"
-                              onfocus="this.style.borderColor='#2a7a52';this.style.boxShadow='0 0 0 3px rgba(42,122,82,.1)'" onblur="this.style.borderColor='#e2e8f0';this.style.boxShadow='none'"></textarea>
+                              onfocus="this.style.borderColor='#2a7a52';this.style.boxShadow='0 0 0 3px rgba(42,122,82,.1)'" onblur="this.style.borderColor='#e2e8f0';this.style.boxShadow='none'"><?= htmlspecialchars($prefill['address'] ?? '') ?></textarea>
                 </div>
             </div>
+
+            <?php if (Auth::isCustomerLoggedIn() && intval(Auth::getCustomerStoreId()) === intval($storeData['id'])): ?>
+            <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+                <input type="checkbox" id="save_address" name="save_address" value="1" checked style="width:16px;height:16px;cursor:pointer;">
+                <label for="save_address" style="font-size:13px;color:#334155;cursor:pointer;">
+                    Guardar esta dirección como predeterminada en mi cuenta
+                </label>
+            </div>
+            <?php endif; ?>
 
             <!-- Payment Method Notice -->
             <div style="background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:12px;padding:16px 18px;display:flex;align-items:flex-start;gap:12px;margin-bottom:20px;">

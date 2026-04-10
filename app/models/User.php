@@ -68,6 +68,128 @@ class User {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function findCustomerByEmailAndStore($email, $storeId) {
+        $query = "SELECT * FROM " . $this->table . "
+                  WHERE email = :email AND store_id = :store_id AND role = :role
+                  LIMIT 1";
+        $stmt = $this->db->prepare($query);
+        $role = ROLE_CUSTOMER;
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':store_id', $storeId, PDO::PARAM_INT);
+        $stmt->bindParam(':role', $role);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function customerEmailExistsInStore($email, $storeId, $excludeId = 0) {
+        $query = "SELECT id FROM " . $this->table . "
+                  WHERE email = :email AND store_id = :store_id AND role = :role";
+        if ($excludeId > 0) {
+            $query .= " AND id != :exclude_id";
+        }
+        $query .= " LIMIT 1";
+
+        $stmt = $this->db->prepare($query);
+        $role = ROLE_CUSTOMER;
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':store_id', $storeId, PDO::PARAM_INT);
+        $stmt->bindParam(':role', $role);
+        if ($excludeId > 0) {
+            $stmt->bindParam(':exclude_id', $excludeId, PDO::PARAM_INT);
+        }
+        $stmt->execute();
+
+        return (bool) $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function updateCustomerProfile($id, $storeId, $name, $email, $phone) {
+        $query = "UPDATE " . $this->table . "
+                  SET name = :name,
+                      email = :email,
+                      phone = :phone,
+                      updated_at = CURRENT_TIMESTAMP
+                  WHERE id = :id AND store_id = :store_id AND role = :role";
+
+        $stmt = $this->db->prepare($query);
+        $role = ROLE_CUSTOMER;
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->bindParam(':store_id', $storeId, PDO::PARAM_INT);
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':phone', $phone);
+        $stmt->bindParam(':role', $role);
+
+        return $stmt->execute();
+    }
+
+    public function getCustomersByStore($storeId, $limit = 20, $offset = 0, $search = '') {
+        $query = "SELECT u.*,
+                         COUNT(o.id) AS orders_count,
+                         COALESCE(SUM(CASE WHEN o.status != 'cancelled' THEN o.total ELSE 0 END), 0) AS total_spent,
+                         MAX(o.created_at) AS last_order_at
+                  FROM " . $this->table . " u
+                  LEFT JOIN orders o ON o.user_id = u.id AND o.store_id = u.store_id
+                  WHERE u.store_id = :store_id AND u.role = :role";
+
+        if ($search !== '') {
+            $query .= " AND (u.name LIKE :search OR u.email LIKE :search OR u.phone LIKE :search)";
+        }
+
+        $query .= " GROUP BY u.id
+                    ORDER BY u.created_at DESC
+                    LIMIT :limit OFFSET :offset";
+
+        $stmt = $this->db->prepare($query);
+        $role = ROLE_CUSTOMER;
+        $stmt->bindValue(':store_id', intval($storeId), PDO::PARAM_INT);
+        $stmt->bindValue(':role', $role);
+        if ($search !== '') {
+            $stmt->bindValue(':search', '%' . $search . '%');
+        }
+        $stmt->bindValue(':limit', intval($limit), PDO::PARAM_INT);
+        $stmt->bindValue(':offset', intval($offset), PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function countCustomersByStore($storeId, $search = '') {
+        $query = "SELECT COUNT(*) AS total
+                  FROM " . $this->table . "
+                  WHERE store_id = :store_id AND role = :role";
+
+        if ($search !== '') {
+            $query .= " AND (name LIKE :search OR email LIKE :search OR phone LIKE :search)";
+        }
+
+        $stmt = $this->db->prepare($query);
+        $role = ROLE_CUSTOMER;
+        $stmt->bindValue(':store_id', intval($storeId), PDO::PARAM_INT);
+        $stmt->bindValue(':role', $role);
+        if ($search !== '') {
+            $stmt->bindValue(':search', '%' . $search . '%');
+        }
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return intval($row['total'] ?? 0);
+    }
+
+    public function findCustomerByIdAndStore($id, $storeId) {
+        $query = "SELECT * FROM " . $this->table . "
+                  WHERE id = :id AND store_id = :store_id AND role = :role
+                  LIMIT 1";
+        $stmt = $this->db->prepare($query);
+        $role = ROLE_CUSTOMER;
+        $stmt->bindValue(':id', intval($id), PDO::PARAM_INT);
+        $stmt->bindValue(':store_id', intval($storeId), PDO::PARAM_INT);
+        $stmt->bindValue(':role', $role);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     public function findById($id) {
         $query = "SELECT * FROM " . $this->table . " WHERE id = :id LIMIT 1";
         $stmt = $this->db->prepare($query);

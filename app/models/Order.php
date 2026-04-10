@@ -93,6 +93,46 @@ class Order {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getByCustomer($store_id, $customer_id, $limit = 20, $offset = 0) {
+        $query = "SELECT * FROM " . $this->table . "
+                  WHERE store_id = :store_id AND user_id = :user_id
+                  ORDER BY created_at DESC
+                  LIMIT :limit OFFSET :offset";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':store_id', $store_id, PDO::PARAM_INT);
+        $stmt->bindParam(':user_id', $customer_id, PDO::PARAM_INT);
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function countByCustomer($store_id, $customer_id) {
+        $query = "SELECT COUNT(*) as total FROM " . $this->table . "
+                  WHERE store_id = :store_id AND user_id = :user_id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':store_id', $store_id, PDO::PARAM_INT);
+        $stmt->bindParam(':user_id', $customer_id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return intval($row['total'] ?? 0);
+    }
+
+    public function findByIdForCustomer($order_id, $store_id, $customer_id) {
+        $query = "SELECT * FROM " . $this->table . "
+                  WHERE id = :id AND store_id = :store_id AND user_id = :user_id
+                  LIMIT 1";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':id', $order_id, PDO::PARAM_INT);
+        $stmt->bindParam(':store_id', $store_id, PDO::PARAM_INT);
+        $stmt->bindParam(':user_id', $customer_id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     public function update() {
         $query = "UPDATE " . $this->table . " 
                   SET status = :status, 

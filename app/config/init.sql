@@ -50,6 +50,26 @@ CREATE TABLE IF NOT EXISTS stores (
     FOREIGN KEY (owner_id) REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- Tabla de direcciones de cliente
+CREATE TABLE IF NOT EXISTS customer_addresses (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    store_id INT NOT NULL,
+    label VARCHAR(50) DEFAULT 'Principal',
+    recipient_name VARCHAR(100) NOT NULL,
+    phone VARCHAR(20),
+    address_line TEXT NOT NULL,
+    city VARCHAR(100),
+    state VARCHAR(100),
+    country VARCHAR(100),
+    postal_code VARCHAR(20),
+    is_default BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (store_id) REFERENCES stores(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- Tabla de licencias
 CREATE TABLE IF NOT EXISTS licenses (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -223,5 +243,7 @@ CREATE INDEX idx_order_store ON orders(store_id);
 CREATE INDEX idx_review_product ON reviews(product_id);
 CREATE INDEX idx_plan_change_store ON plan_change_requests(store_id);
 CREATE INDEX idx_plan_change_status ON plan_change_requests(status);
+CREATE INDEX idx_customer_address_user_store ON customer_addresses(user_id, store_id);
+CREATE INDEX idx_customer_address_default ON customer_addresses(user_id, store_id, is_default);
 
 SET FOREIGN_KEY_CHECKS=1;

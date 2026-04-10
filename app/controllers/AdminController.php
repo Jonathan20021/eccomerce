@@ -6,6 +6,8 @@ require_once __DIR__ . '/../models/Product.php';
 require_once __DIR__ . '/../models/Category.php';
 require_once __DIR__ . '/../models/Cart.php';
 require_once __DIR__ . '/../models/Order.php';
+require_once __DIR__ . '/../models/User.php';
+require_once __DIR__ . '/../models/CustomerAddress.php';
 require_once __DIR__ . '/../models/License.php';
 require_once __DIR__ . '/../models/PlanChangeRequest.php';
 require_once __DIR__ . '/../models/Setting.php';
@@ -616,6 +618,128 @@ class AdminController {
         include VIEWS_PATH . 'admin/orders.php';
     }
 
+    public static function customers() {
+        Auth::requireStoreOwner();
+        Auth::requireValidStoreLicense();
+        $store_id = Auth::getStoreId();
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $name = Helper::sanitizeInput($_POST['name'] ?? '');
+            $email = Helper::sanitizeInput($_POST['email'] ?? '');
+            $phone = Helper::sanitizeInput($_POST['phone'] ?? '');
+            $password = $_POST['password'] ?? '';
+            $autoPassword = isset($_POST['auto_password']) && $_POST['auto_password'] == '1';
+            $isActive = isset($_POST['is_active']) ? 1 : 0;
+
+            if ($autoPassword || trim($password) === '') {
+                $password = self::generateTemporaryPassword();
+            }
+
+            $errors = [];
+            if ($name === '') {
+                $errors[] = 'El nombre es obligatorio';
+            }
+            if (!Helper::validateEmail($email)) {
+                $errors[] = 'El email no es válido';
+            }
+            if (!$autoPassword && strlen($password) < 6) {
+                $errors[] = 'La contraseña debe tener al menos 6 caracteres';
+            }
+
+            $user = new User();
+            $existing = $user->findByEmail($email);
+            if ($existing) {
+                $errors[] = 'Ya existe una cuenta con ese email';
+            }
+
+            if (!empty($errors)) {
+                Helper::redirect(BASE_URL . 'admin/customers?error=' . urlencode(implode(' | ', $errors)));
+            }
+
+            $newCustomer = new User();
+            $newCustomer->name = $name;
+            $newCustomer->email = $email;
+            $newCustomer->password = $password;
+            $newCustomer->phone = $phone;
+            $newCustomer->role = ROLE_CUSTOMER;
+            $newCustomer->store_id = intval($store_id);
+            $newCustomer->is_active = $isActive;
+            $newCustomer->email_verified = 1;
+
+            if ($newCustomer->create()) {
+                Helper::redirect(
+                    BASE_URL . 'admin/customers?success=' . urlencode('Cliente creado correctamente') .
+                    '&generated_password=' . urlencode($password)
+                );
+            }
+
+            Helper::redirect(BASE_URL . 'admin/customers?error=' . urlencode('No se pudo crear el cliente'));
+        }
+
+        $page = intval($_GET['page'] ?? 1);
+        if ($page < 1) {
+            $page = 1;
+        }
+        $limit = 15;
+        $offset = ($page - 1) * $limit;
+        $search = trim((string)($_GET['q'] ?? ''));
+
+        $user = new User();
+        $customers = $user->getCustomersByStore($store_id, $limit, $offset, $search);
+        $totalCustomers = $user->countCustomersByStore($store_id, $search);
+        $totalPages = max(1, intval(ceil($totalCustomers / $limit)));
+
+        $allCustomers = $user->getCustomersByStore($store_id, 2000, 0, '');
+        $activeCustomers = 0;
+        $customersWithOrders = 0;
+        foreach ($allCustomers as $row) {
+            if (!empty($row['is_active'])) {
+                $activeCustomers++;
+            }
+            if (intval($row['orders_count'] ?? 0) > 0) {
+                $customersWithOrders++;
+            }
+        }
+
+        include VIEWS_PATH . 'admin/customers.php';
+    }
+
+    public static function customerDetail($customer_id) {
+        Auth::requireStoreOwner();
+        Auth::requireValidStoreLicense();
+        $store_id = Auth::getStoreId();
+
+        $user = new User();
+        $customerData = $user->findCustomerByIdAndStore(intval($customer_id), intval($store_id));
+        if (!$customerData) {
+            Helper::redirect(BASE_URL . 'admin/customers?error=' . urlencode('Cliente no encontrado'));
+        }
+
+        $order = new Order();
+        $orders = $order->getByCustomer($store_id, intval($customer_id), 100, 0);
+        $totalOrders = $order->countByCustomer($store_id, intval($customer_id));
+
+        $totalSpent = 0.0;
+        $pendingOrders = 0;
+        $lastOrderAt = null;
+        foreach ($orders as $item) {
+            if (($item['status'] ?? '') !== 'cancelled') {
+                $totalSpent += floatval($item['total'] ?? 0);
+            }
+            if (($item['status'] ?? '') === 'pending') {
+                $pendingOrders++;
+            }
+            if ($lastOrderAt === null && !empty($item['created_at'])) {
+                $lastOrderAt = $item['created_at'];
+            }
+        }
+
+        $addressModel = new CustomerAddress();
+        $addresses = $addressModel->getByCustomer(intval($customer_id), intval($store_id));
+
+        include VIEWS_PATH . 'admin/customer-detail.php';
+    }
+
     public static function viewOrder($order_id) {
         Auth::requireStoreOwner();
         Auth::requireValidStoreLicense();
@@ -631,6 +755,18 @@ class AdminController {
         $orderItems = $order->getOrderItems($order_id);
 
         include VIEWS_PATH . 'admin/view-order.php';
+    }
+
+    private static function generateTemporaryPassword($length = 10) {
+        $alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789';
+        $maxIndex = strlen($alphabet) - 1;
+        $password = '';
+
+        for ($i = 0; $i < $length; $i++) {
+            $password .= $alphabet[random_int(0, $maxIndex)];
+        }
+
+        return $password;
     }
 
     private static function getStoreDiskUsageBytes($storeId) {

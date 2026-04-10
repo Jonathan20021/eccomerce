@@ -60,7 +60,7 @@ $statusMap  = ['active'=>['badge-green','Activa'], 'expired'=>['badge-red','Expi
     <div class="page-header">
         <div>
             <h2 style="font-size:22px;font-weight:800;color:#1e293b;letter-spacing:-0.5px;">Licencias</h2>
-            <p style="font-size:13.5px;color:#64748b;margin-top:3px;">Gestiona las licencias de la plataforma</p>
+            <p style="font-size:13.5px;color:#64748b;margin-top:3px;">Gestiona las licencias y módulos activos por plan</p>
         </div>
         <a href="<?= BASE_URL ?>superadmin/licenses/create" class="btn btn-primary">
             <i class="fas fa-plus"></i> Nueva Licencia
@@ -77,6 +77,7 @@ $statusMap  = ['active'=>['badge-green','Activa'], 'expired'=>['badge-red','Expi
                 <thead>
                     <tr style="background:#ecfdf5;color:#166534;">
                         <th style="text-align:left;padding:8px;border:1px solid #c7d2fe;">Plan</th>
+                        <th style="text-align:left;padding:8px;border:1px solid #c7d2fe;">Portal de Clientes</th>
                         <th style="text-align:left;padding:8px;border:1px solid #c7d2fe;">Inventario</th>
                         <th style="text-align:left;padding:8px;border:1px solid #c7d2fe;">Finanzas</th>
                         <th style="text-align:left;padding:8px;border:1px solid #c7d2fe;">Notas</th>
@@ -85,18 +86,21 @@ $statusMap  = ['active'=>['badge-green','Activa'], 'expired'=>['badge-red','Expi
                 <tbody>
                     <tr>
                         <td style="padding:8px;border:1px solid #e2e8f0;font-weight:700;color:#0f172a;">Starter</td>
+                        <td style="padding:8px;border:1px solid #e2e8f0;color:#0f766e;">Incluido (perfil, direcciones, pedidos)</td>
                         <td style="padding:8px;border:1px solid #e2e8f0;color:#0f766e;">Incluido</td>
                         <td style="padding:8px;border:1px solid #e2e8f0;color:#b91c1c;">No incluido</td>
-                        <td style="padding:8px;border:1px solid #e2e8f0;color:#475569;">Plan base para operaciones de stock</td>
+                        <td style="padding:8px;border:1px solid #e2e8f0;color:#475569;">Plan base para operaciones de stock y atención a clientes</td>
                     </tr>
                     <tr>
                         <td style="padding:8px;border:1px solid #e2e8f0;font-weight:700;color:#0f172a;">Professional</td>
+                        <td style="padding:8px;border:1px solid #e2e8f0;color:#0f766e;">Incluido + checkout autocompletado</td>
                         <td style="padding:8px;border:1px solid #e2e8f0;color:#0f766e;">Incluido</td>
                         <td style="padding:8px;border:1px solid #e2e8f0;color:#0f766e;">Incluido</td>
                         <td style="padding:8px;border:1px solid #e2e8f0;color:#475569;">Análisis financiero y control operativo</td>
                     </tr>
                     <tr>
                         <td style="padding:8px;border:1px solid #e2e8f0;font-weight:700;color:#0f172a;">Enterprise</td>
+                        <td style="padding:8px;border:1px solid #e2e8f0;color:#0f766e;">Incluido + experiencia personalizada</td>
                         <td style="padding:8px;border:1px solid #e2e8f0;color:#0f766e;">Incluido</td>
                         <td style="padding:8px;border:1px solid #e2e8f0;color:#0f766e;">Incluido</td>
                         <td style="padding:8px;border:1px solid #e2e8f0;color:#475569;">Módulos completos y escalables</td>
@@ -104,7 +108,7 @@ $statusMap  = ['active'=>['badge-green','Activa'], 'expired'=>['badge-red','Expi
                 </tbody>
             </table>
         </div>
-        <p style="margin-top:8px;font-size:12px;color:#64748b;">Puedes sobrescribir esta matriz por licencia desde la columna <strong>Módulos</strong> en la tabla.</p>
+        <p style="margin-top:8px;font-size:12px;color:#64748b;">El portal de clientes está activo por defecto en todos los planes. Puedes sobrescribir inventario/finanzas por licencia desde la columna <strong>Módulos</strong>.</p>
     </div>
 
     <div class="table-card">

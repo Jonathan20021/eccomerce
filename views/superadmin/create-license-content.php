@@ -28,9 +28,9 @@
                 <div class="form-group" style="margin-bottom:0;">
                     <label class="form-label" for="plan_id">Plan <span style="color:#ef4444;">*</span></label>
                     <select id="plan_id" name="plan_id" required class="form-input">
-                        <option value="1">Starter — 50 productos, 5 GB</option>
-                        <option value="2" selected>Professional — 500 productos, 50 GB</option>
-                        <option value="3">Enterprise — Productos ilimitados</option>
+                        <option value="1">Starter — 50 productos, 5 GB, portal de clientes</option>
+                        <option value="2" selected>Professional — 500 productos, 50 GB, portal + checkout autocompletado</option>
+                        <option value="3">Enterprise — Productos ilimitados, portal de clientes personalizado</option>
                     </select>
                 </div>
 
@@ -43,6 +43,10 @@
                 <div class="form-group" style="margin-bottom:0;">
                     <label class="form-label">Módulos Incluidos</label>
                     <div style="display:flex;gap:16px;flex-wrap:wrap;padding:10px 12px;border:1px solid #e2e8f0;border-radius:8px;background:#f8fafc;">
+                        <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:#0f766e;cursor:default;">
+                            <input type="checkbox" checked disabled style="width:16px;height:16px;accent-color:#2a7a52;cursor:not-allowed;">
+                            Portal de Clientes
+                        </label>
                         <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:#1e293b;cursor:pointer;">
                             <input type="checkbox" id="module_inventory" name="module_inventory" checked style="width:16px;height:16px;accent-color:#0ea5e9;cursor:pointer;">
                             Módulo de Inventario
@@ -52,7 +56,7 @@
                             Módulo de Finanzas
                         </label>
                     </div>
-                    <p class="form-help">Starter: Inventario. Professional y Enterprise: Inventario + Finanzas.</p>
+                    <p class="form-help">Portal de Clientes: incluido por defecto en todos los planes. Starter: Inventario. Professional y Enterprise: Inventario + Finanzas.</p>
                 </div>
 
                 <div class="form-grid-2" style="gap:14px;">

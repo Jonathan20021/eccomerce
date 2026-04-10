@@ -6,12 +6,26 @@ require_once __DIR__ . '/../models/Product.php';
 require_once __DIR__ . '/../models/Category.php';
 require_once __DIR__ . '/../models/Cart.php';
 require_once __DIR__ . '/../models/Order.php';
+require_once __DIR__ . '/../models/User.php';
+require_once __DIR__ . '/../models/CustomerAddress.php';
 require_once __DIR__ . '/../models/Setting.php';
 require_once __DIR__ . '/../helpers/Helper.php';
 require_once __DIR__ . '/../helpers/NotificationService.php';
 require_once __DIR__ . '/../middleware/Auth.php';
 
 class PublicController {
+
+    private static function getCartActorId() {
+        if (Auth::isCustomerLoggedIn()) {
+            return intval(Auth::getCustomerId());
+        }
+
+        if (Auth::isLoggedIn()) {
+            return intval(Auth::getUserId());
+        }
+
+        return null;
+    }
 
     private static function getStaticPages() {
         return [
@@ -180,7 +194,7 @@ class PublicController {
         $totalPages = ceil($totalProducts / $limit);
 
         $cart = new Cart();
-        $cartItems = $cart->getCart(Auth::getUserId());
+        $cartItems = $cart->getCart(self::getCartActorId());
         $cartCount = count($cartItems);
         $storeTheme = self::resolveStoreTheme($storeData);
 
@@ -211,7 +225,7 @@ class PublicController {
         }
 
         $cart = new Cart();
-        $cartItems = $cart->getCart(Auth::getUserId());
+        $cartItems = $cart->getCart(self::getCartActorId());
         $cartCount = count($cartItems);
         $storeTheme = self::resolveStoreTheme($storeData);
 
@@ -227,8 +241,8 @@ class PublicController {
         }
 
         $cart = new Cart();
-        $cartItems = $cart->getCart(Auth::getUserId());
-        $cartTotal = $cart->getCartTotal(Auth::getUserId());
+        $cartItems = $cart->getCart(self::getCartActorId());
+        $cartTotal = $cart->getCartTotal(self::getCartActorId());
 
         if (!$storeData && !empty($cartItems) && !empty($cartItems[0]['store_id'])) {
             $storeData = $store->findById(intval($cartItems[0]['store_id']));
@@ -253,8 +267,8 @@ class PublicController {
         }
 
         $cart = new Cart();
-        if ($cart->addItem($product_id, $quantity, $store_id, Auth::getUserId())) {
-            $cartCount = $cart->getCartCount(Auth::getUserId());
+        if ($cart->addItem($product_id, $quantity, $store_id, self::getCartActorId())) {
+            $cartCount = $cart->getCartCount(self::getCartActorId());
             Helper::json(['success' => true, 'message' => 'Producto añadido al carrito', 'cartCount' => $cartCount]);
         }
 
@@ -271,7 +285,7 @@ class PublicController {
 
         $cart = new Cart();
         if ($cart->updateQuantity($cart_item_id, $quantity)) {
-            $cartTotal = $cart->getCartTotal(Auth::getUserId());
+            $cartTotal = $cart->getCartTotal(self::getCartActorId());
             Helper::json(['success' => true, 'cartTotal' => $cartTotal]);
         }
 
@@ -299,7 +313,7 @@ class PublicController {
         // Try to recover store context from cart when store_id is missing.
         if (!$store_id) {
             $cart = new Cart();
-            $cartItemsFallback = $cart->getCart(Auth::getUserId());
+            $cartItemsFallback = $cart->getCart(self::getCartActorId());
             if (!empty($cartItemsFallback) && !empty($cartItemsFallback[0]['store_id'])) {
                 $store_id = intval($cartItemsFallback[0]['store_id']);
                 Helper::redirect(BASE_URL . 'checkout?store_id=' . $store_id);
@@ -315,15 +329,46 @@ class PublicController {
         }
 
         $cart = new Cart();
-        $cartItems = $cart->getCart(Auth::getUserId());
+        $cartItems = $cart->getCart(self::getCartActorId());
         $isSuccessView = isset($_GET['success']) && trim((string)$_GET['success']) !== '';
 
         if (empty($cartItems) && !$isSuccessView) {
             Helper::redirect(BASE_URL . 'shop/' . $storeData['slug'] . '/cart?error=' . urlencode('Tu carrito está vacío'));
         }
 
-        $cartTotal = $cart->getCartTotal(Auth::getUserId());
+        $cartTotal = $cart->getCartTotal(self::getCartActorId());
         $storeTheme = self::resolveStoreTheme($storeData);
+
+        $prefill = [
+            'name' => '',
+            'email' => '',
+            'phone' => '',
+            'address' => ''
+        ];
+
+        if (Auth::isCustomerLoggedIn() && intval(Auth::getCustomerStoreId()) === intval($storeData['id'])) {
+            $customer = Auth::getCurrentCustomer();
+            if ($customer) {
+                $prefill['name'] = $customer['name'] ?? '';
+                $prefill['email'] = $customer['email'] ?? '';
+                $prefill['phone'] = $customer['phone'] ?? '';
+            }
+
+            $addressModel = new CustomerAddress();
+            $defaultAddress = $addressModel->getDefaultAddress(intval(Auth::getCustomerId()), intval($storeData['id']));
+            if ($defaultAddress) {
+                $addressParts = [
+                    $defaultAddress['address_line'] ?? '',
+                    $defaultAddress['city'] ?? '',
+                    $defaultAddress['state'] ?? '',
+                    $defaultAddress['country'] ?? '',
+                    $defaultAddress['postal_code'] ?? ''
+                ];
+                $prefill['address'] = trim(implode(', ', array_filter($addressParts, function ($value) {
+                    return trim((string)$value) !== '';
+                })));
+            }
+        }
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $name = Helper::sanitizeInput($_POST['name'] ?? '');
@@ -343,7 +388,7 @@ class PublicController {
             }
 
             $order = new Order();
-            $order->user_id = Auth::getUserId();
+            $order->user_id = self::getCartActorId();
             $order->store_id = $store_id;
             $order->customer_name = $name;
             $order->customer_email = $email;
@@ -367,7 +412,39 @@ class PublicController {
                 }
 
                 // Limpiar carrito
-                $cart->clearCart(Auth::getUserId());
+                $cart->clearCart(self::getCartActorId());
+
+                if (Auth::isCustomerLoggedIn() && intval(Auth::getCustomerStoreId()) === intval($store_id)) {
+                    $customerId = intval(Auth::getCustomerId());
+                    $userModel = new User();
+                    $customerData = $userModel->findById($customerId);
+                    if ($customerData && intval($customerData['store_id']) === intval($store_id) && ($customerData['role'] ?? '') === ROLE_CUSTOMER) {
+                        $userModel->updateCustomerProfile($customerId, intval($store_id), $name, $email, $phone);
+
+                        $saveAddress = isset($_POST['save_address']) && $_POST['save_address'] == '1';
+                        if ($saveAddress) {
+                            $addressModel = new CustomerAddress();
+                            $addressModel->create(
+                                $customerId,
+                                intval($store_id),
+                                'Envio',
+                                $name,
+                                $phone,
+                                $address,
+                                '',
+                                '',
+                                '',
+                                '',
+                                true
+                            );
+                        }
+
+                        $freshCustomer = $userModel->findById($customerId);
+                        if ($freshCustomer) {
+                            Auth::loginCustomer($freshCustomer);
+                        }
+                    }
+                }
 
                 // Notificacion no bloqueante para nueva orden.
                 NotificationService::notifyNewOrder(
@@ -393,6 +470,12 @@ class PublicController {
         }
 
         include VIEWS_PATH . 'public/checkout.php';
+    }
+
+    public static function cartCount() {
+        $cart = new Cart();
+        $count = $cart->getCartCount(self::getCartActorId());
+        Helper::json(['success' => true, 'count' => intval($count)]);
     }
 
     public static function home() {

@@ -1,6 +1,4 @@
-<?php
-$page_title = "Iniciar Sesion - Kyros Commerce";
-?>
+<?php $page_title = "Iniciar Sesión — Kyros Commerce"; ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -9,358 +7,574 @@ $page_title = "Iniciar Sesion - Kyros Commerce";
     <title><?= $page_title ?></title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="<?= ASSETS_PATH ?>css/style.css">
-    <link rel="stylesheet" href="<?= ASSETS_PATH ?>css/mobile-pro.css">
     <style>
-        :root {
-            --bg-soft: #f4f7fb;
-            --ink-900: #0f172a;
-            --ink-700: #334155;
-            --ink-500: #64748b;
-            --line: #dbe5f1;
-            --brand: #1f7a53;
-            --brand-dark: #166241;
-            --navy: #12314d;
-        }
+    /* ═══════════════════════════════════════════════
+       BASE
+    ═══════════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { height: 100%; }
+    body {
+        min-height: 100%;
+        font-family: 'Inter', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        background: #fff;
+        color: #0f172a;
+    }
 
-        html, body {
-            height: 100%;
-        }
+    /* ═══════════════════════════════════════════════
+       PAGE GRID
+    ═══════════════════════════════════════════════ */
+    .pg {
+        display: grid;
+        grid-template-columns: 480px 1fr;
+        min-height: 100vh;
+    }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg-soft);
-        }
+    /* ═══════════════════════════════════════════════
+       LEFT — BRAND PANEL
+    ═══════════════════════════════════════════════ */
+    .bp {
+        position: relative;
+        overflow: hidden;
+        background: #071810;
+        display: flex;
+        flex-direction: column;
+        padding: 36px 44px 40px;
+    }
 
-        .auth-shell {
-            width: 100%;
-            max-width: 420px;
-            background: #fff;
-            border: 1px solid #e6edf5;
-            border-radius: 18px;
-            padding: 24px;
-            box-shadow: 0 18px 38px rgba(15, 23, 42, 0.08);
-        }
+    /* layered gradient */
+    .bp::before {
+        content: '';
+        position: absolute; inset: 0;
+        background:
+            linear-gradient(155deg, transparent 0%, rgba(42,122,82,.55) 50%, rgba(31,92,61,.7) 100%);
+        pointer-events: none;
+    }
+    /* gold orb top-right */
+    .bp::after {
+        content: '';
+        position: absolute; top: -120px; right: -120px;
+        width: 520px; height: 520px; border-radius: 50%;
+        background: radial-gradient(circle, rgba(212,151,58,.18) 0%, transparent 65%);
+        pointer-events: none;
+    }
+    /* green orb bottom-left */
+    .bp-orb2 {
+        position: absolute; bottom: -140px; left: -100px;
+        width: 440px; height: 440px; border-radius: 50%;
+        background: radial-gradient(circle, rgba(42,122,82,.32) 0%, transparent 65%);
+        pointer-events: none;
+    }
+    /* subtle grid texture */
+    .bp-grid {
+        position: absolute; inset: 0;
+        background-image:
+            linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+        background-size: 44px 44px;
+        pointer-events: none;
+    }
 
-        .demo-panel {
-            margin-top: 18px;
-            border: 1px solid var(--line);
-            border-radius: 14px;
-            overflow: hidden;
-            background: #f7fbff;
-        }
+    .bp-inner {
+        position: relative; z-index: 2;
+        display: flex; flex-direction: column;
+        height: 100%;
+    }
 
-        .demo-panel-head {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 8px;
-            padding: 11px 13px;
-            background: linear-gradient(135deg, #15324c 0%, #20486b 100%);
-        }
+    /* logo */
+    .bp-logo {
+        display: inline-flex; align-items: center; gap: 10px;
+        text-decoration: none; flex-shrink: 0;
+    }
+    .bp-logo-mark {
+        width: 38px; height: 38px; border-radius: 11px;
+        background: rgba(255,255,255,.1);
+        border: 1.5px solid rgba(255,255,255,.18);
+        backdrop-filter: blur(8px);
+        display: flex; align-items: center; justify-content: center;
+        font-size: 16px; font-weight: 900; color: #fff;
+    }
+    .bp-logo-name {
+        font-size: 18px; font-weight: 800; color: #fff; letter-spacing: -.3px;
+    }
 
-        .demo-panel-body {
-            padding: 12px;
-        }
+    /* center hero copy */
+    .bp-hero {
+        flex: 1; display: flex; flex-direction: column;
+        justify-content: center; padding: 40px 0;
+    }
+    .bp-badge {
+        display: inline-flex; align-items: center; gap: 6px;
+        background: rgba(134,239,172,.1);
+        border: 1px solid rgba(134,239,172,.2);
+        color: #86efac; font-size: 10.5px; font-weight: 700;
+        letter-spacing: .7px; text-transform: uppercase;
+        padding: 4px 11px; border-radius: 9999px;
+        margin-bottom: 20px; width: fit-content;
+    }
+    .bp-h1 {
+        font-size: clamp(30px, 2.8vw, 42px);
+        font-weight: 900; color: #fff;
+        line-height: 1.08; letter-spacing: -1.2px;
+        margin-bottom: 14px;
+    }
+    .bp-h1 span {
+        background: linear-gradient(120deg, #86efac 0%, #fde68a 100%);
+        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    .bp-desc {
+        font-size: 15px; color: rgba(255,255,255,.55);
+        line-height: 1.7; max-width: 300px; margin-bottom: 32px;
+    }
+    .bp-list { display: flex; flex-direction: column; gap: 11px; }
+    .bp-item {
+        display: flex; align-items: center; gap: 10px;
+        font-size: 13.5px; color: rgba(255,255,255,.72);
+    }
+    .bp-check {
+        width: 20px; height: 20px; border-radius: 50%;
+        background: rgba(134,239,172,.12);
+        border: 1px solid rgba(134,239,172,.24);
+        display: flex; align-items: center; justify-content: center;
+        font-size: 8px; color: #86efac; flex-shrink: 0;
+    }
 
-        .demo-list {
-            margin-top: 10px;
-            display: grid;
-            gap: 9px;
-        }
+    /* testimonial bottom */
+    .bp-quote {
+        border-top: 1px solid rgba(255,255,255,.08);
+        padding-top: 20px; flex-shrink: 0;
+    }
+    .bp-quote-stars {
+        display: flex; gap: 2px; margin-bottom: 10px;
+    }
+    .bp-quote-text {
+        font-size: 13px; color: rgba(255,255,255,.65);
+        line-height: 1.65; font-style: italic; margin-bottom: 10px;
+    }
+    .bp-quote-author {
+        display: flex; align-items: center; gap: 8px;
+    }
+    .bp-quote-avatar {
+        width: 30px; height: 30px; border-radius: 50%;
+        background: linear-gradient(135deg, #2a7a52, #fde68a);
+        display: flex; align-items: center; justify-content: center;
+        font-size: 12px; font-weight: 800; color: #fff; flex-shrink: 0;
+    }
+    .bp-quote-name { font-size: 12px; font-weight: 700; color: rgba(255,255,255,.5); }
 
-        .demo-item {
-            border: 1px solid #d8e4f2;
-            border-radius: 11px;
-            background: #fff;
-            padding: 11px;
-            transition: all .18s ease;
-        }
+    /* ═══════════════════════════════════════════════
+       RIGHT — FORM PANEL
+    ═══════════════════════════════════════════════ */
+    .fp {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 32px;
+        background: #fff;
+        overflow-y: auto;
+    }
+    .fw {
+        width: 100%;
+        max-width: 400px;
+        display: flex;
+        flex-direction: column;
+    }
 
-        .demo-item:hover {
-            border-color: #bbcee4;
-            box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
-            transform: translateY(-1px);
-        }
+    /* mobile logo */
+    .mob-logo {
+        display: none;
+        align-items: center; gap: 9px;
+        text-decoration: none; margin-bottom: 28px;
+    }
+    .mob-logo-mark {
+        width: 34px; height: 34px; border-radius: 10px;
+        background: linear-gradient(135deg, #2a7a52, #071810);
+        display: flex; align-items: center; justify-content: center;
+        font-size: 14px; font-weight: 900; color: #fff;
+    }
+    .mob-logo-name { font-size: 17px; font-weight: 800; color: #0f172a; }
 
-        .demo-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 8px;
-        }
+    /* heading */
+    .fh { margin-bottom: 22px; }
+    .fh-title {
+        font-size: 24px; font-weight: 800; color: #0f172a;
+        letter-spacing: -.6px; margin-bottom: 5px;
+    }
+    .fh-sub { font-size: 14px; color: #64748b; line-height: 1.5; }
 
-        .demo-role {
-            font-size: 10px;
-            font-weight: 800;
-            color: #166534;
-            background: #dcfce7;
-            border: 1px solid #86efac;
-            border-radius: 999px;
-            padding: 2px 8px;
-            white-space: nowrap;
-        }
+    /* alert */
+    .al {
+        display: flex; align-items: flex-start; gap: 9px;
+        padding: 11px 13px; border-radius: 10px;
+        font-size: 13px; line-height: 1.5;
+        margin-bottom: 18px;
+    }
+    .al-e { background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; }
+    .al-s { background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; }
+    .al i  { flex-shrink: 0; margin-top: 1px; }
 
-        .demo-meta {
-            margin-top: 5px;
-            color: var(--ink-500);
-            font-size: 12px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
+    /* form fields stack */
+    .stack { display: flex; flex-direction: column; gap: 14px; }
 
-        .demo-meta span {
-            min-width: 0;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-        }
+    /* single field */
+    .field {}
+    .field-lrow {
+        display: flex; align-items: center;
+        justify-content: space-between; gap: 8px;
+        margin-bottom: 6px;
+    }
+    .field-label {
+        font-size: 13px; font-weight: 600; color: #374151;
+    }
+    .field-link {
+        font-size: 12px; font-weight: 600; color: #2a7a52;
+        text-decoration: none; white-space: nowrap;
+    }
+    .field-link:hover { text-decoration: underline; }
 
-        .demo-actions {
-            margin-top: 9px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-        }
+    /* input wrapper */
+    .iw { position: relative; }
+    .iw-icon {
+        position: absolute; left: 13px; top: 50%;
+        transform: translateY(-50%);
+        font-size: 13px; color: #9ca3af; pointer-events: none;
+    }
+    .iw-inp {
+        display: block; width: 100%;
+        height: 44px; padding: 0 14px 0 38px;
+        border: 1.5px solid #e5eaf2;
+        border-radius: 10px;
+        font-size: 14px; font-family: 'Inter', sans-serif;
+        color: #0f172a; background: #fff;
+        outline: none;
+        transition: border-color .15s, box-shadow .15s, background .15s;
+    }
+    .iw-inp::placeholder { color: #c4cdd8; }
+    .iw-inp:hover  { border-color: #c8d4e3; }
+    .iw-inp:focus  {
+        border-color: #2a7a52;
+        box-shadow: 0 0 0 3px rgba(42,122,82,.12);
+        background: #fafffe;
+    }
+    .iw-inp.pr { padding-right: 42px; }
+    .iw-eye {
+        position: absolute; right: 13px; top: 50%;
+        transform: translateY(-50%);
+        background: none; border: none; cursor: pointer;
+        color: #9ca3af; padding: 2px;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 14px; transition: color .15s;
+    }
+    .iw-eye:hover { color: #4b5563; }
 
-        .demo-btn {
-            border-radius: 9px;
-            padding: 8px 10px;
-            font-size: 12px;
-            font-weight: 800;
-            cursor: pointer;
-            transition: all .16s ease;
-        }
+    /* primary button */
+    .btn-go {
+        display: flex; align-items: center; justify-content: center; gap: 8px;
+        width: 100%; height: 44px;
+        border: none; border-radius: 10px;
+        background: linear-gradient(135deg, #2a7a52 0%, #1c5438 100%);
+        color: #fff; font-size: 15px; font-weight: 700;
+        font-family: 'Inter', sans-serif; cursor: pointer;
+        box-shadow: 0 2px 12px rgba(42,122,82,.3), 0 1px 2px rgba(42,122,82,.15);
+        transition: transform .15s, box-shadow .15s;
+        letter-spacing: -.1px;
+    }
+    .btn-go:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(42,122,82,.38), 0 2px 6px rgba(42,122,82,.15);
+    }
+    .btn-go:active { transform: translateY(0); }
 
-        .demo-btn-light {
-            border: 1px solid #cbd5e1;
-            color: var(--ink-700);
-            background: #f8fafc;
-        }
+    /* demo accounts */
+    .demo {
+        margin-top: 18px;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1.5px solid #dae5f0;
+    }
+    .demo-head {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 10px 14px;
+        background: linear-gradient(135deg, #0d2035 0%, #1b3d5c 100%);
+    }
+    .demo-head-lbl {
+        font-size: 10.5px; font-weight: 800;
+        letter-spacing: .6px; text-transform: uppercase; color: #cbd5e1;
+    }
+    .demo-head-cnt {
+        font-size: 11px; font-weight: 700; color: #e2e8f0;
+        background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.16);
+        padding: 2px 8px; border-radius: 9999px;
+    }
+    .demo-body { background: #f5f9fd; padding: 12px; }
+    .demo-hint { font-size: 12px; color: #64748b; margin-bottom: 10px; line-height: 1.5; }
+    .demo-list { display: flex; flex-direction: column; gap: 8px; }
+    .demo-card {
+        background: #fff; border: 1.5px solid #dce7f3;
+        border-radius: 10px; padding: 11px 12px;
+        transition: border-color .18s, box-shadow .18s, transform .18s;
+    }
+    .demo-card:hover {
+        border-color: #a8c8e8;
+        box-shadow: 0 4px 14px rgba(15,23,42,.07);
+        transform: translateY(-1px);
+    }
+    .demo-card-top {
+        display: flex; align-items: center;
+        justify-content: space-between; gap: 8px;
+        margin-bottom: 4px;
+    }
+    .demo-card-name { font-size: 13px; font-weight: 700; color: #0f172a; }
+    .demo-card-role {
+        font-size: 10px; font-weight: 700; color: #166534;
+        background: #dcfce7; border: 1px solid #86efac;
+        padding: 2px 7px; border-radius: 9999px; white-space: nowrap;
+    }
+    .demo-card-email {
+        font-size: 12px; color: #64748b;
+        display: flex; align-items: center; gap: 5px;
+        margin-bottom: 9px;
+    }
+    .demo-card-email i { font-size: 10px; color: #9ca3af; }
+    .demo-card-pw {
+        font-size: 12px; color: #64748b;
+        display: flex; align-items: center; gap: 5px;
+        margin-bottom: 9px;
+    }
+    .demo-card-pw i { font-size: 10px; color: #9ca3af; }
+    .demo-card-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+    .db {
+        height: 32px; border-radius: 8px;
+        font-size: 12px; font-weight: 700;
+        font-family: 'Inter', sans-serif;
+        cursor: pointer; transition: all .15s;
+        display: flex; align-items: center; justify-content: center;
+    }
+    .db-o {
+        background: #f8fafc; border: 1.5px solid #d1d9e4; color: #374151;
+    }
+    .db-o:hover { background: #f1f5f9; border-color: #94a3b8; }
+    .db-f {
+        background: linear-gradient(135deg, #2a7a52, #1c5438);
+        border: none; color: #fff;
+        box-shadow: 0 2px 8px rgba(42,122,82,.22);
+    }
+    .db-f:hover { box-shadow: 0 4px 14px rgba(42,122,82,.36); transform: translateY(-1px); }
+    .demo-note {
+        margin-top: 9px; font-size: 11px; color: #9ca3af;
+        display: flex; align-items: center; gap: 5px;
+    }
 
-        .demo-btn-light:hover {
-            border-color: #94a3b8;
-            background: #f1f5f9;
-        }
+    /* divider */
+    .divider {
+        display: flex; align-items: center; gap: 12px;
+        margin: 20px 0 0;
+    }
+    .divider::before, .divider::after {
+        content: ''; flex: 1; height: 1px; background: #f0f4f8;
+    }
+    .divider span { font-size: 12px; color: #94a3b8; white-space: nowrap; }
 
-        .demo-btn-main {
-            border: 1px solid var(--brand);
-            color: #fff;
-            background: linear-gradient(135deg, var(--brand) 0%, var(--brand-dark) 100%);
-            box-shadow: 0 5px 14px rgba(31, 122, 83, 0.25);
-        }
+    /* footer */
+    .ff { margin-top: 20px; text-align: center; font-size: 13.5px; color: #64748b; }
+    .ff a { color: #2a7a52; font-weight: 700; text-decoration: none; margin-left: 4px; }
+    .ff a:hover { text-decoration: underline; }
+    .fc { margin-top: 14px; text-align: center; font-size: 11.5px; color: #b4bfcc; }
+    .fc a { color: inherit; text-decoration: none; }
+    .fc a:hover { color: #64748b; }
 
-        .demo-btn-main:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 8px 18px rgba(31, 122, 83, 0.34);
-        }
+    /* ═══════════════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════════════ */
 
-        @media (max-width: 640px) {
-            .demo-actions {
-                grid-template-columns: 1fr;
-            }
-        }
+    /* tablet landscape → hide brand panel */
+    @media (max-width: 1100px) {
+        .pg { grid-template-columns: 400px 1fr; }
+        .bp { padding: 32px 36px; }
+        .bp-desc { font-size: 14px; }
+    }
+    @media (max-width: 860px) {
+        .pg { grid-template-columns: 1fr; min-height: 100vh; }
+        .bp { display: none; }
+        .fp { padding: 32px 24px; align-items: flex-start; padding-top: 40px; }
+        .mob-logo { display: flex; }
+        .fw { max-width: 440px; margin: 0 auto; }
+    }
+    @media (max-width: 520px) {
+        .fp { padding: 24px 16px 32px; }
+        .demo-card-btns { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 360px) {
+        .fh-title { font-size: 21px; }
+        .iw-inp  { font-size: 13.5px; }
+    }
     </style>
 </head>
 <body>
+<div class="pg">
 
-<div class="auth-split-layout">
+    <!-- ████ LEFT ████ -->
+    <aside class="bp" aria-hidden="true">
+        <div class="bp-orb2"></div>
+        <div class="bp-grid"></div>
+        <div class="bp-inner">
 
-    <div class="auth-brand-panel" style="background:linear-gradient(145deg,#0f2234 0%,#12314d 42%,#1f7a53 78%,#166241 100%);position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;padding:48px;">
-        <div style="position:absolute;top:-20%;right:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(98,190,151,.24) 0%,transparent 60%);border-radius:50%;pointer-events:none;"></div>
-        <div style="position:absolute;bottom:-20%;left:-10%;width:400px;height:400px;background:radial-gradient(circle,rgba(255,255,255,.15) 0%,transparent 60%);border-radius:50%;pointer-events:none;"></div>
+            <a href="<?= BASE_URL ?>" class="bp-logo">
+                <div class="bp-logo-mark">K</div>
+                <span class="bp-logo-name">Kyros Commerce</span>
+            </a>
 
-        <a href="<?= BASE_URL ?>" style="display:flex;align-items:center;gap:10px;text-decoration:none;position:relative;z-index:1;">
-            <div style="width:36px;height:36px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;color:#fff;">K</div>
-            <span style="font-size:20px;font-weight:800;color:#fff;letter-spacing:-0.4px;">Kyros Commerce</span>
-        </a>
-
-        <div style="position:relative;z-index:1;">
-            <div style="font-size:clamp(28px,3vw,40px);font-weight:900;color:#fff;line-height:1.15;letter-spacing:-1px;margin-bottom:16px;">
-                Vende online con
-                <span style="color:#c9f7e1;">control total</span>
+            <div class="bp-hero">
+                <div class="bp-badge"><i class="fa-solid fa-bolt fa-xs"></i> Plataforma SaaS</div>
+                <h1 class="bp-h1">Vende online<br>con <span>control total</span></h1>
+                <p class="bp-desc">Plataforma SaaS para crear, gestionar y escalar tu tienda sin fricción.</p>
+                <div class="bp-list">
+                    <div class="bp-item"><span class="bp-check"><i class="fa-solid fa-check"></i></span>Panel de ventas en tiempo real</div>
+                    <div class="bp-item"><span class="bp-check"><i class="fa-solid fa-check"></i></span>Gestión de pedidos y catálogo</div>
+                    <div class="bp-item"><span class="bp-check"><i class="fa-solid fa-check"></i></span>Reportes, métricas y analíticas</div>
+                </div>
             </div>
-            <p style="font-size:16px;color:rgba(255,255,255,0.78);line-height:1.7;max-width:360px;">
-                Plataforma SaaS para crear, gestionar y escalar tu tienda sin friccion.
-            </p>
+
+            <div class="bp-quote">
+                <div class="bp-quote-stars">
+                    <i class="fa-solid fa-star" style="color:#fbbf24;font-size:12px;"></i>
+                    <i class="fa-solid fa-star" style="color:#fbbf24;font-size:12px;"></i>
+                    <i class="fa-solid fa-star" style="color:#fbbf24;font-size:12px;"></i>
+                    <i class="fa-solid fa-star" style="color:#fbbf24;font-size:12px;"></i>
+                    <i class="fa-solid fa-star" style="color:#fbbf24;font-size:12px;"></i>
+                </div>
+                <p class="bp-quote-text">"Con Kyros lanzamos en días y ahora operamos con procesos claros y reportes en tiempo real."</p>
+                <div class="bp-quote-author">
+                    <div class="bp-quote-avatar">E</div>
+                    <span class="bp-quote-name">Equipo Operativo — Cliente Kyros</span>
+                </div>
+            </div>
+
         </div>
+    </aside>
 
-        <div style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:14px;padding:18px;position:relative;z-index:1;">
-            <p style="font-size:13px;color:rgba(255,255,255,0.82);line-height:1.55;margin-bottom:10px;">
-                "Con Kyros lanzamos en dias y ahora operamos con procesos claros y reportes en tiempo real."
-            </p>
-            <div style="font-size:12px;color:rgba(255,255,255,.6);font-weight:700;">Equipo Operativo - Cliente Kyros</div>
-        </div>
-    </div>
+    <!-- ████ RIGHT ████ -->
+    <main class="fp">
+        <div class="fw">
 
-    <div class="auth-form-panel" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 24px;background:#fff;min-height:100vh;">
+            <a href="<?= BASE_URL ?>" class="mob-logo">
+                <div class="mob-logo-mark">K</div>
+                <span class="mob-logo-name">Kyros Commerce</span>
+            </a>
 
-        <a href="<?= BASE_URL ?>" class="auth-mobile-logo" style="display:flex;align-items:center;gap:9px;text-decoration:none;margin-bottom:38px;">
-            <div style="width:32px;height:32px;background:linear-gradient(135deg,#1f7a53,#12314d);border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;color:#fff;">K</div>
-            <span style="font-size:17px;font-weight:800;color:#1e293b;">Kyros Commerce</span>
-        </a>
-
-        <div class="auth-shell">
-            <div style="margin-bottom:28px;">
-                <h1 style="font-size:30px;font-weight:900;color:var(--ink-900);letter-spacing:-0.7px;margin-bottom:7px;">Bienvenido de vuelta</h1>
-                <p style="font-size:14px;color:var(--ink-500);">Inicia sesion en tu cuenta de Kyros Commerce.</p>
+            <div class="fh">
+                <h2 class="fh-title">Bienvenido de vuelta</h2>
+                <p class="fh-sub">Inicia sesión en tu cuenta de Kyros Commerce.</p>
             </div>
 
             <?php if (isset($_GET['error'])): ?>
-            <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:12px 16px;margin-bottom:20px;display:flex;align-items:center;gap:10px;">
-                <i class="fas fa-exclamation-circle" style="color:#dc2626;font-size:14px;flex-shrink:0;"></i>
-                <p style="font-size:13px;color:#b91c1c;font-weight:600;"><?= htmlspecialchars($_GET['error']) ?></p>
-            </div>
+            <div class="al al-e"><i class="fa-solid fa-circle-exclamation"></i><?= htmlspecialchars($_GET['error']) ?></div>
             <?php endif; ?>
-
             <?php if (isset($_GET['success'])): ?>
-            <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:12px 16px;margin-bottom:20px;display:flex;align-items:center;gap:10px;">
-                <i class="fas fa-check-circle" style="color:#16a34a;font-size:14px;flex-shrink:0;"></i>
-                <p style="font-size:13px;color:#166534;font-weight:600;"><?= htmlspecialchars($_GET['success']) ?></p>
-            </div>
+            <div class="al al-s"><i class="fa-solid fa-circle-check"></i><?= htmlspecialchars($_GET['success']) ?></div>
             <?php endif; ?>
 
-            <form method="POST" id="login-form" style="display:flex;flex-direction:column;gap:16px;">
-                <input type="hidden" name="demo_login_key" id="demo_login_key" value="">
+            <form method="POST" id="lf" novalidate>
+                <input type="hidden" name="demo_login_key" id="dlk" value="">
+                <div class="stack">
 
-                <div class="form-group" style="margin-bottom:0;">
-                    <label class="form-label" for="email">Correo electronico</label>
-                    <input type="email" id="email" name="email" required class="form-input" placeholder="tu@email.com" autocomplete="email">
-                </div>
-
-                <div class="form-group" style="margin-bottom:0;">
-                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;gap:10px;">
-                        <label class="form-label" for="password" style="margin-bottom:0;">Contrasena</label>
-                        <a href="<?= BASE_URL ?>auth/forgot-password" style="font-size:12px;color:#2a7a52;font-weight:700;text-decoration:none;">Olvidaste tu contrasena?</a>
+                    <div class="field">
+                        <div class="field-lrow">
+                            <label class="field-label" for="email">Correo electrónico</label>
+                        </div>
+                        <div class="iw">
+                            <i class="fa-regular fa-envelope iw-icon"></i>
+                            <input class="iw-inp" type="email" id="email" name="email"
+                                   placeholder="tu@email.com" autocomplete="email" required>
+                        </div>
                     </div>
-                    <div style="position:relative;">
-                        <input type="password" id="password" name="password" required class="form-input" placeholder="********" autocomplete="current-password" style="padding-right:44px;">
-                        <button type="button" onclick="togglePasswordVisibility('password', this)" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:#94a3b8;cursor:pointer;padding:4px;">
-                            <i class="fas fa-eye text-sm" id="password-eye"></i>
-                        </button>
-                    </div>
-                </div>
 
-                <button type="submit" style="width:100%;padding:13px;border-radius:10px;background:linear-gradient(135deg,#1f7a53,#166241);color:#fff;font-size:15px;font-weight:800;border:none;cursor:pointer;box-shadow:0 6px 18px rgba(31,122,83,0.26);transition:all .2s;" onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 9px 24px rgba(31,122,83,0.34)'" onmouseout="this.style.transform='none';this.style.boxShadow='0 6px 18px rgba(31,122,83,0.26)'">
-                    Iniciar Sesion
-                </button>
+                    <div class="field">
+                        <div class="field-lrow">
+                            <label class="field-label" for="pwd">Contraseña</label>
+                            <a class="field-link" href="<?= BASE_URL ?>auth/forgot-password">¿Olvidaste tu contraseña?</a>
+                        </div>
+                        <div class="iw">
+                            <i class="fa-solid fa-lock iw-icon"></i>
+                            <input class="iw-inp pr" type="password" id="pwd" name="password"
+                                   placeholder="••••••••" autocomplete="current-password" required>
+                            <button type="button" class="iw-eye" onclick="tpw('pwd',this)" aria-label="Mostrar contraseña">
+                                <i class="fa-regular fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-go">
+                        <i class="fa-solid fa-arrow-right-to-bracket"></i> Iniciar Sesión
+                    </button>
+
+                </div>
             </form>
 
             <?php if (!empty($showDemoBlock) && !empty($demoAccounts) && is_array($demoAccounts)): ?>
-            <div class="demo-panel">
-                <div class="demo-panel-head">
-                    <p style="font-size:12px;font-weight:800;letter-spacing:.45px;text-transform:uppercase;color:#e2e8f0;">Accesos Demo</p>
-                    <span style="font-size:11px;color:#e2e8f0;background:rgba(255,255,255,0.14);padding:3px 8px;border-radius:999px;font-weight:700;border:1px solid rgba(255,255,255,0.2);">
-                        <?= count($demoAccounts) ?> cuentas
-                    </span>
+            <div class="demo">
+                <div class="demo-head">
+                    <span class="demo-head-lbl">Accesos Demo</span>
+                    <span class="demo-head-cnt"><?= count($demoAccounts) ?> cuentas</span>
                 </div>
-                <div class="demo-panel-body">
-                    <p style="font-size:12px;color:var(--ink-500);line-height:1.45;">Usa cuentas de prueba para entrar rapido y validar el flujo.</p>
-
+                <div class="demo-body">
+                    <p class="demo-hint">Usa cuentas de prueba para entrar rápido y validar el flujo.</p>
                     <div class="demo-list">
-                    <?php foreach ($demoAccounts as $account): ?>
-                    <?php
-                        $roleText = ($account['role'] ?? '') === ROLE_STORE_OWNER ? 'Propietario de tienda' : ucfirst(str_replace('_', ' ', strval($account['role'] ?? '')));
+                    <?php foreach ($demoAccounts as $a):
+                        $rl = ($a['role'] ?? '') === ROLE_STORE_OWNER ? 'Propietario de tienda'
+                            : ucfirst(str_replace('_',' ',strval($a['role'] ?? '')));
                     ?>
-                        <div class="demo-item">
-                            <div class="demo-row">
-                                <span style="font-size:13px;font-weight:800;color:var(--ink-900);"><?= htmlspecialchars($account['name']) ?></span>
-                                <span class="demo-role"><?= htmlspecialchars($roleText) ?></span>
+                        <div class="demo-card">
+                            <div class="demo-card-top">
+                                <span class="demo-card-name"><?= htmlspecialchars($a['name']) ?></span>
+                                <span class="demo-card-role"><?= htmlspecialchars($rl) ?></span>
                             </div>
-
-                            <div class="demo-meta">
-                                <i class="fas fa-envelope" style="font-size:10px;color:#94a3b8;"></i>
-                                <span><?= htmlspecialchars($account['email']) ?></span>
+                            <div class="demo-card-email">
+                                <i class="fa-regular fa-envelope"></i><?= htmlspecialchars($a['email']) ?>
                             </div>
-
                             <?php if (!empty($showDemoPasswords)): ?>
-                            <div class="demo-meta">
-                                <i class="fas fa-key" style="font-size:10px;color:#94a3b8;"></i>
-                                <span><?= htmlspecialchars($account['password']) ?></span>
+                            <div class="demo-card-pw">
+                                <i class="fa-solid fa-key"></i><?= htmlspecialchars($a['password']) ?>
                             </div>
                             <?php endif; ?>
-
-                            <div class="demo-actions">
-                                <button type="button" class="demo-btn demo-btn-light" onclick="fillDemoCredentials('<?= htmlspecialchars($account['email']) ?>', '<?= htmlspecialchars($account['password']) ?>')">
-                                    Autocompletar
-                                </button>
-                                <button type="button" class="demo-btn demo-btn-main" onclick="demoDirectLogin('<?= htmlspecialchars($account['key']) ?>')">
-                                    Entrar como demo
-                                </button>
+                            <div class="demo-card-btns">
+                                <button class="db db-o" onclick="fd('<?= htmlspecialchars($a['email']) ?>','<?= htmlspecialchars($a['password']) ?>')">Autocompletar</button>
+                                <button class="db db-f" onclick="ld('<?= htmlspecialchars($a['key']) ?>')">Entrar como demo</button>
                             </div>
                         </div>
                     <?php endforeach; ?>
                     </div>
-
-                    <div style="margin-top:10px;font-size:11px;color:var(--ink-500);display:flex;align-items:center;gap:6px;">
-                        <i class="fas fa-shield-alt" style="font-size:10px;color:#94a3b8;"></i>
-                        <span>Cuentas temporales para pruebas, sujetas a reinicio.</span>
-                    </div>
+                    <p class="demo-note"><i class="fa-solid fa-shield-halved"></i> Cuentas temporales, sujetas a reinicio.</p>
                 </div>
             </div>
             <?php endif; ?>
 
-            <div style="display:flex;align-items:center;gap:12px;margin:24px 0;">
-                <div style="flex:1;height:1px;background:#e8eef5;"></div>
-                <span style="font-size:12px;color:#94a3b8;font-weight:600;">o continua con</span>
-                <div style="flex:1;height:1px;background:#e8eef5;"></div>
-            </div>
+            <p class="ff">¿No tienes cuenta?<a href="<?= BASE_URL ?>auth/register">Regístrate gratis</a></p>
+            <p class="fc">&copy; <?= date('Y') ?> Kyros Commerce &nbsp;·&nbsp; <a href="<?= BASE_URL ?>terms">Términos</a> &nbsp;·&nbsp; <a href="<?= BASE_URL ?>privacy">Privacidad</a></p>
 
-            <p style="text-align:center;font-size:14px;color:var(--ink-500);">
-                No tienes una cuenta?
-                <a href="<?= BASE_URL ?>auth/register" style="color:#1f7a53;font-weight:800;text-decoration:none;margin-left:4px;">Registrate gratis</a>
-            </p>
         </div>
-
-        <div style="margin-top:34px;text-align:center;">
-            <p style="font-size:12px;color:#94a3b8;">
-                &copy; <?= date('Y') ?> Kyros Commerce |
-                <a href="<?= BASE_URL ?>terms" style="color:#94a3b8;text-decoration:none;">Terminos</a> |
-                <a href="<?= BASE_URL ?>privacy" style="color:#94a3b8;text-decoration:none;">Privacidad</a>
-            </p>
-        </div>
-    </div>
+    </main>
 
 </div>
-
 <script>
-function togglePasswordVisibility(inputId, btn) {
-    const input = document.getElementById(inputId);
-    const icon  = btn.querySelector('i');
-    if (input.type === 'password') {
-        input.type = 'text';
-        icon.classList.replace('fa-eye', 'fa-eye-slash');
-    } else {
-        input.type = 'password';
-        icon.classList.replace('fa-eye-slash', 'fa-eye');
-    }
+function tpw(id, btn) {
+    const el = document.getElementById(id), ic = btn.querySelector('i');
+    el.type = el.type === 'password' ? 'text' : 'password';
+    ic.classList.toggle('fa-eye');
+    ic.classList.toggle('fa-eye-slash');
 }
-
-function fillDemoCredentials(email, password) {
-    const emailInput = document.getElementById('email');
-    const passwordInput = document.getElementById('password');
-    const demoKeyInput = document.getElementById('demo_login_key');
-
-    if (!emailInput || !passwordInput) return;
-
-    emailInput.value = email;
-    passwordInput.value = password;
-    if (demoKeyInput) demoKeyInput.value = '';
-    emailInput.focus();
+function fd(e, p) {
+    document.getElementById('email').value = e;
+    document.getElementById('pwd').value   = p;
+    document.getElementById('dlk').value   = '';
+    document.getElementById('email').focus();
 }
-
-function demoDirectLogin(demoKey) {
-    const form = document.getElementById('login-form');
-    const demoKeyInput = document.getElementById('demo_login_key');
-
-    if (!form || !demoKeyInput) return;
-
-    demoKeyInput.value = demoKey;
-    form.submit();
+function ld(k) {
+    document.getElementById('dlk').value = k;
+    document.getElementById('lf').submit();
 }
 </script>
 </body>
