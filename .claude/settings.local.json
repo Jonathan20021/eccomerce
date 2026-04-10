@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(wc -l /c/xampp/htdocs/eccomerce/views/auth/*.php /c/xampp/htdocs/eccomerce/views/superadmin/*.php)"
+      "Bash(wc -l /c/xampp/htdocs/eccomerce/views/auth/*.php /c/xampp/htdocs/eccomerce/views/superadmin/*.php)",
+      "Bash(grep -E \"^[[:space:]]*\\(--[a-z-]+:|color:|background|#[0-9a-fA-F]{3,8}\\)\" /c/xampp/htdocs/eccomerce/assets/css/style.css)",
+      "Bash(xargs grep:*)"
     ]
   }
 }
