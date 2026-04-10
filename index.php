@@ -101,6 +101,9 @@ else if ($parts[0] == 'admin') {
             AdminController::customers();
         }
     }
+    else if (isset($parts[1]) && $parts[1] == 'documentation') {
+        AdminController::documentation();
+    }
     else if (isset($parts[1]) && $parts[1] == 'settings') {
         AdminController::storeSettings();
     }

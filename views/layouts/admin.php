@@ -158,6 +158,11 @@ if (!$isSuperAdmin && !empty($_SESSION['store_id'])) {
                class="nav-item <?= strpos($currentUri, 'admin/customers') !== false ? 'active' : '' ?>">
                 <i class="fas fa-users"></i><span class="nav-label"> Clientes</span>
             </a>
+            <a href="<?= BASE_URL ?>admin/documentation"
+               data-tooltip="Documentación"
+               class="nav-item <?= strpos($currentUri, 'admin/documentation') !== false ? 'active' : '' ?>">
+                <i class="fas fa-book"></i><span class="nav-label"> Documentación</span>
+            </a>
 
             <div class="nav-section-label" style="margin-top:8px;">Ajustes</div>
             <a href="<?= BASE_URL ?>admin/settings"

@@ -740,6 +740,17 @@ class AdminController {
         include VIEWS_PATH . 'admin/customer-detail.php';
     }
 
+    public static function documentation() {
+        Auth::requireStoreOwner();
+        Auth::requireValidStoreLicense();
+
+        $store_id = Auth::getStoreId();
+        $store = new Store();
+        $storeData = $store->findById($store_id);
+
+        include VIEWS_PATH . 'admin/documentation.php';
+    }
+
     public static function viewOrder($order_id) {
         Auth::requireStoreOwner();
         Auth::requireValidStoreLicense();
