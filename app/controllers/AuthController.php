@@ -352,8 +352,13 @@ class AuthController {
             Helper::redirect(BASE_URL . 'auth/forgot-password?error=' . urlencode('Ingresa un email valido'));
         }
 
-        // Notificacion no bloqueante: avisa al buzón de plataforma y al correo solicitado.
-        NotificationService::notifyForgotPasswordRequest($email);
+        $userModel = new User();
+        $user = $userModel->findByEmail($email);
+
+        if ($user) {
+            // Notificacion no bloqueante: solo se envía si la cuenta existe realmente.
+            NotificationService::notifyForgotPasswordRequest($email);
+        }
 
         // Por seguridad, respondemos con el mismo mensaje exista o no la cuenta.
         Helper::redirect(BASE_URL . 'auth/forgot-password?success=' . urlencode('Si el email existe, te enviaremos instrucciones para recuperar tu acceso.'));
