@@ -130,6 +130,61 @@ $page_title = "Kyros Commerce — Crea tu Tienda Online Profesional";
             border-radius: 24px;
             padding: 32px;
         }
+        .home-contact-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            max-width: 820px;
+            margin: 0 auto;
+        }
+        .home-contact-card {
+            background: #ffffff;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 18px;
+            padding: 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            text-decoration: none;
+            transition: all .2s ease;
+            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+        }
+        .home-contact-card:hover {
+            border-color: #bbf7d0;
+            transform: translateY(-2px);
+            box-shadow: 0 14px 30px rgba(42, 122, 82, 0.14);
+        }
+        .home-contact-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 17px;
+            flex-shrink: 0;
+        }
+        .home-contact-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.9px;
+            font-weight: 700;
+            color: #94a3b8;
+            margin-bottom: 4px;
+        }
+        .home-contact-value {
+            font-size: 17px;
+            font-weight: 800;
+            color: #1e293b;
+            line-height: 1.25;
+            margin-bottom: 3px;
+            word-break: break-word;
+        }
+        .home-contact-note {
+            font-size: 13px;
+            color: #64748b;
+            line-height: 1.45;
+        }
 
         .integration-pill {
             display: inline-flex; align-items: center; gap: 8px;
@@ -196,6 +251,10 @@ $page_title = "Kyros Commerce — Crea tu Tienda Online Profesional";
             .home-process-grid {
                 grid-template-columns: 1fr;
                 gap: 28px;
+            }
+            .home-contact-grid {
+                grid-template-columns: 1fr;
+                max-width: 100%;
             }
             .home-process-mobile-preview {
                 display: block;
@@ -432,6 +491,23 @@ $page_title = "Kyros Commerce — Crea tu Tienda Online Profesional";
             .home-process-mobile-preview-price {
                 font-size: 11px;
             }
+            .home-contact-card {
+                padding: 15px;
+                border-radius: 14px;
+                gap: 11px;
+            }
+            .home-contact-icon {
+                width: 36px;
+                height: 36px;
+                border-radius: 10px;
+                font-size: 15px;
+            }
+            .home-contact-value {
+                font-size: 15px;
+            }
+            .home-contact-note {
+                font-size: 12.5px;
+            }
         }
     </style>
 </head>
@@ -452,6 +528,7 @@ $page_title = "Kyros Commerce — Crea tu Tienda Online Profesional";
             <a href="#como-funciona" class="nav-link-home">Cómo funciona</a>
             <a href="#comparacion" class="nav-link-home">Por qué Kyros</a>
             <a href="#planes" class="nav-link-home">Precios</a>
+            <a href="#contacto" class="nav-link-home">Contacto</a>
         </div>
 
         <!-- Auth (desktop) + Hamburger (mobile) -->
@@ -492,6 +569,7 @@ $page_title = "Kyros Commerce — Crea tu Tienda Online Profesional";
         <a href="#como-funciona" class="mobile-nav-link" onclick="closeHomeNav()"><i class="fas fa-play-circle"></i> Cómo funciona</a>
         <a href="#comparacion" class="mobile-nav-link" onclick="closeHomeNav()"><i class="fas fa-balance-scale"></i> Por qué Kyros</a>
         <a href="#planes" class="mobile-nav-link" onclick="closeHomeNav()"><i class="fas fa-tag"></i> Precios</a>
+        <a href="#contacto" class="mobile-nav-link" onclick="closeHomeNav()"><i class="fas fa-envelope"></i> Contacto</a>
     </div>
     <div class="mobile-nav-footer">
         <?php if (Auth::isLoggedIn()): ?>
@@ -1037,6 +1115,41 @@ $page_title = "Kyros Commerce — Crea tu Tienda Online Profesional";
                 <div class="faq-answer" id="faq-answer-<?= $i ?>"><?= $faq['a'] ?></div>
             </div>
             <?php endforeach; ?>
+        </div>
+    </div>
+</section>
+
+<!-- =========== CONTACTO =========== -->
+<section class="section" id="contacto" style="background:#ffffff;">
+    <div class="section-inner">
+        <div class="text-center" style="margin-bottom:42px;">
+            <div class="section-label"><i class="fas fa-envelope-open-text"></i> Contacto</div>
+            <h2 class="section-title">Estamos listos para ayudarte</h2>
+            <p class="section-subtitle">Escríbenos por correo o WhatsApp y te respondemos lo antes posible.</p>
+        </div>
+
+        <div class="home-contact-grid">
+            <a class="home-contact-card fade-in-up" href="mailto:jonathansandoval@kyrosrd.com">
+                <div class="home-contact-icon" style="background:#eff6ff;color:#2563eb;">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div>
+                    <div class="home-contact-label">Correo</div>
+                    <div class="home-contact-value">jonathansandoval@kyrosrd.com</div>
+                    <div class="home-contact-note">Ideal para soporte, alianzas y consultas comerciales.</div>
+                </div>
+            </a>
+
+            <a class="home-contact-card fade-in-up" href="https://wa.me/18495024061" target="_blank" rel="noopener noreferrer">
+                <div class="home-contact-icon" style="background:#ecfdf5;color:#16a34a;">
+                    <i class="fab fa-whatsapp"></i>
+                </div>
+                <div>
+                    <div class="home-contact-label">WhatsApp</div>
+                    <div class="home-contact-value">1 849-502-4061</div>
+                    <div class="home-contact-note">Atención directa para dudas rápidas y seguimiento.</div>
+                </div>
+            </a>
         </div>
     </div>
 </section>
