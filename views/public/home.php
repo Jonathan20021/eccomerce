@@ -761,6 +761,7 @@ $page_title = "Kyros Commerce — Crea tu Tienda Online Profesional";
                 ['icon'=>'fas fa-users-cog',    'bg'=>'#eff6ff','color'=>'#2563eb','title'=>'Portal de Clientes',            'desc'=>'Tus compradores crean cuenta por tienda, gestionan perfil, direcciones y revisan su historial de pedidos.'],
                 ['icon'=>'fas fa-mobile-alt',   'bg'=>'#fdf4ff','color'=>'#9333ea','title'=>'100% Responsivo',               'desc'=>'Tu tienda luce perfecta en todos los dispositivos: desktop, tablet y smartphones modernos.'],
                 ['icon'=>'fas fa-box',          'bg'=>'#fff7ed','color'=>'#ea580c','title'=>'Gestión de Inventario',         'desc'=>'Controla tu stock en tiempo real. Recibe alertas de stock bajo y evita vender lo que no tienes.'],
+                ['icon'=>'fas fa-cash-register','bg'=>'#eef2ff','color'=>'#4f46e5','title'=>'POS Profesional Integrado',     'desc'=>'Vende en tienda física con búsqueda en vivo, escáner SKU, cierre diario de caja y facturas online, PDF y térmica.'],
                 ['icon'=>'fas fa-chart-line',   'bg'=>'#ecfeff','color'=>'#0891b2','title'=>'Analytics en Tiempo Real',      'desc'=>'Visualiza ventas, clientes recurrentes y productos más vendidos. Métricas claras para tomar mejores decisiones.'],
                 ['icon'=>'fas fa-search',       'bg'=>'#f0fdf4','color'=>'#059669','title'=>'SEO Optimizado',                'desc'=>'Tu tienda está optimizada para aparecer en Google. Atrae tráfico orgánico sin esfuerzo extra.'],
                 ['icon'=>'fas fa-lock',         'bg'=>'#fef2f2','color'=>'#dc2626','title'=>'Seguridad SSL Incluida',        'desc'=>'Certificado SSL gratuito en todos los planes. Tus clientes compran con total confianza y seguridad.'],
@@ -908,6 +909,7 @@ $page_title = "Kyros Commerce — Crea tu Tienda Online Profesional";
                 ['feat'=>'15 días de prueba gratis',    'kyros'=>true,  'other'=>false],
                 ['feat'=>'Panel multitienda incluido',  'kyros'=>true,  'other'=>true],
                 ['feat'=>'Portal de clientes por tienda','kyros'=>true,  'other'=>false],
+                ['feat'=>'POS con búsqueda, SKU y ticket térmico','kyros'=>true,  'other'=>false],
                 ['feat'=>'Analytics integrado',         'kyros'=>true,  'other'=>true],
             ];
             foreach ($compare as $i => $row): ?>
@@ -968,7 +970,7 @@ $page_title = "Kyros Commerce — Crea tu Tienda Online Profesional";
                 <div style="font-size:12.5px;color:#94a3b8;margin-bottom:24px;">Primeros 30 días con 50% off</div>
                 <hr style="border-color:#bbf7d0;margin-bottom:24px;">
                 <ul style="list-style:none;margin-bottom:28px;display:flex;flex-direction:column;gap:10px;">
-                    <?php foreach (['500 productos activos','50 GB almacenamiento','Portal de clientes + checkout autocompletado','Módulo de Inventario','Módulo de Finanzas','Carrito avanzado + upsell','Analytics completo','SEO avanzado','API REST acceso','Soporte prioritario'] as $feat): ?>
+                    <?php foreach (['500 productos activos','50 GB almacenamiento','Portal de clientes + checkout autocompletado','Módulo de Inventario','POS avanzado (búsqueda en vivo, escáner SKU y cierre diario)','Módulo de Finanzas','Carrito avanzado + upsell','Analytics completo','SEO avanzado','API REST acceso','Soporte prioritario'] as $feat): ?>
                     <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:#334155;">
                         <i class="fas fa-check-circle" style="color:#2a7a52;font-size:13px;flex-shrink:0;"></i><?= $feat ?>
                     </li>
@@ -990,7 +992,7 @@ $page_title = "Kyros Commerce — Crea tu Tienda Online Profesional";
                 <div style="font-size:12.5px;color:#94a3b8;margin-bottom:24px;">Para grandes operaciones</div>
                 <hr style="border-color:#f1f5f9;margin-bottom:24px;">
                 <ul style="list-style:none;margin-bottom:28px;display:flex;flex-direction:column;gap:10px;">
-                    <?php foreach (['Productos ilimitados','500 GB almacenamiento','Portal de clientes + experiencia personalizada','Todo el plan Professional','Personalización completa','Webhooks e integraciones','White label disponible','Consultoría incluida','SLA garantizado','Soporte dedicado 24/7'] as $feat): ?>
+                    <?php foreach (['Productos ilimitados','500 GB almacenamiento','Portal de clientes + experiencia personalizada','Todo el plan Professional','POS avanzado con facturación online/PDF/térmica','Personalización completa','Webhooks e integraciones','White label disponible','Consultoría incluida','SLA garantizado','Soporte dedicado 24/7'] as $feat): ?>
                     <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:#334155;">
                         <i class="fas fa-check-circle" style="color:#10b981;font-size:13px;flex-shrink:0;"></i><?= $feat ?>
                     </li>

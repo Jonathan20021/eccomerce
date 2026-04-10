@@ -64,10 +64,10 @@ define('PLAN_STARTER', [
     'price' => 0,
     'products' => 50,
     'storage' => 5, // GB
-    'features' => ['basic_storefront', 'products', 'orders', 'inventory_module', 'pos_module'],
+    'features' => ['basic_storefront', 'products', 'orders', 'inventory_module'],
     'module_inventory' => true,
     'module_finance' => false,
-    'module_pos' => true
+    'module_pos' => false
 ]);
 
 define('PLAN_PROFESSIONAL', [
