@@ -6,6 +6,7 @@ require_once __DIR__ . '/../models/Product.php';
 require_once __DIR__ . '/../models/Category.php';
 require_once __DIR__ . '/../models/Cart.php';
 require_once __DIR__ . '/../models/Order.php';
+require_once __DIR__ . '/../models/Review.php';
 require_once __DIR__ . '/../models/User.php';
 require_once __DIR__ . '/../models/CustomerAddress.php';
 require_once __DIR__ . '/../models/Setting.php';
@@ -223,6 +224,49 @@ class PublicController {
             echo "Producto no encontrado";
             exit;
         }
+
+        $reviewModel = new Review();
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $comment = trim($_POST['comment'] ?? '');
+            $customerName = Helper::sanitizeInput($_POST['customer_name'] ?? '');
+            $rating = intval($_POST['rating'] ?? 5);
+
+            if ($customerName === '') {
+                $customerName = 'Cliente';
+            }
+
+            if ($comment === '') {
+                Helper::redirect(BASE_URL . 'shop/' . $store_slug . '/product/' . $product_slug . '?id=' . intval($productData['id']) . '&error=' . urlencode('Escribe un comentario para enviarlo'));
+            }
+
+            if (strlen($comment) > 1200) {
+                Helper::redirect(BASE_URL . 'shop/' . $store_slug . '/product/' . $product_slug . '?id=' . intval($productData['id']) . '&error=' . urlencode('El comentario no puede exceder 1200 caracteres'));
+            }
+
+            if (strlen($customerName) > 120) {
+                $customerName = substr($customerName, 0, 120);
+            }
+
+            $created = $reviewModel->create([
+                'product_id' => intval($productData['id']),
+                'store_id' => intval($storeData['id']),
+                'user_id' => Auth::isCustomerLoggedIn() ? intval(Auth::getCustomerId()) : null,
+                'customer_name' => $customerName,
+                'comment' => $comment,
+                'rating' => max(1, min(5, $rating)),
+                'is_verified' => Auth::isCustomerLoggedIn() ? 1 : 0,
+                'is_approved' => 1
+            ]);
+
+            if (!$created) {
+                Helper::redirect(BASE_URL . 'shop/' . $store_slug . '/product/' . $product_slug . '?id=' . intval($productData['id']) . '&error=' . urlencode('No se pudo enviar tu comentario'));
+            }
+
+            Helper::redirect(BASE_URL . 'shop/' . $store_slug . '/product/' . $product_slug . '?id=' . intval($productData['id']) . '&success=' . urlencode('Comentario publicado correctamente'));
+        }
+
+        $productReviews = $reviewModel->getApprovedByProduct(intval($productData['id']), intval($storeData['id']));
 
         $cart = new Cart();
         $cartItems = $cart->getCart(self::getCartActorId());

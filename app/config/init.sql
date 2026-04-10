@@ -194,8 +194,11 @@ CREATE TABLE IF NOT EXISTS reviews (
     user_id INT,
     store_id INT NOT NULL,
     rating INT NOT NULL,
+    customer_name VARCHAR(120),
     title VARCHAR(150),
     comment TEXT,
+    reply_comment TEXT,
+    replied_at TIMESTAMP NULL,
     is_verified BOOLEAN DEFAULT FALSE,
     is_approved BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -204,6 +207,10 @@ CREATE TABLE IF NOT EXISTS reviews (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL,
     FOREIGN KEY (store_id) REFERENCES stores(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+ALTER TABLE reviews ADD COLUMN IF NOT EXISTS customer_name VARCHAR(120) AFTER rating;
+ALTER TABLE reviews ADD COLUMN IF NOT EXISTS reply_comment TEXT AFTER comment;
+ALTER TABLE reviews ADD COLUMN IF NOT EXISTS replied_at TIMESTAMP NULL AFTER reply_comment;
 
 -- Tabla de configuración de superadmin
 CREATE TABLE IF NOT EXISTS settings (

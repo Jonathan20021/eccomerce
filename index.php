@@ -94,6 +94,13 @@ else if ($parts[0] == 'admin') {
             AdminController::orders();
         }
     }
+    else if (isset($parts[1]) && $parts[1] == 'reviews') {
+        if (isset($parts[2]) && $parts[2] == 'reply' && isset($parts[3])) {
+            AdminController::replyReview(intval($parts[3]));
+        } else {
+            AdminController::reviews();
+        }
+    }
     else if (isset($parts[1]) && $parts[1] == 'customers') {
         if (isset($parts[2])) {
             AdminController::customerDetail(intval($parts[2]));

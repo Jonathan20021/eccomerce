@@ -250,9 +250,112 @@
     .pd-add-btn { min-width: 100%; }
     .pd-trust-grid { grid-template-columns: 1fr; }
 }
+
+.pd-alert {
+    border-radius: 12px;
+    padding: 12px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.pd-alert-success {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    color: #166534;
+}
+
+.pd-alert-error {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #b91c1c;
+}
+
+.pd-reviews {
+    margin-top: 34px;
+    padding-top: 28px;
+    border-top: 1px solid #e2e8f0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.pd-reviews-title {
+    font-size: 23px;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 2px;
+}
+
+.pd-review-form {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 16px;
+    display: grid;
+    gap: 10px;
+}
+
+.pd-review-input,
+.pd-review-textarea,
+.pd-review-select {
+    width: 100%;
+    border: 1.5px solid #dbe2ea;
+    border-radius: 10px;
+    background: #fff;
+    padding: 11px 12px;
+    font-size: 13.5px;
+    color: #1e293b;
+    outline: none;
+}
+
+.pd-review-textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.pd-review-item {
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    background: #fff;
+    padding: 14px;
+}
+
+.pd-review-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.pd-review-reply {
+    margin-top: 10px;
+    background: #ecfdf5;
+    border: 1px solid #bbf7d0;
+    border-radius: 10px;
+    padding: 10px 11px;
+}
 </style>
 
 <div class="pd-wrap">
+    <?php if (isset($_GET['success'])): ?>
+    <div class="pd-alert pd-alert-success">
+        <i class="fas fa-check-circle"></i>
+        <span><?= htmlspecialchars($_GET['success']) ?></span>
+    </div>
+    <?php endif; ?>
+
+    <?php if (isset($_GET['error'])): ?>
+    <div class="pd-alert pd-alert-error">
+        <i class="fas fa-exclamation-circle"></i>
+        <span><?= htmlspecialchars($_GET['error']) ?></span>
+    </div>
+    <?php endif; ?>
+
     <!-- Breadcrumb -->
     <nav class="pd-breadcrumb" aria-label="Breadcrumb">
         <a href="<?= BASE_URL ?>shop/<?= htmlspecialchars($storeData['slug']) ?>">
@@ -426,6 +529,60 @@
             </div>
         </div>
     </div>
+
+    <section class="pd-reviews">
+        <div>
+            <h2 class="pd-reviews-title">Comentarios</h2>
+            <p style="font-size:13.5px;color:#64748b;">Comparte tu experiencia con este producto.</p>
+        </div>
+
+        <form method="POST" class="pd-review-form">
+            <div style="display:grid;grid-template-columns:1fr 140px;gap:10px;">
+                <input type="text" name="customer_name" maxlength="120" class="pd-review-input" placeholder="Tu nombre">
+                <select name="rating" class="pd-review-select">
+                    <option value="5">5 estrellas</option>
+                    <option value="4">4 estrellas</option>
+                    <option value="3">3 estrellas</option>
+                    <option value="2">2 estrellas</option>
+                    <option value="1">1 estrella</option>
+                </select>
+            </div>
+            <textarea name="comment" class="pd-review-textarea" maxlength="1200" required placeholder="Escribe tu comentario..."></textarea>
+            <div style="display:flex;justify-content:flex-end;">
+                <button type="submit" class="pd-add-btn" style="max-width:220px;">
+                    <i class="fas fa-paper-plane"></i> Publicar comentario
+                </button>
+            </div>
+        </form>
+
+        <div style="display:grid;gap:12px;">
+            <?php if (!empty($productReviews)): ?>
+                <?php foreach ($productReviews as $review): ?>
+                <article class="pd-review-item">
+                    <div class="pd-review-meta">
+                        <strong style="font-size:14px;color:#0f172a;"><?= htmlspecialchars($review['customer_name'] ?: ($review['user_name'] ?? 'Cliente')) ?></strong>
+                        <span style="font-size:12px;color:#64748b;"><?= Helper::formatDate($review['created_at']) ?></span>
+                    </div>
+                    <div style="font-size:12.5px;color:#f59e0b;font-weight:700;margin-bottom:6px;">
+                        <?= str_repeat('★', max(1, min(5, intval($review['rating'] ?? 5)))) ?>
+                    </div>
+                    <p style="font-size:13.5px;color:#334155;line-height:1.55;white-space:pre-wrap;"><?= htmlspecialchars($review['comment'] ?? '') ?></p>
+
+                    <?php if (!empty($review['reply_comment'])): ?>
+                    <div class="pd-review-reply">
+                        <p style="font-size:11.5px;font-weight:700;color:#166534;margin-bottom:5px;">Respuesta de la tienda</p>
+                        <p style="font-size:13px;color:#166534;line-height:1.5;white-space:pre-wrap;"><?= htmlspecialchars($review['reply_comment']) ?></p>
+                    </div>
+                    <?php endif; ?>
+                </article>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <div class="pd-review-item" style="text-align:center;color:#64748b;font-size:13.5px;">
+                    Aún no hay comentarios. Sé el primero en opinar.
+                </div>
+            <?php endif; ?>
+        </div>
+    </section>
 </div>
 
 <script>

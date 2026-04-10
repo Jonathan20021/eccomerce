@@ -6,6 +6,7 @@ require_once __DIR__ . '/../models/Product.php';
 require_once __DIR__ . '/../models/Category.php';
 require_once __DIR__ . '/../models/Cart.php';
 require_once __DIR__ . '/../models/Order.php';
+require_once __DIR__ . '/../models/Review.php';
 require_once __DIR__ . '/../models/User.php';
 require_once __DIR__ . '/../models/CustomerAddress.php';
 require_once __DIR__ . '/../models/License.php';
@@ -616,6 +617,63 @@ class AdminController {
         $totalPages = ceil($totalOrders / $limit);
 
         include VIEWS_PATH . 'admin/orders.php';
+    }
+
+    public static function reviews() {
+        Auth::requireStoreOwner();
+        Auth::requireValidStoreLicense();
+        $store_id = Auth::getStoreId();
+
+        $store = new Store();
+        $storeData = $store->findById($store_id);
+
+        $page = intval($_GET['page'] ?? 1);
+        if ($page < 1) {
+            $page = 1;
+        }
+        $limit = 20;
+        $offset = ($page - 1) * $limit;
+
+        $reviewModel = new Review();
+        $reviews = $reviewModel->getByStore($store_id, $limit, $offset);
+        $totalReviews = $reviewModel->countByStore($store_id);
+        $reviewStats = $reviewModel->getStatsByStore($store_id);
+        $topCommentedProducts = $reviewModel->getTopCommentedProducts($store_id, 5);
+        $totalPages = max(1, intval(ceil($totalReviews / $limit)));
+
+        include VIEWS_PATH . 'admin/reviews.php';
+    }
+
+    public static function replyReview($review_id) {
+        Auth::requireStoreOwner();
+        Auth::requireValidStoreLicense();
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            Helper::redirect(BASE_URL . 'admin/reviews');
+        }
+
+        $store_id = Auth::getStoreId();
+        $replyComment = trim($_POST['reply_comment'] ?? '');
+
+        if ($replyComment === '') {
+            Helper::redirect(BASE_URL . 'admin/reviews?error=' . urlencode('La respuesta no puede estar vacía'));
+        }
+
+        if (strlen($replyComment) > 1200) {
+            Helper::redirect(BASE_URL . 'admin/reviews?error=' . urlencode('La respuesta no puede exceder 1200 caracteres'));
+        }
+
+        $reviewModel = new Review();
+        $reviewData = $reviewModel->findById(intval($review_id));
+        if (!$reviewData || intval($reviewData['store_id']) !== intval($store_id)) {
+            Helper::redirect(BASE_URL . 'admin/reviews?error=' . urlencode('Comentario no encontrado'));
+        }
+
+        if ($reviewModel->updateReply(intval($review_id), intval($store_id), $replyComment, true)) {
+            Helper::redirect(BASE_URL . 'admin/reviews?success=' . urlencode('Respuesta guardada correctamente'));
+        }
+
+        Helper::redirect(BASE_URL . 'admin/reviews?error=' . urlencode('No se pudo guardar la respuesta'));
     }
 
     public static function customers() {

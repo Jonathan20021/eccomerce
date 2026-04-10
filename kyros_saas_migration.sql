@@ -264,8 +264,11 @@ CREATE TABLE `reviews` (
   `user_id` int(11) DEFAULT NULL,
   `store_id` int(11) NOT NULL,
   `rating` int(11) NOT NULL,
+  `customer_name` varchar(120) DEFAULT NULL,
   `title` varchar(150) DEFAULT NULL,
   `comment` text DEFAULT NULL,
+  `reply_comment` text DEFAULT NULL,
+  `replied_at` timestamp NULL DEFAULT NULL,
   `is_verified` tinyint(1) DEFAULT 0,
   `is_approved` tinyint(1) DEFAULT 0,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -279,6 +282,10 @@ CREATE TABLE `reviews` (
   CONSTRAINT `reviews_ibfk_3` FOREIGN KEY (`store_id`) REFERENCES `stores` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+ALTER TABLE `reviews` ADD COLUMN IF NOT EXISTS `customer_name` varchar(120) DEFAULT NULL AFTER `rating`;
+ALTER TABLE `reviews` ADD COLUMN IF NOT EXISTS `reply_comment` text DEFAULT NULL AFTER `comment`;
+ALTER TABLE `reviews` ADD COLUMN IF NOT EXISTS `replied_at` timestamp NULL DEFAULT NULL AFTER `reply_comment`;
 
 --
 -- Dumping data for table `reviews`
