@@ -19,7 +19,7 @@ $page_title = 'Recuperar Acceso — Kyros Commerce';
 
 <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;">
     <div style="width:100%;max-width:460px;background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:24px;">
-        <a href="<?= BASE_URL ?>auth/login" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;color:#64748b;font-size:13px;margin-bottom:14px;">
+        <a href="<?= BASE_URL ?>auth/login" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;color:#2a7a52;font-size:13px;font-weight:600;margin-bottom:14px;">
             <i class="fas fa-arrow-left"></i> Volver a login
         </a>
 
@@ -43,8 +43,8 @@ $page_title = 'Recuperar Acceso — Kyros Commerce';
             <input type="email" id="email" name="email" required placeholder="tu@email.com"
                    style="width:100%;height:42px;border:1px solid #e2e8f0;border-radius:9px;padding:0 12px;font-size:14px;outline:none;">
 
-            <button type="submit"
-                    style="height:43px;border:none;border-radius:9px;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;font-size:14px;font-weight:700;cursor:pointer;">
+                <button type="submit"
+                    style="height:43px;border:none;border-radius:9px;background:linear-gradient(135deg,#2a7a52,#1f5c3d);color:#fff;font-size:14px;font-weight:700;cursor:pointer;">
                 Enviar instrucciones
             </button>
         </form>

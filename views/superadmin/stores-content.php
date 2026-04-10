@@ -25,7 +25,7 @@
             <input type="search" id="storeSearch" placeholder="Buscar tienda..."
                    oninput="filterStores(this.value)"
                    style="padding:9px 14px 9px 38px;border:1.5px solid #e2e8f0;border-radius:9px;font-size:13.5px;font-family:'Inter',sans-serif;color:#1e293b;background:#fff;outline:none;transition:border-color .15s;width:220px;"
-                   onfocus="this.style.borderColor='#4f46e5'" onblur="this.style.borderColor='#e2e8f0'">
+                   onfocus="this.style.borderColor='#2a7a52'" onblur="this.style.borderColor='#e2e8f0'">
             <i class="fas fa-search" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#94a3b8;font-size:12px;pointer-events:none;"></i>
         </div>
     </div>
@@ -38,13 +38,13 @@
              onmouseover="this.style.boxShadow='0 6px 24px rgba(0,0,0,0.08)';this.style.transform='translateY(-2px)'"
              onmouseout="this.style.boxShadow='none';this.style.transform='none'">
             <!-- Card top banner -->
-            <div style="height:72px;background:linear-gradient(135deg,#312e81 0%,#4f46e5 60%,#7c3aed 100%);position:relative;">
+            <div style="height:72px;background:linear-gradient(135deg,#0c1f12 0%,#1a4a2e 60%,#2a7a52 100%);position:relative;">
                 <div style="position:absolute;bottom:-22px;left:20px;">
                     <div style="width:44px;height:44px;border-radius:11px;background:#fff;border:2px solid #f1f5f9;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,0.1);">
                         <?php if ($store['logo']): ?>
                             <img src="<?= htmlspecialchars($store['logo']) ?>" alt="" style="width:36px;height:36px;object-fit:cover;border-radius:8px;">
                         <?php else: ?>
-                            <i class="fas fa-store" style="color:#4f46e5;font-size:16px;"></i>
+                            <i class="fas fa-store" style="color:#2a7a52;font-size:16px;"></i>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -79,7 +79,7 @@
                 </div>
 
                 <a href="<?= BASE_URL ?>superadmin/stores/<?= $store['id'] ?>"
-                   style="display:flex;align-items:center;justify-content:center;gap:7px;padding:9px;border-radius:8px;border:1.5px solid #e2e8f0;color:#4f46e5;font-size:13px;font-weight:700;text-decoration:none;transition:all .15s;"
+                   style="display:flex;align-items:center;justify-content:center;gap:7px;padding:9px;border-radius:8px;border:1.5px solid #e2e8f0;color:#2a7a52;font-size:13px;font-weight:700;text-decoration:none;transition:all .15s;"
                    onmouseover="this.style.background='#eef2ff';this.style.borderColor='#c7d2fe'"
                    onmouseout="this.style.background='transparent';this.style.borderColor='#e2e8f0'">
                     <i class="fas fa-eye text-xs"></i> Ver Detalles

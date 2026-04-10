@@ -2,7 +2,7 @@
 
     <div class="card">
         <div class="card-header" style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
-            <h3><i class="fas fa-cog" style="color:#4f46e5;margin-right:7px;"></i>Configuracion de Plataforma</h3>
+            <h3><i class="fas fa-cog" style="color:#2a7a52;margin-right:7px;"></i>Configuracion de Plataforma</h3>
             <span class="badge badge-indigo">Super Admin</span>
         </div>
         <div class="card-body">

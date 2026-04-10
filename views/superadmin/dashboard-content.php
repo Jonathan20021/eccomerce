@@ -44,13 +44,13 @@
         </div>
         <div class="card-body">
             <div class="quick-actions">
-                <a href="<?= BASE_URL ?>superadmin/licenses/create" class="action-chip" style="background:#eef2ff;color:#4f46e5;">
+                <a href="<?= BASE_URL ?>superadmin/licenses/create" class="action-chip" style="background:#ecfdf5;color:#2a7a52;">
                     <i class="fas fa-plus-circle"></i> Crear Licencia
                 </a>
                 <a href="<?= BASE_URL ?>superadmin/licenses" class="action-chip" style="background:#f0fdf4;color:#16a34a;">
                     <i class="fas fa-certificate"></i> Gestionar Licencias
                 </a>
-                <a href="<?= BASE_URL ?>superadmin/stores" class="action-chip" style="background:#faf5ff;color:#7c3aed;">
+                <a href="<?= BASE_URL ?>superadmin/stores" class="action-chip" style="background:#fffbeb;color:#b45309;">
                     <i class="fas fa-store"></i> Ver Tiendas
                 </a>
                 <a href="<?= BASE_URL ?>superadmin/settings" class="action-chip" style="background:#f8fafc;color:#475569;">
@@ -64,7 +64,7 @@
     <div class="table-card">
         <div class="table-card-header">
             <h3><i class="fas fa-store" style="color:#64748b;margin-right:7px;"></i>Tiendas Recientes</h3>
-            <a href="<?= BASE_URL ?>superadmin/stores" style="font-size:13px;color:#4f46e5;font-weight:600;text-decoration:none;">
+            <a href="<?= BASE_URL ?>superadmin/stores" style="font-size:13px;color:#2a7a52;font-weight:600;text-decoration:none;">
                 Ver todas <i class="fas fa-arrow-right text-xs ml-1"></i>
             </a>
         </div>
@@ -91,7 +91,7 @@
                         <td>
                             <div style="display:flex;align-items:center;gap:10px;">
                                 <div style="width:34px;height:34px;border-radius:9px;background:#eef2ff;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                                    <i class="fas fa-store" style="color:#4f46e5;font-size:13px;"></i>
+                                    <i class="fas fa-store" style="color:#2a7a52;font-size:13px;"></i>
                                 </div>
                                 <span style="font-size:13.5px;font-weight:600;color:#1e293b;"><?= htmlspecialchars($store['name']) ?></span>
                             </div>
@@ -130,7 +130,7 @@
     <div class="table-card">
         <div class="table-card-header">
             <h3><i class="fas fa-certificate" style="color:#64748b;margin-right:7px;"></i>Licencias Recientes</h3>
-            <a href="<?= BASE_URL ?>superadmin/licenses" style="font-size:13px;color:#4f46e5;font-weight:600;text-decoration:none;">
+            <a href="<?= BASE_URL ?>superadmin/licenses" style="font-size:13px;color:#2a7a52;font-weight:600;text-decoration:none;">
                 Ver todas <i class="fas fa-arrow-right text-xs ml-1"></i>
             </a>
         </div>
@@ -157,14 +157,14 @@
                     ?>
                     <tr>
                         <td>
-                            <code style="font-size:12px;background:#f8fafc;color:#4f46e5;padding:3px 8px;border-radius:5px;border:1px solid #e2e8f0;">
+                            <code style="font-size:12px;background:#f8fafc;color:#2a7a52;padding:3px 8px;border-radius:5px;border:1px solid #e2e8f0;">
                                 <?= htmlspecialchars($license['code']) ?>
                             </code>
                         </td>
                         <td class="col-hide-sm"><span style="font-size:13.5px;color:#1e293b;"><?= $planNames[($license['plan_id'] - 1)] ?? 'Plan ' . $license['plan_id'] ?></span></td>
                         <td class="col-hide-sm">
                             <?php if ($license['store_id']): ?>
-                                <a href="<?= BASE_URL ?>superadmin/stores/<?= $license['store_id'] ?>" style="color:#4f46e5;font-size:13px;font-weight:600;text-decoration:none;">
+                                <a href="<?= BASE_URL ?>superadmin/stores/<?= $license['store_id'] ?>" style="color:#2a7a52;font-size:13px;font-weight:600;text-decoration:none;">
                                     Tienda #<?= $license['store_id'] ?>
                                 </a>
                             <?php else: ?>

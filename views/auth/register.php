@@ -25,11 +25,11 @@ $plan = isset($_GET['plan']) ? $_GET['plan'] : 'starter';
 <div class="auth-split-layout">
 
     <!-- ====== LEFT PANEL (brand) ====== -->
-    <div class="auth-brand-panel" style="background:linear-gradient(145deg,#1e1b4b 0%,#312e81 40%,#4c1d95 70%,#1e40af 100%);
+    <div class="auth-brand-panel" style="background:linear-gradient(145deg,#0c1f12 0%,#1a4a2e 40%,#2a7a52 72%,#1f5c3d 100%);
                 position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;padding:48px;">
 
-        <div style="position:absolute;top:-20%;right:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(139,92,246,.25) 0%,transparent 60%);border-radius:50%;pointer-events:none;"></div>
-        <div style="position:absolute;bottom:-20%;left:-10%;width:400px;height:400px;background:radial-gradient(circle,rgba(59,130,246,.2) 0%,transparent 60%);border-radius:50%;pointer-events:none;"></div>
+        <div style="position:absolute;top:-20%;right:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(212,151,58,.22) 0%,transparent 60%);border-radius:50%;pointer-events:none;"></div>
+        <div style="position:absolute;bottom:-20%;left:-10%;width:400px;height:400px;background:radial-gradient(circle,rgba(42,122,82,.25) 0%,transparent 60%);border-radius:50%;pointer-events:none;"></div>
 
         <!-- Logo -->
         <a href="<?= BASE_URL ?>" style="display:flex;align-items:center;gap:10px;text-decoration:none;position:relative;z-index:1;">
@@ -41,7 +41,7 @@ $plan = isset($_GET['plan']) ? $_GET['plan'] : 'starter';
         <div style="position:relative;z-index:1;">
             <div style="font-size:clamp(26px,2.5vw,38px);font-weight:900;color:#fff;line-height:1.15;letter-spacing:-1px;margin-bottom:18px;">
                 Empieza a vender<br>
-                <span style="background:linear-gradient(135deg,#a78bfa,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">hoy mismo</span>
+                <span style="background:linear-gradient(135deg,#86efac,#fde68a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">hoy mismo</span>
             </div>
             <p style="font-size:15px;color:rgba(255,255,255,0.65);line-height:1.7;max-width:320px;margin-bottom:32px;">
                 Crea tu tienda online en minutos. Sin tarjeta de crédito, sin complicaciones técnicas.
@@ -83,7 +83,7 @@ $plan = isset($_GET['plan']) ? $_GET['plan'] : 'starter';
 
         <!-- Mobile logo -->
         <a href="<?= BASE_URL ?>" class="auth-mobile-logo" style="display:flex;align-items:center;gap:9px;text-decoration:none;margin-bottom:32px;">
-            <div style="width:32px;height:32px;background:linear-gradient(135deg,#4f46e5,#7c3aed);border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;color:#fff;">K</div>
+            <div style="width:32px;height:32px;background:linear-gradient(135deg,#2a7a52,#d4973a);border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;color:#fff;">K</div>
             <span style="font-size:17px;font-weight:800;color:#1e293b;">Kyros Commerce</span>
         </a>
 
@@ -160,9 +160,9 @@ $plan = isset($_GET['plan']) ? $_GET['plan'] : 'starter';
                 </div>
 
                 <!-- Trial notice -->
-                <div style="background:#eef2ff;border:1px solid #c7d2fe;border-radius:9px;padding:12px 14px;display:flex;align-items:center;gap:10px;">
-                    <i class="fas fa-gift" style="color:#4f46e5;font-size:14px;flex-shrink:0;"></i>
-                    <p style="font-size:13px;color:#3730a3;font-weight:500;line-height:1.5;">
+                <div style="background:#ecfdf5;border:1px solid #bbf7d0;border-radius:9px;padding:12px 14px;display:flex;align-items:center;gap:10px;">
+                    <i class="fas fa-gift" style="color:#2a7a52;font-size:14px;flex-shrink:0;"></i>
+                    <p style="font-size:13px;color:#166534;font-weight:500;line-height:1.5;">
                         <strong>15 días de prueba gratis</strong> con todas las características del plan elegido. Sin tarjeta de crédito.
                     </p>
                 </div>
@@ -170,27 +170,27 @@ $plan = isset($_GET['plan']) ? $_GET['plan'] : 'starter';
                 <!-- Terms -->
                 <div style="display:flex;align-items:flex-start;gap:10px;">
                     <input type="checkbox" id="terms" name="terms" required
-                           style="width:15px;height:15px;margin-top:2px;accent-color:#4f46e5;cursor:pointer;">
+                           style="width:15px;height:15px;margin-top:2px;accent-color:#2a7a52;cursor:pointer;">
                     <label for="terms" style="font-size:13px;color:#64748b;cursor:pointer;line-height:1.5;">
                         Acepto los
-                        <a href="<?= BASE_URL ?>terms" style="color:#4f46e5;font-weight:600;text-decoration:none;">Términos de Servicio</a>
+                        <a href="<?= BASE_URL ?>terms" style="color:#2a7a52;font-weight:600;text-decoration:none;">Términos de Servicio</a>
                         y la
-                        <a href="<?= BASE_URL ?>privacy" style="color:#4f46e5;font-weight:600;text-decoration:none;">Política de Privacidad</a>
+                        <a href="<?= BASE_URL ?>privacy" style="color:#2a7a52;font-weight:600;text-decoration:none;">Política de Privacidad</a>
                     </label>
                 </div>
 
                 <!-- Submit -->
                 <button type="submit"
-                        style="width:100%;padding:13px;border-radius:10px;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;font-size:15px;font-weight:700;border:none;cursor:pointer;box-shadow:0 4px 16px rgba(79,70,229,0.3);transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;"
-                        onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 6px 22px rgba(79,70,229,0.4)'"
-                        onmouseout="this.style.transform='none';this.style.boxShadow='0 4px 16px rgba(79,70,229,0.3)'">
+                        style="width:100%;padding:13px;border-radius:10px;background:linear-gradient(135deg,#2a7a52,#1f5c3d);color:#fff;font-size:15px;font-weight:700;border:none;cursor:pointer;box-shadow:0 4px 16px rgba(42,122,82,0.3);transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;"
+                        onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 6px 22px rgba(42,122,82,0.4)'"
+                        onmouseout="this.style.transform='none';this.style.boxShadow='0 4px 16px rgba(42,122,82,0.3)'">
                     <i class="fas fa-rocket"></i> Crear Tienda Gratis
                 </button>
             </form>
 
             <p style="text-align:center;font-size:14px;color:#64748b;margin-top:20px;">
                 ¿Ya tienes cuenta?
-                <a href="<?= BASE_URL ?>auth/login" style="color:#4f46e5;font-weight:700;text-decoration:none;margin-left:4px;">Inicia sesión aquí</a>
+                <a href="<?= BASE_URL ?>auth/login" style="color:#2a7a52;font-weight:700;text-decoration:none;margin-left:4px;">Inicia sesión aquí</a>
             </p>
         </div>
 

@@ -48,7 +48,7 @@ $storePublicUrl = BASE_URL . 'shop/' . ($storeData['slug'] ?? '');
     <div class="admin-grid-2-1">
         <div class="card">
             <div class="card-header">
-                <h3><i class="fas fa-store" style="margin-right:7px;color:#4f46e5;"></i>Informacion General</h3>
+                <h3><i class="fas fa-store" style="margin-right:7px;color:#2a7a52;"></i>Informacion General</h3>
             </div>
             <div class="card-body form-grid-2" style="gap:12px;">
                 <div>
@@ -111,7 +111,7 @@ $storePublicUrl = BASE_URL . 'shop/' . ($storeData['slug'] ?? '');
 
     <div class="table-card">
         <div class="table-card-header">
-            <h3><i class="fas fa-users" style="margin-right:7px;color:#7c3aed;"></i>Usuarios asociados</h3>
+            <h3><i class="fas fa-users" style="margin-right:7px;color:#d4973a;"></i>Usuarios asociados</h3>
         </div>
         <div class="overflow-x">
             <table class="data-table">

@@ -44,7 +44,7 @@ $statusMap  = ['active'=>['badge-green','Activa'], 'expired'=>['badge-red','Expi
         <div class="overflow-x">
             <table style="width:100%;border-collapse:collapse;font-size:12.5px;">
                 <thead>
-                    <tr style="background:#eef2ff;color:#3730a3;">
+                    <tr style="background:#ecfdf5;color:#166534;">
                         <th style="text-align:left;padding:8px;border:1px solid #c7d2fe;">Plan</th>
                         <th style="text-align:left;padding:8px;border:1px solid #c7d2fe;">Inventario</th>
                         <th style="text-align:left;padding:8px;border:1px solid #c7d2fe;">Finanzas</th>
@@ -99,7 +99,7 @@ $statusMap  = ['active'=>['badge-green','Activa'], 'expired'=>['badge-red','Expi
                     ?>
                     <tr>
                         <td>
-                            <code style="font-size:12px;background:#f8fafc;color:#4f46e5;padding:3px 8px;border-radius:5px;border:1px solid #e2e8f0;font-family:monospace;">
+                            <code style="font-size:12px;background:#f8fafc;color:#2a7a52;padding:3px 8px;border-radius:5px;border:1px solid #e2e8f0;font-family:monospace;">
                                 <?= htmlspecialchars($license['code']) ?>
                             </code>
                         </td>
@@ -131,7 +131,7 @@ $statusMap  = ['active'=>['badge-green','Activa'], 'expired'=>['badge-red','Expi
                         <td class="col-hide-sm">
                             <?php if ($license['store_id']): ?>
                                 <a href="<?= BASE_URL ?>superadmin/stores/<?= $license['store_id'] ?>"
-                                   style="color:#4f46e5;font-size:13.5px;font-weight:600;text-decoration:none;">
+                                   style="color:#2a7a52;font-size:13.5px;font-weight:600;text-decoration:none;">
                                     <i class="fas fa-store text-xs mr-1"></i> Tienda #<?= $license['store_id'] ?>
                                 </a>
                             <?php else: ?>

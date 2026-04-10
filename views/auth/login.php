@@ -24,12 +24,12 @@ $page_title = "Iniciar Sesión — Kyros Commerce";
 <div class="auth-split-layout">
 
     <!-- ====== LEFT PANEL (brand) ====== -->
-    <div class="auth-brand-panel" style="background:linear-gradient(145deg,#1e1b4b 0%,#312e81 40%,#4c1d95 70%,#1e40af 100%);
+    <div class="auth-brand-panel" style="background:linear-gradient(145deg,#0c1f12 0%,#1a4a2e 40%,#2a7a52 72%,#1f5c3d 100%);
                 position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;padding:48px;">
 
         <!-- Background decorations -->
-        <div style="position:absolute;top:-20%;right:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(139,92,246,.25) 0%,transparent 60%);border-radius:50%;pointer-events:none;"></div>
-        <div style="position:absolute;bottom:-20%;left:-10%;width:400px;height:400px;background:radial-gradient(circle,rgba(59,130,246,.2) 0%,transparent 60%);border-radius:50%;pointer-events:none;"></div>
+        <div style="position:absolute;top:-20%;right:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(212,151,58,.22) 0%,transparent 60%);border-radius:50%;pointer-events:none;"></div>
+        <div style="position:absolute;bottom:-20%;left:-10%;width:400px;height:400px;background:radial-gradient(circle,rgba(42,122,82,.25) 0%,transparent 60%);border-radius:50%;pointer-events:none;"></div>
 
         <!-- Logo -->
         <a href="<?= BASE_URL ?>" style="display:flex;align-items:center;gap:10px;text-decoration:none;position:relative;z-index:1;">
@@ -41,7 +41,7 @@ $page_title = "Iniciar Sesión — Kyros Commerce";
         <div style="position:relative;z-index:1;">
             <div style="font-size:clamp(28px,3vw,40px);font-weight:900;color:#fff;line-height:1.15;letter-spacing:-1px;margin-bottom:18px;">
                 Tu negocio online,<br>
-                <span style="background:linear-gradient(135deg,#a78bfa,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">sin complicaciones</span>
+                <span style="background:linear-gradient(135deg,#86efac,#fde68a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">sin complicaciones</span>
             </div>
             <p style="font-size:16px;color:rgba(255,255,255,0.65);line-height:1.7;max-width:340px;">
                 Miles de emprendedores ya confían en Kyros Commerce para vender online y hacer crecer su negocio.
@@ -51,7 +51,7 @@ $page_title = "Iniciar Sesión — Kyros Commerce";
             <div style="display:flex;align-items:center;gap:12px;margin-top:32px;">
                 <div style="display:flex;">
                     <?php
-                    $colors = ['#4f46e5','#7c3aed','#0891b2','#059669','#d97706'];
+                    $colors = ['#2a7a52','#1f5c3d','#059669','#d4973a','#f59e0b'];
                     foreach ($colors as $c):
                     ?>
                     <div style="width:30px;height:30px;border-radius:50%;background:<?= $c ?>;border:2px solid rgba(255,255,255,.3);margin-left:-8px;first:margin-left:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;"></div>
@@ -68,7 +68,7 @@ $page_title = "Iniciar Sesión — Kyros Commerce";
                 "Kyros Commerce me permitió lanzar mi tienda en un fin de semana. Ahora vendo todos los días sin preocupaciones técnicas."
             </p>
             <div style="display:flex;align-items:center;gap:10px;">
-                <div style="width:34px;height:34px;border-radius:50%;background:#7c3aed;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:800;">AV</div>
+                <div style="width:34px;height:34px;border-radius:50%;background:#2a7a52;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:800;">AV</div>
                 <div>
                     <div style="font-size:13px;font-weight:700;color:#fff;">Ana Vargas</div>
                     <div style="font-size:11px;color:rgba(255,255,255,.45);">Tienda de Bisutería</div>
@@ -82,7 +82,7 @@ $page_title = "Iniciar Sesión — Kyros Commerce";
 
         <!-- Mobile logo (hidden on desktop via CSS since left panel is visible there) -->
         <a href="<?= BASE_URL ?>" class="auth-mobile-logo" style="display:flex;align-items:center;gap:9px;text-decoration:none;margin-bottom:40px;">
-            <div style="width:32px;height:32px;background:linear-gradient(135deg,#4f46e5,#7c3aed);border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;color:#fff;">K</div>
+            <div style="width:32px;height:32px;background:linear-gradient(135deg,#2a7a52,#d4973a);border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;color:#fff;">K</div>
             <span style="font-size:17px;font-weight:800;color:#1e293b;">Kyros Commerce</span>
         </a>
 
@@ -122,7 +122,7 @@ $page_title = "Iniciar Sesión — Kyros Commerce";
                 <div class="form-group" style="margin-bottom:0;">
                     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
                         <label class="form-label" for="password" style="margin-bottom:0;">Contraseña</label>
-                        <a href="<?= BASE_URL ?>auth/forgot-password" style="font-size:12.5px;color:#4f46e5;font-weight:600;text-decoration:none;">¿Olvidaste tu contraseña?</a>
+                        <a href="<?= BASE_URL ?>auth/forgot-password" style="font-size:12.5px;color:#2a7a52;font-weight:600;text-decoration:none;">¿Olvidaste tu contraseña?</a>
                     </div>
                     <div style="position:relative;">
                         <input type="password" id="password" name="password" required
@@ -138,9 +138,9 @@ $page_title = "Iniciar Sesión — Kyros Commerce";
                 </div>
 
                 <button type="submit"
-                        style="width:100%;padding:13px;border-radius:10px;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;font-size:15px;font-weight:700;border:none;cursor:pointer;box-shadow:0 4px 16px rgba(79,70,229,0.3);transition:all .2s;"
-                        onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 6px 22px rgba(79,70,229,0.4)'"
-                        onmouseout="this.style.transform='none';this.style.boxShadow='0 4px 16px rgba(79,70,229,0.3)'">
+                        style="width:100%;padding:13px;border-radius:10px;background:linear-gradient(135deg,#2a7a52,#1f5c3d);color:#fff;font-size:15px;font-weight:700;border:none;cursor:pointer;box-shadow:0 4px 16px rgba(42,122,82,0.3);transition:all .2s;"
+                        onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 6px 22px rgba(42,122,82,0.4)'"
+                        onmouseout="this.style.transform='none';this.style.boxShadow='0 4px 16px rgba(42,122,82,0.3)'">
                     Iniciar Sesión
                 </button>
             </form>
@@ -170,9 +170,9 @@ $page_title = "Iniciar Sesión — Kyros Commerce";
                                     style="border:1px solid #cbd5e1;background:#fff;color:#334155;border-radius:8px;padding:6px 10px;font-size:12px;font-weight:600;cursor:pointer;">
                                 Autocompletar
                             </button>
-                            <button type="button"
+                                <button type="button"
                                     onclick="demoDirectLogin('<?= htmlspecialchars($account['key']) ?>')"
-                                    style="border:1px solid #4f46e5;background:#4f46e5;color:#fff;border-radius:8px;padding:6px 10px;font-size:12px;font-weight:700;cursor:pointer;">
+                                    style="border:1px solid #2a7a52;background:#2a7a52;color:#fff;border-radius:8px;padding:6px 10px;font-size:12px;font-weight:700;cursor:pointer;">
                                 Entrar como demo
                             </button>
                         </div>
@@ -192,7 +192,7 @@ $page_title = "Iniciar Sesión — Kyros Commerce";
             <!-- Register link -->
             <p style="text-align:center;font-size:14px;color:#64748b;">
                 ¿No tienes una cuenta?
-                <a href="<?= BASE_URL ?>auth/register" style="color:#4f46e5;font-weight:700;text-decoration:none;margin-left:4px;">
+                <a href="<?= BASE_URL ?>auth/register" style="color:#2a7a52;font-weight:700;text-decoration:none;margin-left:4px;">
                     Regístrate gratis
                 </a>
             </p>

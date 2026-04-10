@@ -60,7 +60,7 @@ $page_title = ($isStore ? 'Tienda Inactiva' : 'Cuenta Inactiva') . ' — Kyros C
             <!-- Action buttons -->
             <div style="display:flex;flex-direction:column;gap:10px;">
                 <a href="<?= BASE_URL ?>auth/login"
-                   style="display:flex;align-items:center;justify-content:center;gap:8px;height:44px;border-radius:10px;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;text-decoration:none;font-size:14px;font-weight:700;">
+                         style="display:flex;align-items:center;justify-content:center;gap:8px;height:44px;border-radius:10px;background:linear-gradient(135deg,#2a7a52,#1f5c3d);color:#fff;text-decoration:none;font-size:14px;font-weight:700;">
                     <i class="fas fa-arrow-left"></i> Volver al inicio de sesión
                 </a>
                 <a href="<?= BASE_URL ?>contact"
@@ -73,7 +73,7 @@ $page_title = ($isStore ? 'Tienda Inactiva' : 'Cuenta Inactiva') . ' — Kyros C
         <!-- Footer note -->
         <p style="margin-top:20px;font-size:12px;color:#94a3b8;">
             ¿No eres tú?
-            <a href="<?= BASE_URL ?>auth/login" style="color:#4f46e5;text-decoration:none;font-weight:600;">Iniciar sesión con otra cuenta</a>
+            <a href="<?= BASE_URL ?>auth/login" style="color:#2a7a52;text-decoration:none;font-weight:600;">Iniciar sesión con otra cuenta</a>
         </p>
 
     </div>

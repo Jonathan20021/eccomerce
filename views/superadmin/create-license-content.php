@@ -64,14 +64,14 @@
                     <div class="form-group" style="margin-bottom:0;display:flex;flex-direction:column;justify-content:flex-end;">
                         <label style="display:flex;align-items:center;gap:8px;cursor:pointer;padding:10px 0;">
                             <input type="checkbox" id="is_trial" name="is_trial" checked
-                                   style="width:16px;height:16px;accent-color:#4f46e5;cursor:pointer;">
+                                   style="width:16px;height:16px;accent-color:#2a7a52;cursor:pointer;">
                             <span style="font-size:14px;font-weight:600;color:#1e293b;">Es Licencia de Prueba</span>
                         </label>
                     </div>
                 </div>
 
                 <div style="background:#eef2ff;border:1px solid #c7d2fe;border-radius:9px;padding:13px 15px;display:flex;align-items:flex-start;gap:10px;">
-                    <i class="fas fa-info-circle" style="color:#4f46e5;font-size:14px;flex-shrink:0;margin-top:1px;"></i>
+                    <i class="fas fa-info-circle" style="color:#2a7a52;font-size:14px;flex-shrink:0;margin-top:1px;"></i>
                     <p style="font-size:13px;color:#3730a3;line-height:1.5;">
                         Se generará automáticamente un <strong>código único</strong> que el usuario podrá usar para activar su licencia.
                     </p>
