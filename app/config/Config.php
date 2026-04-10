@@ -3,7 +3,7 @@
 // Configuración general de la aplicación
 define('APP_NAME', 'Kyros Commerce');
 define('APP_VERSION', '1.0.0');
-define('BASE_URL', 'http://localhost/eccomerce/');
+define('BASE_URL', 'https://www.store.kyrosrd.com/');
 define('APP_URL', BASE_URL);
 define('APP_ENV', getenv('APP_ENV') ?: 'development');
 define('ENABLE_DEMO_ACCOUNTS', APP_ENV !== 'production');
