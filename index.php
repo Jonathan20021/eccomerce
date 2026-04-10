@@ -7,8 +7,16 @@ require_once __DIR__ . '/app/helpers/Helper.php';
 
 // Enrutamiento simple
 $request_uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$base_path = '/eccomerce/';
-$request = str_replace($base_path, '', $request_uri);
+$script_dir = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? '/'));
+$script_dir = rtrim($script_dir, '/');
+$base_path = $script_dir === '' ? '/' : $script_dir . '/';
+
+if ($base_path !== '/' && strpos($request_uri, $base_path) === 0) {
+    $request = substr($request_uri, strlen($base_path));
+} else {
+    $request = ltrim($request_uri, '/');
+}
+
 $request = trim($request, '/');
 
 // Rutas por defecto

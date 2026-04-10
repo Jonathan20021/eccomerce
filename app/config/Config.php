@@ -3,7 +3,26 @@
 // Configuración general de la aplicación
 define('APP_NAME', 'Kyros Commerce');
 define('APP_VERSION', '1.0.0');
-define('BASE_URL', 'https://www.store.kyrosrd.com/');
+
+// BASE_URL dinámico para funcionar en local y producción sin cambios manuales.
+$envAppUrl = getenv('APP_URL');
+if (!empty($envAppUrl)) {
+    $baseUrl = rtrim($envAppUrl, '/') . '/';
+} else {
+    $isHttps = (
+        (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ||
+        (isset($_SERVER['SERVER_PORT']) && (int) $_SERVER['SERVER_PORT'] === 443)
+    );
+    $scheme = $isHttps ? 'https' : 'http';
+    $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+    $scriptDir = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? '/'));
+    $scriptDir = trim($scriptDir, '/');
+    $pathPrefix = $scriptDir !== '' ? '/' . $scriptDir . '/' : '/';
+
+    $baseUrl = $scheme . '://' . $host . $pathPrefix;
+}
+
+define('BASE_URL', $baseUrl);
 define('APP_URL', BASE_URL);
 define('APP_ENV', getenv('APP_ENV') ?: 'development');
 define('ENABLE_DEMO_ACCOUNTS', APP_ENV !== 'production');

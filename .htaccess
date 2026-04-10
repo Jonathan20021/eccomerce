@@ -1,6 +1,13 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteBase /eccomerce/
+
+    # Producción: forzar dominio canónico con HTTPS + www
+    RewriteCond %{HTTP_HOST} ^store\.kyrosrd\.com$ [NC]
+    RewriteRule ^ https://www.store.kyrosrd.com%{REQUEST_URI} [R=301,L]
+
+    RewriteCond %{HTTP_HOST} ^www\.store\.kyrosrd\.com$ [NC]
+    RewriteCond %{HTTPS} !=on
+    RewriteRule ^ https://www.store.kyrosrd.com%{REQUEST_URI} [R=301,L]
     
     # No procesar archivos o directorios reales
     RewriteCond %{REQUEST_FILENAME} !-f
