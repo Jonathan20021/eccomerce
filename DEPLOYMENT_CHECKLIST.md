@@ -95,7 +95,7 @@ Verificación previa antes de llevar Kyros a producción.
   - [ ] Estados de orden actualizan
   - [ ] Historial de órdenes visible
 
-- [ ] **WhatsApp integrado**
+- [ ] **Contacto por wa.me operativo**
   - [ ] Enlaces wa.me generan correctamente
   - [ ] Números almacenan bien
   - [ ] Clientes pueden contactar
@@ -131,10 +131,10 @@ Verificación previa antes de llevar Kyros a producción.
 
 ### 7. Integraciones
 
-- [ ] **WhatsApp (wa.me)**
+- [ ] **Enlaces wa.me**
   - [ ] Enlaces generan correctamente
   - [ ] URLs están codificadas
-  - [ ] Mensajes se envían
+  - [ ] Mensajes se precargan correctamente
 
 - [ ] **Email (futuro)**
   - [ ] SMTP configurado

@@ -10,8 +10,8 @@
 .sf-hero-bg {
     position: absolute; inset: 0;
     background:
-        radial-gradient(ellipse 60% 80% at 70% 40%, rgba(99,102,241,0.22) 0%, transparent 60%),
-        radial-gradient(ellipse 50% 60% at 20% 80%, rgba(124,58,237,0.18) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 80% at 70% 40%, rgba(42,122,82,0.22) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 20% 80%, rgba(212,151,58,0.16) 0%, transparent 55%),
         radial-gradient(ellipse 40% 50% at 85% 85%, rgba(59,130,246,0.12) 0%, transparent 50%);
 }
 .sf-hero-grid-overlay {
@@ -29,9 +29,9 @@
 }
 .sf-hero-kicker {
     display: inline-flex; align-items: center; gap: 7px;
-    background: rgba(99,102,241,0.2);
-    border: 1px solid rgba(99,102,241,0.35);
-    color: #a5b4fc;
+    background: rgba(42,122,82,0.2);
+    border: 1px solid rgba(134,239,172,0.35);
+    color: #bbf7d0;
     font-size: 12px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase;
     padding: 5px 12px; border-radius: 9999px;
     margin-bottom: 20px;
@@ -42,7 +42,7 @@
     letter-spacing: -1.5px; line-height: 1.08;
     margin-bottom: 18px;
 }
-.sf-hero-headline span { color: #818cf8; }
+.sf-hero-headline span { color: #86efac; }
 .sf-hero-sub {
     font-size: 16px; color: rgba(255,255,255,0.52); line-height: 1.6;
     margin-bottom: 32px; max-width: 420px;
@@ -50,13 +50,13 @@
 .sf-hero-ctas { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .sf-hero-cta-primary {
     display: inline-flex; align-items: center; gap: 8px;
-    background: #4f46e5; color: #fff;
+    background: #2a7a52; color: #fff;
     padding: 13px 24px; border-radius: 12px;
     font-size: 14.5px; font-weight: 700; text-decoration: none;
-    box-shadow: 0 8px 24px rgba(79,70,229,0.4);
+    box-shadow: 0 8px 24px rgba(42,122,82,0.35);
     transition: transform .2s, box-shadow .2s, background .15s;
 }
-.sf-hero-cta-primary:hover { background: #4338ca; transform: translateY(-2px); box-shadow: 0 12px 32px rgba(79,70,229,0.5); }
+.sf-hero-cta-primary:hover { background: #1f5c3d; transform: translateY(-2px); box-shadow: 0 12px 32px rgba(42,122,82,0.45); }
 .sf-hero-cta-wa {
     display: inline-flex; align-items: center; gap: 8px;
     background: rgba(37,211,102,0.15); border: 1.5px solid rgba(37,211,102,0.35);
@@ -78,8 +78,8 @@
 .sf-hero-card-back {
     position: absolute; top: 16px; right: -12px;
     width: 200px; height: 260px;
-    background: rgba(99,102,241,0.15);
-    border: 1px solid rgba(99,102,241,0.2);
+    background: rgba(42,122,82,0.16);
+    border: 1px solid rgba(42,122,82,0.24);
     border-radius: 20px;
     backdrop-filter: blur(4px);
     transform: rotate(6deg);
@@ -87,8 +87,8 @@
 .sf-hero-card-mid {
     position: absolute; top: 8px; left: -8px;
     width: 200px; height: 260px;
-    background: rgba(124,58,237,0.12);
-    border: 1px solid rgba(124,58,237,0.18);
+    background: rgba(212,151,58,0.12);
+    border: 1px solid rgba(212,151,58,0.2);
     border-radius: 20px;
     backdrop-filter: blur(4px);
     transform: rotate(-3deg);
@@ -132,7 +132,7 @@
     font-size: 12px; font-weight: 700; color: #fff;
     margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
-.sf-hero-slide-price { font-size: 14px; font-weight: 900; color: #818cf8; }
+.sf-hero-slide-price { font-size: 14px; font-weight: 900; color: #86efac; }
 .sf-hero-dots {
     position: absolute; left: 50%; bottom: 8px; transform: translateX(-50%);
     display: flex; align-items: center; gap: 6px; z-index: 6;
@@ -142,7 +142,7 @@
     background: rgba(255,255,255,.35);
     transition: background .2s ease, transform .2s ease;
 }
-.sf-hero-dot.active { background: #818cf8; transform: scale(1.15); }
+.sf-hero-dot.active { background: #86efac; transform: scale(1.15); }
 .sf-hero-arrow {
     position: absolute;
     top: 50%;
@@ -161,7 +161,7 @@
     transition: background .15s ease, transform .15s ease;
 }
 .sf-hero-arrow:hover {
-    background: rgba(79,70,229,0.85);
+    background: rgba(42,122,82,0.9);
     transform: translateY(-50%) scale(1.05);
 }
 .sf-hero-arrow.prev { left: 8px; }
@@ -196,7 +196,7 @@
     flex-shrink: 0;
 }
 .sf-cat-tab:hover { color: #1e293b; }
-.sf-cat-tab.active { color: #4f46e5; border-bottom-color: #4f46e5; }
+.sf-cat-tab.active { color: #2a7a52; border-bottom-color: #2a7a52; }
 .sf-cat-tab i { font-size: 11px; opacity: .7; }
 
 /* ── Toolbar ── */
@@ -225,7 +225,7 @@
     background: #f8fafc; outline: none;
     transition: border-color .15s, background .15s, width .25s;
 }
-.sf-search-input:focus { border-color: #4f46e5; background: #fff; width: 240px; }
+.sf-search-input:focus { border-color: #2a7a52; background: #fff; width: 240px; }
 
 /* ── Product grid ── */
 .sf-grid-wrap { max-width: 1280px; margin: 0 auto; padding: 24px 24px 72px; }
@@ -309,7 +309,7 @@
     transition: background .15s, color .15s;
     letter-spacing: -.2px;
 }
-.sf-card-add-btn:hover { background: #4f46e5; color: #fff; }
+.sf-card-add-btn:hover { background: #2a7a52; color: #fff; }
 .sf-card-add-btn:disabled { background: rgba(255,255,255,.4); color: rgba(255,255,255,.5); cursor: not-allowed; }
 
 /* Card info */
@@ -324,7 +324,7 @@
     display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
     text-decoration: none; display: block;
 }
-.sf-card-name:hover { color: #4f46e5; }
+.sf-card-name:hover { color: #2a7a52; }
 .sf-card-footer { display: flex; align-items: center; justify-content: space-between; }
 .sf-card-prices { display: flex; align-items: baseline; gap: 6px; }
 .sf-card-price { font-size: 17px; font-weight: 900; color: #1e293b; }
@@ -358,7 +358,7 @@
     font-size: 13.5px; font-weight: 600; color: #475569;
     text-decoration: none; transition: all .15s;
 }
-.sf-page-a:hover { border-color: #4f46e5; color: #4f46e5; background: #eef2ff; }
+.sf-page-a:hover { border-color: #2a7a52; color: #2a7a52; background: #ecfdf5; }
 .sf-page-a.active { background: #1e293b; border-color: #1e293b; color: #fff; }
 
 /* ── Responsive ── */
@@ -736,7 +736,7 @@ function addToCart(productId, storeId, btn) {
             if (data.success) {
                 showToast('Producto añadido al carrito ✓', 'success');
                 updateCartBadge();
-                btn.style.background = '#4f46e5';
+                btn.style.background = '#2a7a52';
                 btn.style.color = '#fff';
                 btn.innerHTML = '<i class="fas fa-check" style="font-size:12px;"></i> Añadido';
                 setTimeout(() => {

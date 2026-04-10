@@ -12,9 +12,9 @@
     <link rel="stylesheet" href="<?= ASSETS_PATH ?>css/style.css">
     <link rel="stylesheet" href="<?= ASSETS_PATH ?>css/mobile-pro.css">
     <style>
-        :root { --primary: #4f46e5; --primary-hover: #4338ca; }
+        :root { --primary: #2a7a52; --primary-hover: #1f5c3d; }
         .nav-link { font-size: 14px; font-weight: 500; color: #475569; padding: 6px 10px; border-radius: 7px; transition: all 0.15s; text-decoration: none; }
-        .nav-link:hover { color: #1e293b; background: #f8fafc; }
+        .nav-link:hover { color: #1f5c3d; background: #ecfdf5; }
     </style>
 </head>
 <body class="bg-white text-gray-900">
@@ -36,7 +36,7 @@ $socialLinks = array_values(array_filter($socialLinks, function ($item) {
     <div class="nav-inner">
         <!-- Logo -->
         <a href="<?= BASE_URL ?>" class="nav-logo">
-            <div class="logo-icon" style="background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:9px;font-weight:800;font-size:14px;">K</div>
+            <div class="logo-icon" style="background:linear-gradient(135deg,#2a7a52,#d4973a);color:#fff;display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:9px;font-weight:800;font-size:14px;">K</div>
             <span class="nav-logo-text">Kyros Commerce</span>
         </a>
 
@@ -47,7 +47,7 @@ $socialLinks = array_values(array_filter($socialLinks, function ($item) {
             <?php if (isset($storeData)): ?>
                 <a href="<?= BASE_URL ?>shop/<?= $storeData['slug'] ?>/cart" class="nav-link flex items-center gap-1.5">
                     <i class="fas fa-shopping-cart text-xs"></i> Carrito
-                    <span id="cart-count" class="bg-indigo-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-content-center">0</span>
+                    <span id="cart-count" class="bg-green-700 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-content-center">0</span>
                 </a>
             <?php endif; ?>
         </div>
@@ -92,7 +92,7 @@ $socialLinks = array_values(array_filter($socialLinks, function ($item) {
 <div id="mainNavDrawer" class="mobile-nav-drawer">
     <div class="mobile-nav-header">
         <div style="display:flex;align-items:center;gap:9px;">
-            <div style="width:30px;height:30px;background:linear-gradient(135deg,#4f46e5,#7c3aed);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#fff;">K</div>
+            <div style="width:30px;height:30px;background:linear-gradient(135deg,#2a7a52,#d4973a);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#fff;">K</div>
             <span style="font-size:16px;font-weight:800;color:#1e293b;">Kyros Commerce</span>
         </div>
         <button class="mobile-nav-close" onclick="closeMainNav()"><i class="fas fa-times"></i></button>
@@ -113,11 +113,11 @@ $socialLinks = array_values(array_filter($socialLinks, function ($item) {
     <div class="mobile-nav-footer">
         <?php if (Auth::isLoggedIn()): ?>
             <?php if (Auth::isSuperAdmin()): ?>
-                <a href="<?= BASE_URL ?>superadmin/dashboard" style="display:flex;align-items:center;justify-content:center;gap:8px;height:42px;border-radius:9px;background:#f5f3ff;border:1.5px solid #e0e7ff;color:#4f46e5;font-size:14px;font-weight:600;text-decoration:none;">
+                <a href="<?= BASE_URL ?>superadmin/dashboard" style="display:flex;align-items:center;justify-content:center;gap:8px;height:42px;border-radius:9px;background:#ecfdf5;border:1.5px solid #bbf7d0;color:#2a7a52;font-size:14px;font-weight:600;text-decoration:none;">
                     <i class="fas fa-chart-line"></i> Dashboard
                 </a>
             <?php elseif (Auth::isStoreOwner()): ?>
-                <a href="<?= BASE_URL ?>admin/dashboard" style="display:flex;align-items:center;justify-content:center;gap:8px;height:42px;border-radius:9px;background:#f5f3ff;border:1.5px solid #e0e7ff;color:#4f46e5;font-size:14px;font-weight:600;text-decoration:none;">
+                <a href="<?= BASE_URL ?>admin/dashboard" style="display:flex;align-items:center;justify-content:center;gap:8px;height:42px;border-radius:9px;background:#ecfdf5;border:1.5px solid #bbf7d0;color:#2a7a52;font-size:14px;font-weight:600;text-decoration:none;">
                     <i class="fas fa-store"></i> Mi Tienda
                 </a>
             <?php endif; ?>
@@ -128,7 +128,7 @@ $socialLinks = array_values(array_filter($socialLinks, function ($item) {
             <a href="<?= BASE_URL ?>auth/login" style="display:flex;align-items:center;justify-content:center;gap:8px;height:42px;border-radius:9px;border:1.5px solid #e2e8f0;color:#475569;font-size:14px;font-weight:600;text-decoration:none;">
                 Iniciar sesión
             </a>
-            <a href="<?= BASE_URL ?>auth/register" style="display:flex;align-items:center;justify-content:center;gap:8px;height:42px;border-radius:9px;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;font-size:14px;font-weight:700;text-decoration:none;">
+            <a href="<?= BASE_URL ?>auth/register" style="display:flex;align-items:center;justify-content:center;gap:8px;height:42px;border-radius:9px;background:linear-gradient(135deg,#2a7a52,#1f5c3d);color:#fff;font-size:14px;font-weight:700;text-decoration:none;">
                 <i class="fas fa-rocket"></i> Empezar gratis
             </a>
         <?php endif; ?>
@@ -147,7 +147,7 @@ $socialLinks = array_values(array_filter($socialLinks, function ($item) {
             <!-- Brand -->
             <div>
                 <div class="flex items-center gap-2.5 mb-4">
-                    <div style="background:linear-gradient(135deg,#4f46e5,#7c3aed);border-radius:9px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:#fff;">K</div>
+                    <div style="background:linear-gradient(135deg,#2a7a52,#d4973a);border-radius:9px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:#fff;">K</div>
                     <span style="color:#f8fafc;font-size:17px;font-weight:700;">Kyros Commerce</span>
                 </div>
                 <p class="text-sm leading-relaxed mb-5">La plataforma ideal para vender online sin complicaciones.</p>

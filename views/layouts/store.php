@@ -24,7 +24,7 @@
             padding: 8px 16px;
             letter-spacing: .2px;
         }
-        .store-announcement a { color: #a5b4fc; text-decoration: underline; }
+        .store-announcement a { color: #86efac; text-decoration: underline; }
 
         /* Navbar */
         .store-nav {
@@ -82,7 +82,7 @@
             transition: border-color .15s, background .15s, width .25s;
         }
         .store-nav-search input:focus {
-            border-color: #4f46e5; background: #fff; width: 260px;
+            border-color: #2a7a52; background: #fff; width: 260px;
         }
         .store-nav-search i {
             position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
@@ -130,12 +130,12 @@
             font-size: 12.5px; font-weight: 600; color: #475569;
             white-space: nowrap;
         }
-        .store-trust-item i { color: #4f46e5; font-size: 13px; }
+        .store-trust-item i { color: #2a7a52; font-size: 13px; }
 
         /* Hero */
         .store-hero-v2 {
             position: relative; overflow: hidden;
-            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 40%, #312e81 75%, #4338ca 100%);
+            background: linear-gradient(135deg, #0c1f12 0%, #1a4a2e 45%, #2a7a52 80%, #1f5c3d 100%);
             min-height: 320px;
             display: flex; align-items: center;
         }
@@ -143,8 +143,8 @@
             content: '';
             position: absolute; inset: 0;
             background:
-                radial-gradient(circle at 80% 20%, rgba(139,92,246,0.25) 0%, transparent 50%),
-                radial-gradient(circle at 20% 80%, rgba(79,70,229,0.2) 0%, transparent 40%);
+                radial-gradient(circle at 80% 20%, rgba(212,151,58,0.2) 0%, transparent 50%),
+                radial-gradient(circle at 20% 80%, rgba(42,122,82,0.25) 0%, transparent 40%);
         }
         .store-hero-v2::after {
             content: '';
@@ -222,7 +222,7 @@
             transition: all .15s;
             flex-shrink: 0;
         }
-        .cat-chip:hover { border-color: #a5b4fc; color: #4f46e5; background: #eef2ff; }
+        .cat-chip:hover { border-color: #86efac; color: #2a7a52; background: #ecfdf5; }
         .cat-chip.active { background: #1e293b; border-color: #1e293b; color: #fff; }
 
         /* Product grid */
@@ -315,7 +315,7 @@
             display: flex; align-items: center; justify-content: center; gap: 7px;
             transition: background .15s;
         }
-        .sf-add-btn:hover { background: #4f46e5; }
+        .sf-add-btn:hover { background: #2a7a52; }
         .sf-add-btn:disabled { background: rgba(100,116,139,.7); cursor: not-allowed; }
 
         /* Product info */
@@ -403,7 +403,7 @@
             display: flex; align-items: center; justify-content: center;
             font-size: 14px; transition: background .15s, color .15s;
         }
-        .store-footer-social:hover { background: #4f46e5; color: #fff; }
+        .store-footer-social:hover { background: #2a7a52; color: #fff; }
         .store-footer-col-title {
             font-size: 11.5px; font-weight: 700;
             color: #f8fafc; text-transform: uppercase; letter-spacing: .8px;
@@ -422,7 +422,7 @@
             font-size: 12px; flex-wrap: wrap; gap: 8px;
         }
         .store-footer-powered { color: #475569; }
-        .store-footer-powered a { color: #6366f1; text-decoration: none; font-weight: 600; }
+        .store-footer-powered a { color: #86efac; text-decoration: none; font-weight: 600; }
 
         /* Pagination */
         .sf-pagination {
@@ -436,7 +436,7 @@
             font-size: 13.5px; font-weight: 600; color: #475569;
             text-decoration: none; transition: all .15s;
         }
-        .sf-page-btn:hover { border-color: #4f46e5; color: #4f46e5; }
+        .sf-page-btn:hover { border-color: #2a7a52; color: #2a7a52; }
         .sf-page-btn.active { background: #1e293b; border-color: #1e293b; color: #fff; }
 
         /* Responsive */
@@ -633,10 +633,10 @@ $storeInitial = strtoupper(substr($storeName, 0, 1));
             </div>
         </form>
         <a href="<?= BASE_URL ?>shop/<?= htmlspecialchars($storeSlug) ?>" class="store-mobile-link">
-            <i class="fas fa-home" style="width:18px;color:#4f46e5;margin-right:8px;"></i> Inicio
+            <i class="fas fa-home" style="width:18px;color:#2a7a52;margin-right:8px;"></i> Inicio
         </a>
         <a href="<?= BASE_URL ?>shop/<?= htmlspecialchars($storeSlug) ?>/cart" class="store-mobile-link">
-            <i class="fas fa-shopping-bag" style="width:18px;color:#4f46e5;margin-right:8px;"></i> Mi Carrito
+            <i class="fas fa-shopping-bag" style="width:18px;color:#2a7a52;margin-right:8px;"></i> Mi Carrito
         </a>
         <?php foreach ($menuLinks as $item): ?>
             <?php if (!empty($item['label']) && !empty($item['url'])): ?>

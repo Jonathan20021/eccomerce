@@ -4,14 +4,14 @@
 [![PHP Version](https://img.shields.io/badge/php-%3E%3D7.4-blue.svg)](https://www.php.net/)
 [![MySQL](https://img.shields.io/badge/mysql-5.7-blue.svg)](https://www.mysql.com/)
 
-Kyros es una plataforma SaaS completa para crear y administrar tiendas online. Permite a diferentes comerciantes crear sus propias tiendas, subir productos, recibir órdenes y comunicarse con clientes a través de WhatsApp.
+Kyros es una plataforma SaaS completa para crear y administrar tiendas online. Permite a diferentes comerciantes crear sus propias tiendas, subir productos, recibir órdenes y comunicarse con clientes mediante enlaces wa.me.
 
 ## 🚀 Características Principales
 
 - **Multi-tienda**: Diferentes propietarios pueden crear sus tiendas
 - **Panel de Administración**: Gestión integral de productos, órdenes y configuración
 - **Carrito de Compras**: Sistema completo de carrito persistente
-- **Integración WhatsApp**: Recibe notificaciones de órdenes y comunícate con clientes
+- **Contacto por wa.me**: Comparte enlaces de contacto para coordinar pedidos con clientes
 - **Portal Público**: Escaparate profesional para cada tienda
 - **Sistema de Licencias**: Gestión de planes (Starter, Professional, Enterprise)
 - **Prueba Gratis**: 15 días de prueba sin tarjeta de crédito
@@ -154,7 +154,7 @@ kyros/
 2. **Plan de Prueba**: Obtiene 15 días gratis del plan seleccionado
 3. **Panel Tienda**: Sube productos, configura WhatsApp
 4. **Portal Público**: Clientes ven la tienda y compran
-5. **Órdenes**: Usuario recibe notificaciones en WhatsApp
+5. **Órdenes**: Usuario recibe la orden y coordina con el cliente mediante wa.me
 
 ## 🎨 Personalización
 
@@ -184,21 +184,21 @@ define('APP_NAME', 'Kyros');  // Cambiar aquí
 2. Actualiza los modelos correspondientes
 3. Actualiza las vistas
 
-## 📱 Integración WhatsApp
+## 📱 Contacto por wa.me
 
-### Configurar Número de WhatsApp
+### Configurar Número para wa.me
 
 1. En panel de tienda > Configuración
 2. Ingresa número en formato internacional: `34612345678`
-3. Los clientes recibirán enlace wa.me para contactar
+3. Los clientes recibirán un enlace wa.me para contactar
 
-### Personalizar Mensaje de WhatsApp
+### Personalizar Mensaje de wa.me
 
 En `app/helpers/Helper.php`, función `getWhatsAppLink()`:
 
 ```php
 public static function getWhatsAppLink($phone, $message = '') {
-    // $message es el mensaje enviado al abrir WhatsApp
+    // $message es el texto precargado en el enlace wa.me
 }
 ```
 
@@ -217,7 +217,7 @@ public static function getWhatsAppLink($phone, $message = '') {
 2. Añade productos al carrito
 3. Procede al checkout
 4. Completa datos del cliente
-5. La orden se crea y se envía a WhatsApp
+5. La orden se crea y se genera enlace wa.me para contacto
 
 ## 🐛 Solución de Problemas
 

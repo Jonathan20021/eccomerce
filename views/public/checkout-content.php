@@ -121,10 +121,10 @@
                     <i class="fab fa-whatsapp" style="color:#16a34a;font-size:18px;"></i>
                 </div>
                 <div>
-                    <p style="font-size:14px;font-weight:700;color:#15803d;margin-bottom:3px;">Pago por WhatsApp</p>
+                    <p style="font-size:14px;font-weight:700;color:#15803d;margin-bottom:3px;">Coordinación por mensaje (wa.me)</p>
                     <?php if (!empty($storeData['whatsapp_number'])): ?>
                     <p style="font-size:13px;color:#166534;line-height:1.5;">
-                        Recibirás un enlace de WhatsApp para coordinar el pago con la tienda.
+                        Recibirás un enlace wa.me para coordinar el pago con la tienda.
                         Número de contacto: <strong><?= htmlspecialchars($storeData['whatsapp_number']) ?></strong>
                     </p>
                     <?php else: ?>

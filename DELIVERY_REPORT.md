@@ -9,7 +9,7 @@
 Desarrollo de una **plataforma SaaS profesional completa** llamada **Kyros** para gestión de tiendas online con:
 - ✅ Multi-tienda con arquitectura owner_id
 - ✅ Carrito de compras y checkout
-- ✅ Integración WhatsApp (wa.me)
+- ✅ Enlaces wa.me para contacto
 - ✅ Panel SuperAdmin para licencias
 - ✅ Sistema de planes (3 modelos)
 - ✅ PHP/MySQL completo
@@ -292,7 +292,7 @@ Seleccionar plan de prueba (15 días gratis)
 - [x] Configuración del sistema
 
 ### ✅ Integraciones
-- [x] WhatsApp (wa.me links)
+- [x] Enlaces wa.me
 - [x] Números configurables por tienda
 - [x] Encoding de mensajes
 

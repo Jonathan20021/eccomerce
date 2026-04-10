@@ -14,6 +14,7 @@ $page_title = "Kyros Commerce — Crea tu Tienda Online Profesional";
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="<?= ASSETS_PATH ?>css/style.css">
+    <link rel="stylesheet" href="<?= ASSETS_PATH ?>css/mobile-pro.css">
     <style>
         .gradient-text {
             background: linear-gradient(135deg, #86efac, #fde68a);
@@ -132,13 +133,75 @@ $page_title = "Kyros Commerce — Crea tu Tienda Online Profesional";
         }
         .fade-in-up { animation: fadeInUp .6s ease-out both; }
 
+        .home-compare-table { overflow: hidden; }
+
         @media (max-width: 768px) {
             .hero-v2 { padding: 72px 0 80px; }
             .grid-footer { grid-template-columns: 1fr 1fr !important; gap: 32px !important; }
             .process-step:not(:last-child)::after { display: none; }
         }
+
+        @media (max-width: 640px) {
+            .home-nav-shell {
+                padding: 0 16px !important;
+                height: 58px !important;
+            }
+            .home-brand-text {
+                font-size: 16px !important;
+            }
+            .hero-v2 {
+                padding: 56px 0 64px;
+            }
+            .home-hero-shell {
+                padding: 0 16px !important;
+            }
+            .home-hero-title {
+                font-size: clamp(30px, 10vw, 42px) !important;
+                letter-spacing: -1.2px !important;
+                line-height: 1.1 !important;
+            }
+            .home-hero-sub {
+                font-size: 15px !important;
+                line-height: 1.6 !important;
+                margin-bottom: 26px !important;
+            }
+            .home-hero-actions {
+                display: grid !important;
+                grid-template-columns: 1fr;
+                gap: 10px !important;
+            }
+            .home-hero-actions a {
+                width: 100%;
+                justify-content: center;
+            }
+            .home-compare-table {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            .home-compare-table > div {
+                min-width: 620px;
+            }
+            .home-cta-btn {
+                width: 100%;
+                justify-content: center;
+                padding: 14px 20px !important;
+                font-size: 15px !important;
+            }
+        }
+
         @media (max-width: 480px) {
             .grid-footer { grid-template-columns: 1fr !important; }
+            .feature-card-v2,
+            .testimonial-v2 {
+                padding: 22px;
+                border-radius: 16px;
+            }
+            .home-brand-text {
+                max-width: 155px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
         }
     </style>
 </head>
@@ -146,11 +209,11 @@ $page_title = "Kyros Commerce — Crea tu Tienda Online Profesional";
 
 <!-- =========== NAVBAR =========== -->
 <nav style="position:sticky;top:0;z-index:150;background:rgba(255,255,255,0.97);backdrop-filter:blur(16px);border-bottom:1px solid #e2e8f0;">
-    <div style="max-width:1200px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between;">
+    <div class="home-nav-shell" style="max-width:1200px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between;">
         <!-- Logo -->
         <a href="<?= BASE_URL ?>" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
             <div style="width:34px;height:34px;background:linear-gradient(135deg,#2a7a52,#d4973a);border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px;color:#fff;letter-spacing:-0.5px;">K</div>
-            <span style="font-size:18px;font-weight:800;color:#1e293b;letter-spacing:-0.5px;">Kyros Commerce</span>
+            <span class="home-brand-text" style="font-size:18px;font-weight:800;color:#1e293b;letter-spacing:-0.5px;">Kyros Commerce</span>
         </a>
 
         <!-- Links (desktop) -->
@@ -227,7 +290,7 @@ $page_title = "Kyros Commerce — Crea tu Tienda Online Profesional";
 
 <!-- =========== HERO =========== -->
 <section class="hero-v2">
-    <div style="max-width:1200px;margin:0 auto;padding:0 24px;position:relative;z-index:1;">
+    <div class="home-hero-shell" style="max-width:1200px;margin:0 auto;padding:0 24px;position:relative;z-index:1;">
         <div class="grid md:grid-cols-2 gap-14 items-center">
             <div class="fade-in-up">
                 <!-- Badge -->
@@ -236,17 +299,17 @@ $page_title = "Kyros Commerce — Crea tu Tienda Online Profesional";
                     <span style="color:rgba(255,255,255,0.85);font-size:12.5px;font-weight:600;letter-spacing:.3px;">Plataforma SaaS de E-commerce #1 en Latam</span>
                 </div>
 
-                <h1 style="font-size:clamp(36px,5vw,58px);font-weight:900;color:#fff;line-height:1.08;letter-spacing:-2px;margin-bottom:22px;">
+                <h1 class="home-hero-title" style="font-size:clamp(36px,5vw,58px);font-weight:900;color:#fff;line-height:1.08;letter-spacing:-2px;margin-bottom:22px;">
                     Vende más,<br>
                     trabaja menos.<br>
                     <span class="gradient-text">Crece sin límites.</span>
                 </h1>
 
-                <p style="font-size:18px;color:rgba(255,255,255,0.72);line-height:1.75;margin-bottom:38px;max-width:500px;">
+                <p class="home-hero-sub" style="font-size:18px;color:rgba(255,255,255,0.72);line-height:1.75;margin-bottom:38px;max-width:500px;">
                     Kyros Commerce te da todo lo que necesitas para lanzar, crecer y escalar tu tienda online. Sin código, sin complicaciones.
                 </p>
 
-                <div style="display:flex;flex-wrap:wrap;gap:14px;margin-bottom:32px;">
+                <div class="home-hero-actions" style="display:flex;flex-wrap:wrap;gap:14px;margin-bottom:32px;">
                     <a href="<?= BASE_URL ?>auth/register"
                        style="display:inline-flex;align-items:center;gap:9px;background:#d4973a;color:#fff;padding:14px 28px;border-radius:12px;font-size:15px;font-weight:700;text-decoration:none;box-shadow:0 4px 20px rgba(212,151,58,.4);transition:all .2s;"
                        onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 28px rgba(212,151,58,.5)'" onmouseout="this.style.transform='none';this.style.boxShadow='0 4px 20px rgba(212,151,58,.4)'">
@@ -385,7 +448,7 @@ $page_title = "Kyros Commerce — Crea tu Tienda Online Profesional";
             <?php
             $features = [
                 ['icon'=>'fas fa-shopping-cart','bg'=>'#ecfdf5','color'=>'#2a7a52','title'=>'Carrito de Compras Avanzado',   'desc'=>'Carrito robusto y seguro con múltiples opciones. Tus clientes compran sin fricción, en segundos.'],
-                ['icon'=>'fab fa-whatsapp',     'bg'=>'#f0fdf4','color'=>'#16a34a','title'=>'Integración WhatsApp',          'desc'=>'Recibe notificaciones de nuevas órdenes directamente en WhatsApp y mantén contacto fluido con tus clientes.'],
+                ['icon'=>'fab fa-whatsapp',     'bg'=>'#f0fdf4','color'=>'#16a34a','title'=>'Contacto por wa.me',            'desc'=>'Comparte enlaces wa.me para que tus clientes te escriban y coordinen su compra rápidamente.'],
                 ['icon'=>'fas fa-images',       'bg'=>'#fefce8','color'=>'#d97706','title'=>'Galerías de Productos HD',       'desc'=>'Sube fotos de alta calidad sin límite. Muestra tu catálogo de manera profesional y atractiva.'],
                 ['icon'=>'fas fa-chart-line',   'bg'=>'#eff6ff','color'=>'#2563eb','title'=>'Analytics en Tiempo Real',      'desc'=>'Visualiza ventas, clientes y productos más vendidos. Métricas claras para tomar mejores decisiones.'],
                 ['icon'=>'fas fa-mobile-alt',   'bg'=>'#fdf4ff','color'=>'#9333ea','title'=>'100% Responsivo',               'desc'=>'Tu tienda luce perfecta en todos los dispositivos: desktop, tablet y smartphones modernos.'],
@@ -498,7 +561,7 @@ $page_title = "Kyros Commerce — Crea tu Tienda Online Profesional";
             <p class="section-subtitle">Comparado con otras plataformas, Kyros Commerce te da más por menos — en español y sin comisiones.</p>
         </div>
 
-        <div style="max-width:780px;margin:0 auto;border:1.5px solid #e2e8f0;border-radius:20px;overflow:hidden;box-shadow:var(--shadow-lg);">
+        <div class="home-compare-table" style="max-width:780px;margin:0 auto;border:1.5px solid #e2e8f0;border-radius:20px;overflow:hidden;box-shadow:var(--shadow-lg);">
             <!-- Table header -->
             <div style="display:grid;grid-template-columns:2fr 1fr 1fr;background:#f8fafc;border-bottom:2px solid #e2e8f0;">
                 <div style="padding:16px 20px;font-size:12px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;">Característica</div>
@@ -513,7 +576,7 @@ $page_title = "Kyros Commerce — Crea tu Tienda Online Profesional";
             <?php
             $compare = [
                 ['feat'=>'Configuración sin código',    'kyros'=>true,  'other'=>false],
-                ['feat'=>'WhatsApp integrado nativo',   'kyros'=>true,  'other'=>false],
+                ['feat'=>'Enlaces wa.me para contacto', 'kyros'=>true,  'other'=>false],
                 ['feat'=>'SSL gratuito incluido',       'kyros'=>true,  'other'=>true],
                 ['feat'=>'Sin comisiones por venta',    'kyros'=>true,  'other'=>false],
                 ['feat'=>'Soporte en español 24/7',     'kyros'=>true,  'other'=>false],
@@ -556,7 +619,7 @@ $page_title = "Kyros Commerce — Crea tu Tienda Online Profesional";
                 <div style="font-size:12.5px;color:#94a3b8;margin-bottom:24px;">Perfecto para comenzar</div>
                 <hr style="border-color:#f1f5f9;margin-bottom:24px;">
                 <ul style="list-style:none;margin-bottom:28px;display:flex;flex-direction:column;gap:10px;">
-                    <?php foreach (['50 productos activos','5 GB de almacenamiento','Módulo de Inventario','Carrito de compras','WhatsApp integrado','Soporte por email'] as $feat): ?>
+                    <?php foreach (['50 productos activos','5 GB de almacenamiento','Módulo de Inventario','Carrito de compras','Contacto por wa.me','Soporte por email'] as $feat): ?>
                     <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:#334155;">
                         <i class="fas fa-check-circle" style="color:#2a7a52;font-size:13px;flex-shrink:0;"></i><?= $feat ?>
                     </li>
@@ -684,6 +747,7 @@ $page_title = "Kyros Commerce — Crea tu Tienda Online Profesional";
             Crea tu tienda online gratis hoy. Sin tarjeta, sin contrato, sin complicaciones.
         </p>
         <a href="<?= BASE_URL ?>auth/register"
+              class="home-cta-btn"
            style="display:inline-flex;align-items:center;gap:10px;background:#d4973a;color:#fff;padding:16px 36px;border-radius:14px;font-size:16px;font-weight:800;text-decoration:none;box-shadow:0 4px 24px rgba(212,151,58,.4);transition:all .2s;"
            onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 10px 36px rgba(212,151,58,.55)'" onmouseout="this.style.transform='none';this.style.boxShadow='0 4px 24px rgba(212,151,58,.4)'">
             <i class="fas fa-rocket"></i> Comenzar Prueba Gratuita de 15 Días
