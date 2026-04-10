@@ -49,6 +49,9 @@ class AdminController {
         if (!empty($enabledModules['finance'])) {
             $enabledModuleLabels[] = 'Finanzas';
         }
+        if (!empty($enabledModules['pos'])) {
+            $enabledModuleLabels[] = 'POS';
+        }
 
         $storageLimitGb = self::getStoreStorageLimitGb($store_id, $storeData);
 
@@ -213,6 +216,202 @@ class AdminController {
         $recentFinanceOrders = array_slice($orders, 0, 10);
 
         include VIEWS_PATH . 'admin/finance.php';
+    }
+
+    public static function pos() {
+        Auth::requireStoreOwner();
+        Auth::requireValidStoreLicense();
+
+        $store_id = Auth::getStoreId();
+        self::requireModuleAccess($store_id, 'pos');
+
+        $store = new Store();
+        $storeData = $store->findById($store_id);
+
+        $product = new Product();
+        $products = $product->getByStore($store_id, 1000, 0);
+
+        $availableProducts = [];
+        foreach ($products as $item) {
+            if (intval($item['stock'] ?? 0) > 0) {
+                $availableProducts[] = $item;
+            }
+        }
+
+        $user = new User();
+        $customers = $user->getCustomersByStore($store_id, 200, 0, '');
+
+        $orderModel = new Order();
+        $selectedDate = trim((string)($_GET['date'] ?? date('Y-m-d')));
+        if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $selectedDate)) {
+            $selectedDate = date('Y-m-d');
+        }
+
+        $posDailySummary = $orderModel->getPosDailySummary($store_id, $selectedDate);
+        $posDailyOrders = $orderModel->getPosOrdersByDate($store_id, $selectedDate, 20);
+
+        include VIEWS_PATH . 'admin/pos.php';
+    }
+
+    public static function createPosSale() {
+        Auth::requireStoreOwner();
+        Auth::requireValidStoreLicense();
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            Helper::redirect(BASE_URL . 'admin/pos');
+        }
+
+        $store_id = Auth::getStoreId();
+        self::requireModuleAccess($store_id, 'pos');
+
+        $productIds = $_POST['product_id'] ?? [];
+        $quantities = $_POST['quantity'] ?? [];
+
+        if (!is_array($productIds) || !is_array($quantities) || count($productIds) === 0) {
+            Helper::redirect(BASE_URL . 'admin/pos?error=' . urlencode('Agrega productos para completar la venta'));
+        }
+
+        $items = [];
+        foreach ($productIds as $index => $productIdRaw) {
+            $productId = intval($productIdRaw);
+            $quantity = intval($quantities[$index] ?? 0);
+            if ($productId > 0 && $quantity > 0) {
+                $items[] = [
+                    'product_id' => $productId,
+                    'quantity' => $quantity
+                ];
+            }
+        }
+
+        if (empty($items)) {
+            Helper::redirect(BASE_URL . 'admin/pos?error=' . urlencode('Debes seleccionar al menos un producto con cantidad válida'));
+        }
+
+        $customerName = Helper::sanitizeInput($_POST['customer_name'] ?? 'Cliente Mostrador');
+        $customerEmail = Helper::sanitizeInput($_POST['customer_email'] ?? '');
+        $customerPhone = Helper::sanitizeInput($_POST['customer_phone'] ?? '');
+        $customerId = intval($_POST['customer_id'] ?? 0);
+        $paymentMethod = Helper::sanitizeInput($_POST['payment_method'] ?? 'cash');
+        $notes = Helper::sanitizeInput($_POST['notes'] ?? 'Venta desde POS');
+        $tax = floatval($_POST['tax'] ?? 0);
+        $discount = floatval($_POST['discount'] ?? 0);
+
+        if ($customerName === '') {
+            $customerName = 'Cliente Mostrador';
+        }
+
+        $allowedPaymentMethods = ['cash', 'card', 'transfer', 'mixed'];
+        if (!in_array($paymentMethod, $allowedPaymentMethods, true)) {
+            $paymentMethod = 'cash';
+        }
+
+        $order = new Order();
+
+        try {
+            $result = $order->createPosSale($store_id, [
+                'user_id' => $customerId > 0 ? $customerId : null,
+                'customer_name' => $customerName,
+                'customer_email' => $customerEmail,
+                'customer_phone' => $customerPhone,
+                'shipping_address' => 'Venta POS en tienda',
+                'payment_method' => $paymentMethod,
+                'payment_status' => 'paid',
+                'status' => 'delivered',
+                'notes' => $notes,
+                'tax' => max(0, $tax),
+                'discount' => max(0, $discount),
+                'shipping_cost' => 0
+            ], $items);
+
+            Helper::redirect(
+                BASE_URL . 'admin/orders/' . intval($result['order_id']) .
+                '?success=' . urlencode('Venta POS registrada correctamente')
+            );
+        } catch (Throwable $e) {
+            Helper::redirect(BASE_URL . 'admin/pos?error=' . urlencode($e->getMessage()));
+        }
+    }
+
+    public static function searchPosProducts() {
+        Auth::requireStoreOwner();
+        Auth::requireValidStoreLicense();
+
+        header('Content-Type: application/json');
+        $store_id = Auth::getStoreId();
+        self::requireModuleAccess($store_id, 'pos');
+
+        $query = trim((string)($_GET['q'] ?? ''));
+        if ($query === '') {
+            Helper::json(['success' => true, 'products' => []]);
+        }
+
+        $product = new Product();
+        $allProducts = $product->getByStore($store_id, 1000, 0);
+        $qLower = function_exists('mb_strtolower') ? mb_strtolower($query, 'UTF-8') : strtolower($query);
+        $results = [];
+
+        foreach ($allProducts as $item) {
+            $name = strval($item['name'] ?? '');
+            $sku = strval($item['sku'] ?? '');
+            $stock = intval($item['stock'] ?? 0);
+            if ($stock <= 0) {
+                continue;
+            }
+
+            $nameMatch = function_exists('mb_stripos')
+                ? (mb_stripos($name, $query, 0, 'UTF-8') !== false)
+                : (stripos($name, $query) !== false);
+            $skuMatch = $sku !== '' && stripos($sku, $query) !== false;
+            $barcodeMatch = preg_match('/^\d+$/', $qLower) && $sku !== '' && strpos($sku, $query) !== false;
+
+            if (!$nameMatch && !$skuMatch && !$barcodeMatch) {
+                continue;
+            }
+
+            $price = floatval($item['discount_price'] ?? 0) > 0 ? floatval($item['discount_price']) : floatval($item['price'] ?? 0);
+            $image = '';
+            if (!empty($item['images'])) {
+                $images = is_string($item['images']) ? json_decode($item['images'], true) : $item['images'];
+                if (is_array($images) && !empty($images[0])) {
+                    $image = $images[0];
+                }
+            }
+            $results[] = [
+                'id' => intval($item['id']),
+                'name' => $name,
+                'sku' => $sku,
+                'stock' => $stock,
+                'price' => $price,
+                'image' => $image
+            ];
+
+            if (count($results) >= 12) {
+                break;
+            }
+        }
+
+        Helper::json(['success' => true, 'products' => $results]);
+    }
+
+    public static function posCashClose() {
+        Auth::requireStoreOwner();
+        Auth::requireValidStoreLicense();
+
+        $store_id = Auth::getStoreId();
+        self::requireModuleAccess($store_id, 'pos');
+
+        $date = trim((string)($_GET['date'] ?? date('Y-m-d')));
+        if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) {
+            $date = date('Y-m-d');
+        }
+
+        $store = new Store();
+        $storeData = $store->findById($store_id);
+        $orderModel = new Order();
+        $summary = $orderModel->getPosDailySummary($store_id, $date);
+        $orders = $orderModel->getPosOrdersByDate($store_id, $date, 200);
+
+        include VIEWS_PATH . 'admin/pos-cash-close.php';
     }
 
     public static function products() {
@@ -826,6 +1025,41 @@ class AdminController {
         include VIEWS_PATH . 'admin/view-order.php';
     }
 
+    public static function orderInvoice($order_id, $format = 'online') {
+        Auth::requireStoreOwner();
+        Auth::requireValidStoreLicense();
+        $store_id = Auth::getStoreId();
+
+        $orderModel = new Order();
+        $orderData = $orderModel->findById($order_id);
+
+        if (!$orderData || intval($orderData['store_id']) !== intval($store_id)) {
+            Helper::redirect(BASE_URL . 'admin/orders?error=' . urlencode('Orden no encontrada'));
+        }
+
+        $store = new Store();
+        $storeData = $store->findById($store_id);
+        $orderItems = $orderModel->getOrderItems($order_id);
+        $setting = new Setting();
+        $storeTheme = $setting->getStoreTheme($store_id);
+        $footerSettings = $storeTheme['footer'] ?? [];
+        $companyInfo = self::buildInvoiceCompanyInfo($storeData, $footerSettings);
+        $currencySymbol = self::getCurrencySymbol($storeData['currency'] ?? 'USD');
+        $format = strtolower(trim((string)$format));
+
+        if ($format === 'thermal') {
+            include VIEWS_PATH . 'admin/invoice-thermal.php';
+            return;
+        }
+
+        if ($format === 'pdf') {
+            self::streamSimplePdfInvoice($orderData, $orderItems, $companyInfo, $currencySymbol);
+            return;
+        }
+
+        include VIEWS_PATH . 'admin/invoice-online.php';
+    }
+
     private static function generateTemporaryPassword($length = 10) {
         $alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789';
         $maxIndex = strlen($alphabet) - 1;
@@ -836,6 +1070,184 @@ class AdminController {
         }
 
         return $password;
+    }
+
+    private static function streamSimplePdfInvoice($orderData, $orderItems, $companyInfo, $currencySymbol = '$') {
+        $fileName = 'factura-' . preg_replace('/[^a-zA-Z0-9\-_]/', '', strval($orderData['order_number'] ?? 'orden')) . '.pdf';
+        $createdAt = Helper::formatDate($orderData['created_at'] ?? date('Y-m-d H:i:s'), 'Y-m-d H:i');
+        $customerName = strval($orderData['customer_name'] ?? 'Cliente general');
+        $customerEmail = strval($orderData['customer_email'] ?? '-');
+        $customerPhone = strval($orderData['customer_phone'] ?? '-');
+        $paymentMethod = strtoupper(strval($orderData['payment_method'] ?? 'N/A'));
+        $money = function ($amount) use ($currencySymbol) {
+            return $currencySymbol . number_format(floatval($amount), 2, '.', ',');
+        };
+
+        $content = '';
+        $content .= self::pdfFillRect(40, 760, 532, 62, [0.09, 0.16, 0.29]);
+        $content .= self::pdfText(54, 800, strval($companyInfo['name'] ?? 'Tienda'), 'F2', 16, [1, 1, 1]);
+        $content .= self::pdfText(54, 784, 'Factura de venta', 'F1', 10, [0.86, 0.92, 1]);
+        $content .= self::pdfText(410, 800, 'ORDEN', 'F1', 8, [0.75, 0.85, 1]);
+        $content .= self::pdfText(410, 786, strval($orderData['order_number'] ?? ''), 'F2', 11, [1, 1, 1]);
+        $content .= self::pdfText(410, 772, $createdAt, 'F1', 9, [0.86, 0.92, 1]);
+
+        $content .= self::pdfText(54, 740, 'Empresa', 'F2', 10, [0.15, 0.23, 0.35]);
+        $content .= self::pdfText(54, 724, strval($companyInfo['address'] ?? '-'), 'F1', 9, [0.26, 0.35, 0.47]);
+        $content .= self::pdfText(54, 710, 'Tel: ' . strval($companyInfo['phone'] ?? '-'), 'F1', 9, [0.26, 0.35, 0.47]);
+        $content .= self::pdfText(54, 696, 'Email: ' . strval($companyInfo['email'] ?? '-'), 'F1', 9, [0.26, 0.35, 0.47]);
+
+        $content .= self::pdfText(320, 740, 'Cliente', 'F2', 10, [0.15, 0.23, 0.35]);
+        $content .= self::pdfText(320, 724, $customerName, 'F1', 9, [0.26, 0.35, 0.47]);
+        $content .= self::pdfText(320, 710, 'Tel: ' . $customerPhone, 'F1', 9, [0.26, 0.35, 0.47]);
+        $content .= self::pdfText(320, 696, 'Email: ' . $customerEmail, 'F1', 9, [0.26, 0.35, 0.47]);
+        $content .= self::pdfText(320, 682, 'Pago: ' . $paymentMethod, 'F2', 9, [0.15, 0.23, 0.35]);
+
+        $content .= self::pdfFillRect(40, 650, 532, 20, [0.94, 0.96, 0.99]);
+        $content .= self::pdfText(48, 656, 'Producto', 'F2', 9, [0.2, 0.28, 0.4]);
+        $content .= self::pdfText(350, 656, 'Cant.', 'F2', 9, [0.2, 0.28, 0.4]);
+        $content .= self::pdfText(420, 656, 'Precio', 'F2', 9, [0.2, 0.28, 0.4]);
+        $content .= self::pdfText(500, 656, 'Subtotal', 'F2', 9, [0.2, 0.28, 0.4]);
+
+        $rowY = 634;
+        foreach ($orderItems as $item) {
+            if ($rowY < 260) {
+                break;
+            }
+            $productName = substr(strval($item['name'] ?? ''), 0, 43);
+            $qty = intval($item['quantity'] ?? 0);
+            $price = $money($item['price'] ?? 0);
+            $subtotal = $money($item['subtotal'] ?? 0);
+
+            $content .= self::pdfText(48, $rowY, $productName, 'F1', 9, [0.15, 0.15, 0.2]);
+            $content .= self::pdfText(357, $rowY, (string)$qty, 'F1', 9, [0.15, 0.15, 0.2]);
+            $content .= self::pdfText(420, $rowY, $price, 'F1', 9, [0.15, 0.15, 0.2]);
+            $content .= self::pdfText(500, $rowY, $subtotal, 'F1', 9, [0.15, 0.15, 0.2]);
+            $content .= self::pdfStrokeLine(45, $rowY - 6, 567, $rowY - 6, [0.91, 0.94, 0.98], 0.5);
+
+            $rowY -= 18;
+        }
+
+        $totalsY = 176;
+        $content .= self::pdfFillRect(338, $totalsY, 234, 74, [0.97, 0.98, 1]);
+        $content .= self::pdfText(352, $totalsY + 56, 'Subtotal', 'F1', 9, [0.28, 0.35, 0.47]);
+        $content .= self::pdfText(520, $totalsY + 56, $money($orderData['subtotal'] ?? 0), 'F1', 9, [0.15, 0.15, 0.2]);
+        $content .= self::pdfText(352, $totalsY + 42, 'Impuestos', 'F1', 9, [0.28, 0.35, 0.47]);
+        $content .= self::pdfText(520, $totalsY + 42, $money($orderData['tax'] ?? 0), 'F1', 9, [0.15, 0.15, 0.2]);
+        $content .= self::pdfText(352, $totalsY + 28, 'Descuento', 'F1', 9, [0.28, 0.35, 0.47]);
+        $content .= self::pdfText(520, $totalsY + 28, $money($orderData['discount'] ?? 0), 'F1', 9, [0.15, 0.15, 0.2]);
+        $content .= self::pdfStrokeLine(350, $totalsY + 20, 560, $totalsY + 20, [0.8, 0.85, 0.93], 1);
+        $content .= self::pdfText(352, $totalsY + 6, 'TOTAL', 'F2', 11, [0.09, 0.16, 0.29]);
+        $content .= self::pdfText(512, $totalsY + 6, $money($orderData['total'] ?? 0), 'F2', 11, [0.09, 0.16, 0.29]);
+
+        $footerNote = strval($companyInfo['footer_text'] ?? 'Gracias por su compra.');
+        $content .= self::pdfText(44, 120, $footerNote, 'F1', 9, [0.35, 0.42, 0.54]);
+        $content .= self::pdfText(44, 104, 'Documento generado por el módulo POS', 'F1', 8, [0.55, 0.61, 0.71]);
+
+        $objects = [];
+        $objects[1] = "<< /Type /Catalog /Pages 2 0 R >>";
+        $objects[2] = "<< /Type /Pages /Count 1 /Kids [3 0 R] >>";
+        $objects[3] = "<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 842] /Resources << /Font << /F1 5 0 R /F2 6 0 R >> >> /Contents 4 0 R >>";
+        $objects[4] = "<< /Length " . strlen($content) . " >>\nstream\n" . $content . "\nendstream";
+        $objects[5] = "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>";
+        $objects[6] = "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>";
+
+        $pdf = "%PDF-1.4\n";
+        $offsets = [0];
+        for ($i = 1; $i <= 6; $i++) {
+            $offsets[$i] = strlen($pdf);
+            $pdf .= $i . " 0 obj\n" . $objects[$i] . "\nendobj\n";
+        }
+
+        $xrefPos = strlen($pdf);
+        $pdf .= "xref\n0 7\n";
+        $pdf .= "0000000000 65535 f \n";
+        for ($i = 1; $i <= 6; $i++) {
+            $pdf .= sprintf("%010d 00000 n \n", $offsets[$i]);
+        }
+
+        $pdf .= "trailer\n<< /Size 7 /Root 1 0 R >>\nstartxref\n" . $xrefPos . "\n%%EOF";
+
+        header('Content-Type: application/pdf');
+        header('Content-Disposition: attachment; filename="' . $fileName . '"');
+        header('Content-Length: ' . strlen($pdf));
+        echo $pdf;
+        exit;
+    }
+
+    private static function buildInvoiceCompanyInfo($storeData, $footerSettings = []) {
+        $addressParts = array_filter([
+            trim(strval($storeData['address'] ?? '')),
+            trim(strval($storeData['city'] ?? '')),
+            trim(strval($storeData['state'] ?? '')),
+            trim(strval($storeData['postal_code'] ?? '')),
+            trim(strval($storeData['country'] ?? ''))
+        ]);
+
+        return [
+            'name' => strval($storeData['name'] ?? 'Tienda'),
+            'address' => !empty($addressParts) ? implode(', ', $addressParts) : 'Dirección no configurada',
+            'phone' => strval($footerSettings['contact_phone'] ?? ($storeData['phone'] ?? '')),
+            'email' => strval($footerSettings['contact_email'] ?? ($storeData['email'] ?? '')),
+            'footer_text' => strval($footerSettings['text'] ?? 'Gracias por su compra.')
+        ];
+    }
+
+    private static function getCurrencySymbol($currencyCode) {
+        $map = [
+            'USD' => '$',
+            'EUR' => 'EUR ',
+            'MXN' => '$',
+            'COP' => '$',
+            'ARS' => '$',
+            'DOP' => 'RD$'
+        ];
+
+        $code = strtoupper(trim(strval($currencyCode)));
+        return $map[$code] ?? '$';
+    }
+
+    private static function pdfText($x, $y, $text, $font = 'F1', $size = 10, $rgb = null) {
+        $safe = self::escapePdfText(self::toPdfText($text));
+        $command = "BT\n";
+        if (is_array($rgb) && count($rgb) === 3) {
+            $command .= sprintf("%.3F %.3F %.3F rg\n", floatval($rgb[0]), floatval($rgb[1]), floatval($rgb[2]));
+        }
+        $command .= '/' . $font . ' ' . floatval($size) . " Tf\n";
+        $command .= sprintf("1 0 0 1 %.2F %.2F Tm\n", floatval($x), floatval($y));
+        $command .= '(' . $safe . ") Tj\nET\n";
+        return $command;
+    }
+
+    private static function pdfFillRect($x, $y, $width, $height, $rgb = [0, 0, 0]) {
+        return "q\n" .
+            sprintf("%.3F %.3F %.3F rg\n", floatval($rgb[0]), floatval($rgb[1]), floatval($rgb[2])) .
+            sprintf("%.2F %.2F %.2F %.2F re f\n", floatval($x), floatval($y), floatval($width), floatval($height)) .
+            "Q\n";
+    }
+
+    private static function pdfStrokeLine($x1, $y1, $x2, $y2, $rgb = [0, 0, 0], $width = 1) {
+        return "q\n" .
+            sprintf("%.3F %.3F %.3F RG\n", floatval($rgb[0]), floatval($rgb[1]), floatval($rgb[2])) .
+            sprintf("%.2F w\n", floatval($width)) .
+            sprintf("%.2F %.2F m %.2F %.2F l S\n", floatval($x1), floatval($y1), floatval($x2), floatval($y2)) .
+            "Q\n";
+    }
+
+    private static function toPdfText($text) {
+        $value = strval($text);
+        if (function_exists('iconv')) {
+            $converted = @iconv('UTF-8', 'Windows-1252//TRANSLIT//IGNORE', $value);
+            if ($converted !== false) {
+                return $converted;
+            }
+        }
+        return $value;
+    }
+
+    private static function escapePdfText($text) {
+        $search = ['\\', '(', ')', "\r", "\n"];
+        $replace = ['\\\\', '\\(', '\\)', '', ''];
+        return str_replace($search, $replace, strval($text));
     }
 
     private static function getStoreDiskUsageBytes($storeId) {
@@ -910,7 +1322,7 @@ class AdminController {
     }
 
     private static function getEnabledModulesForStore($storeId, $storeData = null) {
-        $modules = ['inventory' => true, 'finance' => false];
+        $modules = ['inventory' => true, 'finance' => false, 'pos' => true];
 
         if (!$storeData) {
             $storeData = (new Store())->findById($storeId);
@@ -933,6 +1345,9 @@ class AdminController {
         if (array_key_exists('module_finance', $features)) {
             $modules['finance'] = !empty($features['module_finance']);
         }
+        if (array_key_exists('module_pos', $features)) {
+            $modules['pos'] = !empty($features['module_pos']);
+        }
 
         $featureList = $features['features'] ?? [];
         if (is_array($featureList)) {
@@ -941,6 +1356,9 @@ class AdminController {
             }
             if (in_array('finance_module', $featureList, true)) {
                 $modules['finance'] = true;
+            }
+            if (in_array('pos_module', $featureList, true)) {
+                $modules['pos'] = true;
             }
         }
 

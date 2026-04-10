@@ -76,9 +76,14 @@ $paymentBadge = [
                         <td class="col-hide-sm"><span class="badge <?= $pb[0] ?>"><?= $pb[1] ?></span></td>
                         <td class="col-hide-sm"><span style="font-size:13px;color:#64748b;"><?= Helper::formatDate($order['created_at']) ?></span></td>
                         <td>
-                            <a href="<?= BASE_URL ?>admin/orders/<?= $order['id'] ?>" class="btn btn-ghost btn-sm">
-                                <i class="fas fa-eye"></i> Ver
-                            </a>
+                            <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                                <a href="<?= BASE_URL ?>admin/orders/<?= $order['id'] ?>" class="btn btn-ghost btn-sm">
+                                    <i class="fas fa-eye"></i> Ver
+                                </a>
+                                <a href="<?= BASE_URL ?>admin/orders/<?= $order['id'] ?>/invoice/online" target="_blank" class="btn btn-ghost btn-sm">
+                                    <i class="fas fa-file-invoice"></i>
+                                </a>
+                            </div>
                         </td>
                     </tr>
                     <?php endforeach; ?>

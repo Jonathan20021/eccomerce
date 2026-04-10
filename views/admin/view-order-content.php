@@ -30,7 +30,23 @@
         ];
         $sb = $statusMap[$orderData['status']] ?? ['badge-slate', ucfirst($orderData['status'])];
         ?>
-        <span class="badge <?= $sb[0] ?>" style="font-size:13px;padding:6px 14px;"><?= $sb[1] ?></span>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end;">
+            <a href="<?= BASE_URL ?>admin/orders/<?= intval($orderData['id']) ?>/invoice/online"
+               target="_blank"
+               class="btn btn-ghost btn-sm">
+                <i class="fas fa-globe"></i> Factura Online
+            </a>
+            <a href="<?= BASE_URL ?>admin/orders/<?= intval($orderData['id']) ?>/invoice/pdf"
+               class="btn btn-ghost btn-sm">
+                <i class="fas fa-file-pdf"></i> PDF
+            </a>
+            <a href="<?= BASE_URL ?>admin/orders/<?= intval($orderData['id']) ?>/invoice/thermal"
+               onclick="window.open(this.href, 'thermalPrintWindow', 'width=420,height=860,menubar=no,toolbar=no,location=no,status=no,resizable=yes,scrollbars=yes'); return false;"
+               class="btn btn-ghost btn-sm">
+                <i class="fas fa-print"></i> Térmica
+            </a>
+            <span class="badge <?= $sb[0] ?>" style="font-size:13px;padding:6px 14px;"><?= $sb[1] ?></span>
+        </div>
     </div>
 
     <div class="store-checkout-grid" style="align-items:start;">

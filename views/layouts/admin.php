@@ -23,7 +23,7 @@ if (!$isSuperAdmin && !isset($storeData) && class_exists('Store') && !empty($_SE
     $storeData = $__store->findById($_SESSION['store_id']);
 }
 
-$enabledModules = ['inventory' => true, 'finance' => false];
+$enabledModules = ['inventory' => true, 'finance' => false, 'pos' => true];
 if (!$isSuperAdmin && !empty($_SESSION['store_id'])) {
     require_once __DIR__ . '/../../app/models/License.php';
     require_once __DIR__ . '/../../app/helpers/Helper.php';
@@ -46,6 +46,9 @@ if (!$isSuperAdmin && !empty($_SESSION['store_id'])) {
     if (array_key_exists('module_finance', $features)) {
         $enabledModules['finance'] = !empty($features['module_finance']);
     }
+    if (array_key_exists('module_pos', $features)) {
+        $enabledModules['pos'] = !empty($features['module_pos']);
+    }
 
     $featureList = $features['features'] ?? [];
     if (is_array($featureList)) {
@@ -54,6 +57,9 @@ if (!$isSuperAdmin && !empty($_SESSION['store_id'])) {
         }
         if (in_array('finance_module', $featureList, true)) {
             $enabledModules['finance'] = true;
+        }
+        if (in_array('pos_module', $featureList, true)) {
+            $enabledModules['pos'] = true;
         }
     }
 }
@@ -146,6 +152,13 @@ if (!$isSuperAdmin && !empty($_SESSION['store_id'])) {
                data-tooltip="Finanzas"
                class="nav-item <?= strpos($currentUri, 'admin/finance') !== false ? 'active' : '' ?>">
                 <i class="fas fa-chart-pie"></i><span class="nav-label"> Finanzas</span>
+            </a>
+            <?php endif; ?>
+            <?php if (!empty($enabledModules['pos'])): ?>
+            <a href="<?= BASE_URL ?>admin/pos"
+               data-tooltip="POS"
+               class="nav-item <?= strpos($currentUri, 'admin/pos') !== false ? 'active' : '' ?>">
+                <i class="fas fa-cash-register"></i><span class="nav-label"> POS</span>
             </a>
             <?php endif; ?>
             <a href="<?= BASE_URL ?>admin/orders"

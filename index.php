@@ -87,8 +87,23 @@ else if ($parts[0] == 'admin') {
     else if (isset($parts[1]) && $parts[1] == 'finance') {
         AdminController::finance();
     }
+    else if (isset($parts[1]) && $parts[1] == 'pos') {
+        if (isset($parts[2]) && $parts[2] == 'sale') {
+            AdminController::createPosSale();
+        } else if (isset($parts[2]) && $parts[2] == 'search') {
+            AdminController::searchPosProducts();
+        } else if (isset($parts[2]) && $parts[2] == 'close') {
+            AdminController::posCashClose();
+        } else {
+            AdminController::pos();
+        }
+    }
     else if (isset($parts[1]) && $parts[1] == 'orders') {
-        if (isset($parts[2])) {
+        if (isset($parts[2]) && isset($parts[3]) && $parts[3] == 'invoice') {
+            $format = $parts[4] ?? 'online';
+            AdminController::orderInvoice(intval($parts[2]), $format);
+        }
+        else if (isset($parts[2])) {
             AdminController::viewOrder(intval($parts[2]));
         } else {
             AdminController::orders();

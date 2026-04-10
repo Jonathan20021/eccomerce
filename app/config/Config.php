@@ -64,9 +64,10 @@ define('PLAN_STARTER', [
     'price' => 0,
     'products' => 50,
     'storage' => 5, // GB
-    'features' => ['basic_storefront', 'products', 'orders', 'inventory_module'],
+    'features' => ['basic_storefront', 'products', 'orders', 'inventory_module', 'pos_module'],
     'module_inventory' => true,
-    'module_finance' => false
+    'module_finance' => false,
+    'module_pos' => true
 ]);
 
 define('PLAN_PROFESSIONAL', [
@@ -75,9 +76,10 @@ define('PLAN_PROFESSIONAL', [
     'price' => 99,
     'products' => 500,
     'storage' => 50,
-    'features' => ['advanced_storefront', 'analytics', 'seo', 'api', 'inventory_module', 'finance_module'],
+    'features' => ['advanced_storefront', 'analytics', 'seo', 'api', 'inventory_module', 'finance_module', 'pos_module'],
     'module_inventory' => true,
-    'module_finance' => true
+    'module_finance' => true,
+    'module_pos' => true
 ]);
 
 define('PLAN_ENTERPRISE', [
@@ -86,9 +88,10 @@ define('PLAN_ENTERPRISE', [
     'price' => 299,
     'products' => -1, // Ilimitado
     'storage' => 500,
-    'features' => ['full_customization', 'dedicated_support', 'api', 'webhooks', 'white_label', 'inventory_module', 'finance_module'],
+    'features' => ['full_customization', 'dedicated_support', 'api', 'webhooks', 'white_label', 'inventory_module', 'finance_module', 'pos_module'],
     'module_inventory' => true,
-    'module_finance' => true
+    'module_finance' => true,
+    'module_pos' => true
 ]);
 
 // Roles
