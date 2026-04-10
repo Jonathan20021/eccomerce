@@ -11,33 +11,82 @@
     <link rel="stylesheet" href="<?= ASSETS_PATH ?>css/style.css">
     <link rel="stylesheet" href="<?= ASSETS_PATH ?>css/mobile-pro.css">
     <style>
-        /* ── Store-specific overrides ── */
-        body { background: #fff; }
-
-        /* Announcement bar */
-        .store-announcement {
-            background: #1e293b;
-            color: rgba(255,255,255,0.82);
-            font-size: 12.5px;
-            font-weight: 500;
-            text-align: center;
-            padding: 8px 16px;
-            letter-spacing: .2px;
+        /* ══════════════════════════════════════
+           STORE PREMIUM DESIGN SYSTEM
+        ══════════════════════════════════════ */
+        :root {
+            --store-primary:    #2a7a52;
+            --store-primary-dk: #1f5c3d;
+            --store-primary-lt: #ecfdf5;
+            --store-accent:     #d4973a;
+            --store-dark:       #0c1f12;
+            --store-navy:       #0f172a;
+            --store-wa:         #25D366;
         }
-        .store-announcement a { color: #86efac; text-decoration: underline; }
 
-        /* Navbar */
+        * { box-sizing: border-box; }
+        body { background: #fff; font-family: 'Inter', sans-serif; }
+
+        /* ── Scroll progress bar ── */
+        .scroll-progress {
+            position: fixed; top: 0; left: 0; z-index: 9999;
+            height: 3px; width: 0%;
+            background: linear-gradient(90deg, var(--store-primary), var(--store-accent), var(--store-primary));
+            background-size: 200% 100%;
+            animation: progress-shimmer 2s linear infinite;
+            transition: width .08s linear;
+            pointer-events: none;
+        }
+        @keyframes progress-shimmer {
+            0%   { background-position: 100% 0; }
+            100% { background-position: -100% 0; }
+        }
+
+        /* ── Announcement bar ── */
+        .store-announcement {
+            background: linear-gradient(90deg, #0c1f12 0%, #1a4a2e 50%, #0c1f12 100%);
+            background-size: 200% 100%;
+            animation: ann-slide 8s linear infinite;
+            color: rgba(255,255,255,0.85);
+            font-size: 12.5px; font-weight: 500;
+            text-align: center; padding: 9px 16px;
+            letter-spacing: .25px; position: relative; overflow: hidden;
+        }
+        @keyframes ann-slide {
+            0%   { background-position: 0% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .store-announcement::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: radial-gradient(ellipse 40% 100% at 50% 50%, rgba(212,151,58,.12), transparent);
+            pointer-events: none;
+        }
+        .store-announcement a { color: #86efac; text-decoration: underline; text-underline-offset: 2px; }
+        .store-announcement .ann-icon {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 16px; height: 16px;
+            background: rgba(212,151,58,.25);
+            border-radius: 50%; margin-right: 6px; font-size: 9px; color: #fde68a;
+            vertical-align: middle;
+        }
+
+        /* ── Navbar ── */
         .store-nav {
             position: sticky; top: 0; z-index: 200;
-            background: rgba(255,255,255,0.97);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid #f1f5f9;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(241,245,249,0.8);
+            transition: box-shadow .25s ease, background .25s ease;
+        }
+        .store-nav.scrolled {
+            box-shadow: 0 4px 24px rgba(0,0,0,.07);
+            background: rgba(255,255,255,0.98);
         }
         .store-nav-inner {
             max-width: 1280px; margin: 0 auto;
-            padding: 0 24px;
-            height: 68px;
+            padding: 0 24px; height: 68px;
             display: flex; align-items: center; gap: 20px;
         }
         .store-nav-logo {
@@ -45,316 +94,266 @@
             text-decoration: none; flex-shrink: 0;
         }
         .store-nav-logo-icon {
-            width: 36px; height: 36px;
-            border-radius: 10px;
-            background: #0f172a;
+            width: 38px; height: 38px; border-radius: 11px;
+            background: linear-gradient(135deg, var(--store-dark) 0%, var(--store-primary) 100%);
             color: #fff;
             display: flex; align-items: center; justify-content: center;
-            font-size: 14px; font-weight: 900;
-            flex-shrink: 0;
+            font-size: 15px; font-weight: 900; flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(42,122,82,.35);
+            transition: transform .2s, box-shadow .2s;
+        }
+        .store-nav-logo:hover .store-nav-logo-icon {
+            transform: scale(1.07) rotate(-3deg);
+            box-shadow: 0 6px 18px rgba(42,122,82,.45);
         }
         .store-nav-logo-text {
-            font-size: 17px; font-weight: 800;
-            color: #0f172a; letter-spacing: -.4px;
-            white-space: nowrap;
+            font-size: 17px; font-weight: 800; color: #0f172a;
+            letter-spacing: -.4px; white-space: nowrap;
         }
         .store-nav-links {
-            display: flex; align-items: center; gap: 2px;
-            flex: 1;
+            display: flex; align-items: center; gap: 2px; flex: 1;
         }
         .store-nav-link {
             font-size: 14px; font-weight: 600; color: #475569;
             padding: 7px 12px; border-radius: 8px;
             text-decoration: none; white-space: nowrap;
             transition: background .15s, color .15s;
-        }
-        .store-nav-link:hover { background: #f8fafc; color: #0f172a; }
-        .store-nav-actions { display: flex; align-items: center; gap: 8px; }
-        .store-nav-search {
             position: relative;
         }
+        .store-nav-link::after {
+            content: ''; position: absolute; bottom: 4px; left: 12px; right: 12px;
+            height: 2px; border-radius: 1px;
+            background: var(--store-primary);
+            transform: scaleX(0); transition: transform .2s ease;
+        }
+        .store-nav-link:hover { color: var(--store-primary); }
+        .store-nav-link:hover::after { transform: scaleX(1); }
+        .store-nav-actions { display: flex; align-items: center; gap: 8px; }
+        .store-nav-search { position: relative; }
         .store-nav-search input {
             height: 38px; width: 220px;
             padding: 0 14px 0 38px;
             border: 1.5px solid #e2e8f0; border-radius: 10px;
             font-size: 13px; color: #1e293b; font-family: 'Inter', sans-serif;
             background: #f8fafc; outline: none;
-            transition: border-color .15s, background .15s, width .25s;
+            transition: border-color .2s, background .2s, width .3s, box-shadow .2s;
         }
         .store-nav-search input:focus {
-            border-color: #2a7a52; background: #fff; width: 260px;
+            border-color: var(--store-primary); background: #fff;
+            width: 260px; box-shadow: 0 0 0 3px rgba(42,122,82,.1);
         }
         .store-nav-search i {
             position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
             color: #94a3b8; font-size: 12px; pointer-events: none;
+            transition: color .2s;
         }
+        .store-nav-search:focus-within i { color: var(--store-primary); }
         .store-cart-btn {
             position: relative;
             display: inline-flex; align-items: center; gap: 7px;
-            background: #0f172a; color: #fff;
-            padding: 9px 16px; border-radius: 10px;
+            background: linear-gradient(135deg, var(--store-dark), var(--store-primary-dk));
+            color: #fff;
+            padding: 9px 18px; border-radius: 11px;
             font-size: 13.5px; font-weight: 700;
             text-decoration: none; white-space: nowrap;
-            transition: background .15s, transform .15s;
+            transition: transform .18s, box-shadow .18s;
+            box-shadow: 0 4px 14px rgba(15,23,42,.25);
         }
-        .store-cart-btn:hover { background: #1e293b; transform: translateY(-1px); }
+        .store-cart-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 22px rgba(15,23,42,.32);
+        }
         .store-cart-badge {
-            position: absolute; top: -6px; right: -6px;
-            min-width: 18px; height: 18px;
+            position: absolute; top: -7px; right: -7px;
+            min-width: 20px; height: 20px;
             background: #ef4444; color: #fff;
             border-radius: 9999px; font-size: 10px; font-weight: 800;
             display: flex; align-items: center; justify-content: center;
-            padding: 0 4px;
-            border: 2px solid #fff;
+            padding: 0 5px; border: 2.5px solid #fff;
+            animation: badge-pop .3s cubic-bezier(.34,1.56,.64,1);
+        }
+        @keyframes badge-pop {
+            from { transform: scale(0); }
+            to   { transform: scale(1); }
         }
         .store-hamburger {
             display: none;
-            background: none; border: none;
-            font-size: 18px; color: #475569;
-            padding: 6px; border-radius: 6px; cursor: pointer;
+            background: none; border: 1.5px solid #e2e8f0;
+            font-size: 16px; color: #475569;
+            padding: 7px 9px; border-radius: 9px; cursor: pointer;
+            transition: border-color .15s, color .15s, background .15s;
         }
+        .store-hamburger:hover { border-color: #cbd5e1; color: #1e293b; background: #f8fafc; }
 
-        /* Promo / Trust strip */
+        /* ── Trust strip ── */
         .store-trust {
-            background: #f8fafc;
-            border-bottom: 1px solid #f1f5f9;
-            padding: 11px 24px;
+            background: linear-gradient(90deg, #f0fdf4, #f8fafc, #f0fdf4);
+            border-bottom: 1px solid #dcfce7;
+            padding: 10px 24px; overflow: hidden;
         }
         .store-trust-inner {
             max-width: 1280px; margin: 0 auto;
             display: flex; align-items: center; justify-content: center;
-            gap: 32px; flex-wrap: wrap;
+            gap: 36px; flex-wrap: wrap;
         }
         .store-trust-item {
-            display: flex; align-items: center; gap: 7px;
-            font-size: 12.5px; font-weight: 600; color: #475569;
+            display: flex; align-items: center; gap: 8px;
+            font-size: 12.5px; font-weight: 600; color: #374151;
             white-space: nowrap;
         }
-        .store-trust-item i { color: #2a7a52; font-size: 13px; }
+        .store-trust-item .trust-icon {
+            width: 28px; height: 28px; border-radius: 8px;
+            background: linear-gradient(135deg, var(--store-primary), var(--store-primary-dk));
+            display: flex; align-items: center; justify-content: center;
+            color: #fff; font-size: 12px; flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(42,122,82,.3);
+        }
 
-        /* Hero */
+        /* ── Store Hero (in store.php, for the brand header) ── */
         .store-hero-v2 {
             position: relative; overflow: hidden;
             background: linear-gradient(135deg, #0c1f12 0%, #1a4a2e 45%, #2a7a52 80%, #1f5c3d 100%);
-            min-height: 320px;
+            min-height: 300px;
             display: flex; align-items: center;
         }
         .store-hero-v2::before {
             content: '';
             position: absolute; inset: 0;
             background:
-                radial-gradient(circle at 80% 20%, rgba(212,151,58,0.2) 0%, transparent 50%),
-                radial-gradient(circle at 20% 80%, rgba(42,122,82,0.25) 0%, transparent 40%);
+                radial-gradient(circle at 80% 20%, rgba(212,151,58,0.22) 0%, transparent 50%),
+                radial-gradient(circle at 20% 80%, rgba(42,122,82,0.28) 0%, transparent 40%);
         }
+        /* Animated mesh dots */
         .store-hero-v2::after {
             content: '';
-            position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,.12), transparent);
+            position: absolute; inset: 0;
+            background-image:
+                radial-gradient(circle, rgba(255,255,255,.07) 1px, transparent 1px);
+            background-size: 32px 32px;
+            animation: mesh-drift 20s linear infinite;
+        }
+        @keyframes mesh-drift {
+            from { background-position: 0 0; }
+            to   { background-position: 32px 32px; }
         }
         .store-hero-inner {
             position: relative; z-index: 1;
             max-width: 1280px; margin: 0 auto; width: 100%;
-            padding: 56px 24px;
+            padding: 52px 24px;
             display: flex; align-items: center; justify-content: space-between; gap: 32px;
             flex-wrap: wrap;
         }
-        .store-hero-brand { display: flex; align-items: center; gap: 20px; }
+        .store-hero-brand { display: flex; align-items: center; gap: 22px; }
         .store-hero-logo-wrap {
-            width: 72px; height: 72px;
-            border-radius: 18px;
+            width: 76px; height: 76px; border-radius: 20px;
             background: rgba(255,255,255,0.1);
-            border: 1.5px solid rgba(255,255,255,0.15);
+            border: 1.5px solid rgba(255,255,255,0.18);
             display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0;
-            backdrop-filter: blur(10px);
+            flex-shrink: 0; backdrop-filter: blur(12px);
+            box-shadow: 0 8px 32px rgba(0,0,0,.2);
+            animation: logo-float 5s ease-in-out infinite;
         }
-        .store-hero-logo-wrap img { width: 60px; height: 60px; object-fit: cover; border-radius: 14px; }
-        .store-hero-logo-letter {
-            font-size: 28px; font-weight: 900; color: #fff; line-height: 1;
+        @keyframes logo-float {
+            0%,100% { transform: translateY(0); }
+            50%     { transform: translateY(-6px); }
         }
-        .store-hero-info {}
+        .store-hero-logo-wrap img { width: 62px; height: 62px; object-fit: cover; border-radius: 15px; }
+        .store-hero-logo-letter { font-size: 30px; font-weight: 900; color: #fff; line-height: 1; }
         .store-hero-name {
-            font-size: clamp(22px, 3.5vw, 38px);
+            font-size: clamp(22px, 3.5vw, 36px);
             font-weight: 900; color: #fff; letter-spacing: -.8px; line-height: 1.1;
             margin-bottom: 8px;
         }
         .store-hero-desc {
-            font-size: 15px; color: rgba(255,255,255,.62); line-height: 1.55; max-width: 460px;
+            font-size: 14.5px; color: rgba(255,255,255,.62); line-height: 1.55; max-width: 460px;
         }
         .store-hero-meta {
-            display: flex; align-items: center; gap: 16px;
+            display: flex; align-items: center; gap: 14px;
             margin-top: 14px; flex-wrap: wrap;
         }
         .store-hero-chip {
             display: inline-flex; align-items: center; gap: 5px;
             background: rgba(255,255,255,.08);
-            border: 1px solid rgba(255,255,255,.12);
-            color: rgba(255,255,255,.7);
-            font-size: 12.5px; font-weight: 600;
-            padding: 5px 12px; border-radius: 9999px;
+            border: 1px solid rgba(255,255,255,.14);
+            color: rgba(255,255,255,.75);
+            font-size: 12px; font-weight: 600;
+            padding: 5px 13px; border-radius: 9999px;
+            backdrop-filter: blur(4px);
+            transition: background .2s;
         }
+        .store-hero-chip:hover { background: rgba(255,255,255,.14); }
         .store-hero-actions { display: flex; flex-direction: column; gap: 10px; align-items: flex-end; }
         .store-hero-wa {
             display: inline-flex; align-items: center; gap: 8px;
-            background: #25D366; color: #fff;
-            padding: 11px 20px; border-radius: 12px;
+            background: var(--store-wa); color: #fff;
+            padding: 12px 22px; border-radius: 13px;
             font-size: 14px; font-weight: 700; text-decoration: none;
-            box-shadow: 0 6px 20px rgba(37,211,102,.35);
+            box-shadow: 0 6px 20px rgba(37,211,102,.38);
             transition: transform .2s, box-shadow .2s;
         }
-        .store-hero-wa:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(37,211,102,.45); }
+        .store-hero-wa:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(37,211,102,.52); }
 
-        /* Category chips */
-        .cat-strip {
-            max-width: 1280px; margin: 0 auto;
-            padding: 20px 24px 0;
-            display: flex; align-items: center; gap: 8px;
-            overflow-x: auto; scrollbar-width: none;
+        /* ── Scroll-reveal animation ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity .6s cubic-bezier(.4,0,.2,1), transform .6s cubic-bezier(.4,0,.2,1);
         }
-        .cat-strip::-webkit-scrollbar { display: none; }
-        .cat-chip {
-            display: inline-flex; align-items: center; gap: 6px;
-            padding: 7px 15px; border-radius: 9999px;
-            border: 1.5px solid #e2e8f0;
-            background: #fff; color: #475569;
-            font-size: 13px; font-weight: 600;
-            white-space: nowrap; text-decoration: none;
-            transition: all .15s;
-            flex-shrink: 0;
+        .reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
         }
-        .cat-chip:hover { border-color: #86efac; color: #2a7a52; background: #ecfdf5; }
-        .cat-chip.active { background: #1e293b; border-color: #1e293b; color: #fff; }
+        .reveal-delay-1 { transition-delay: .08s; }
+        .reveal-delay-2 { transition-delay: .16s; }
+        .reveal-delay-3 { transition-delay: .24s; }
+        .reveal-delay-4 { transition-delay: .32s; }
+        .reveal-delay-5 { transition-delay: .40s; }
+        .reveal-delay-6 { transition-delay: .48s; }
 
-        /* Product grid */
-        .products-wrap { max-width: 1280px; margin: 0 auto; padding: 28px 24px 60px; }
-        .products-toolbar {
-            display: flex; align-items: center; justify-content: space-between;
-            margin-bottom: 24px; flex-wrap: wrap; gap: 12px;
-        }
-        .products-count { font-size: 13.5px; color: #94a3b8; font-weight: 500; }
-        .products-count strong { color: #1e293b; }
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-            gap: 20px;
-        }
-
-        /* Product card — portrait Shopify style */
-        .sf-product-card {
-            border-radius: 16px;
-            overflow: hidden;
-            background: #fff;
-            transition: box-shadow .25s cubic-bezier(.4,0,.2,1), transform .25s;
-            cursor: pointer;
-        }
-        .sf-product-card:hover {
-            box-shadow: 0 16px 40px -8px rgba(0,0,0,.14);
-            transform: translateY(-4px);
-        }
-        .sf-product-img {
-            aspect-ratio: 3/4;
-            background: #f1f5f9;
-            overflow: hidden;
-            position: relative;
-        }
-        .sf-product-img img {
-            width: 100%; height: 100%;
-            object-fit: cover;
-            transition: transform .45s cubic-bezier(.4,0,.2,1);
-            display: block;
-        }
-        .sf-product-card:hover .sf-product-img img { transform: scale(1.07); }
-        .sf-product-img-placeholder {
-            width: 100%; height: 100%;
+        /* ── Floating WhatsApp button ── */
+        .float-wa-btn {
+            position: fixed; bottom: 28px; right: 28px; z-index: 490;
+            width: 58px; height: 58px;
+            background: var(--store-wa);
+            border-radius: 50%; font-size: 26px; color: #fff;
             display: flex; align-items: center; justify-content: center;
-            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+            text-decoration: none;
+            box-shadow: 0 6px 22px rgba(37,211,102,.45);
+            transition: transform .25s, box-shadow .25s;
+            animation: wa-pulse 2.8s ease-in-out infinite;
         }
-        .sf-product-img-placeholder i { font-size: 52px; color: #e2e8f0; }
-
-        /* Badges */
-        .sf-badge-wrap {
-            position: absolute; top: 12px; left: 12px;
-            display: flex; flex-direction: column; gap: 5px;
+        .float-wa-btn:hover {
+            transform: scale(1.12) translateY(-3px);
+            box-shadow: 0 12px 32px rgba(37,211,102,.6);
+            animation: none;
         }
-        .sf-badge {
-            padding: 3px 9px; border-radius: 6px;
-            font-size: 10.5px; font-weight: 700; letter-spacing: .3px;
-            line-height: 1.4;
-        }
-        .sf-badge-sale { background: #ef4444; color: #fff; }
-        .sf-badge-new  { background: #0f172a; color: #fff; }
-        .sf-badge-out  {
-            position: absolute; inset: 0;
-            background: rgba(15,23,42,.45);
-            display: flex; align-items: center; justify-content: center;
-        }
-        .sf-badge-out span {
+        .float-wa-btn .float-wa-tooltip {
+            position: absolute; right: calc(100% + 12px); top: 50%;
+            transform: translateY(-50%);
             background: #1e293b; color: #fff;
-            font-size: 12px; font-weight: 700;
-            padding: 6px 16px; border-radius: 8px; letter-spacing: .5px;
+            font-size: 12.5px; font-weight: 600; font-family: 'Inter', sans-serif;
+            padding: 6px 12px; border-radius: 8px; white-space: nowrap;
+            opacity: 0; pointer-events: none;
+            transition: opacity .2s;
+        }
+        .float-wa-btn .float-wa-tooltip::after {
+            content: '';
+            position: absolute; left: 100%; top: 50%;
+            transform: translateY(-50%);
+            border: 5px solid transparent;
+            border-left-color: #1e293b;
+        }
+        .float-wa-btn:hover .float-wa-tooltip { opacity: 1; }
+        @keyframes wa-pulse {
+            0%,100% { box-shadow: 0 6px 22px rgba(37,211,102,.45); }
+            50%      { box-shadow: 0 6px 30px rgba(37,211,102,.7), 0 0 0 10px rgba(37,211,102,.1); }
         }
 
-        /* Hover CTA overlay */
-        .sf-product-overlay {
-            position: absolute; bottom: 0; left: 0; right: 0;
-            padding: 12px;
-            transform: translateY(100%);
-            transition: transform .25s cubic-bezier(.4,0,.2,1);
-        }
-        .sf-product-card:hover .sf-product-overlay { transform: translateY(0); }
-        .sf-add-btn {
-            width: 100%;
-            padding: 11px;
-            border: none;
-            border-radius: 10px;
-            background: rgba(15,23,42,.92);
-            backdrop-filter: blur(6px);
-            color: #fff;
-            font-size: 13.5px; font-weight: 700; font-family: 'Inter', sans-serif;
-            cursor: pointer;
-            display: flex; align-items: center; justify-content: center; gap: 7px;
-            transition: background .15s;
-        }
-        .sf-add-btn:hover { background: #2a7a52; }
-        .sf-add-btn:disabled { background: rgba(100,116,139,.7); cursor: not-allowed; }
-
-        /* Product info */
-        .sf-product-info { padding: 14px 4px 4px; }
-        .sf-product-cat {
-            font-size: 11px; font-weight: 700; color: #94a3b8;
-            text-transform: uppercase; letter-spacing: .6px;
-            margin-bottom: 5px;
-        }
-        .sf-product-name {
-            font-size: 14.5px; font-weight: 700; color: #1e293b;
-            line-height: 1.35; margin-bottom: 8px;
-            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
-        }
-        .sf-product-prices { display: flex; align-items: baseline; gap: 7px; }
-        .sf-price { font-size: 17px; font-weight: 800; color: #1e293b; }
-        .sf-price-sale { color: #ef4444; }
-        .sf-price-original { font-size: 13px; color: #94a3b8; text-decoration: line-through; }
-        .sf-stock-dot {
-            display: inline-block; width: 6px; height: 6px;
-            background: #22c55e; border-radius: 50%; margin-right: 4px;
-        }
-
-        /* Empty state */
-        .sf-empty {
-            text-align: center; padding: 80px 24px;
-            grid-column: 1 / -1;
-        }
-        .sf-empty-icon {
-            width: 80px; height: 80px;
-            background: #f1f5f9; border-radius: 20px;
-            display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 20px; font-size: 32px; color: #cbd5e1;
-        }
-
-        /* Mobile drawer */
+        /* ── Mobile drawer ── */
         .store-mobile-overlay {
             display: none; position: fixed; inset: 0;
-            background: rgba(0,0,0,.45); z-index: 300;
+            background: rgba(0,0,0,.5); z-index: 300;
+            backdrop-filter: blur(4px);
         }
         .store-mobile-overlay.open { display: block; }
         .store-mobile-drawer {
@@ -363,127 +362,162 @@
             background: #fff; z-index: 301;
             display: flex; flex-direction: column;
             transform: translateX(100%);
-            transition: transform .3s cubic-bezier(.4,0,.2,1);
+            transition: transform .32s cubic-bezier(.4,0,.2,1);
+            box-shadow: -8px 0 48px rgba(0,0,0,.15);
         }
         .store-mobile-drawer.open { transform: translateX(0); }
         .store-mobile-head {
             display: flex; align-items: center; justify-content: space-between;
             padding: 18px 20px; border-bottom: 1px solid #f1f5f9;
+            background: linear-gradient(135deg, #0c1f12, #1a4a2e);
         }
-        .store-mobile-body { flex: 1; overflow-y: auto; padding: 14px 14px; }
+        .store-mobile-head .store-name-mob {
+            font-size: 16px; font-weight: 800; color: #fff;
+        }
+        .store-mobile-close {
+            background: rgba(255,255,255,.12); border: none;
+            font-size: 16px; color: rgba(255,255,255,.8); cursor: pointer;
+            padding: 7px 9px; border-radius: 8px;
+            transition: background .15s;
+        }
+        .store-mobile-close:hover { background: rgba(255,255,255,.22); }
+        .store-mobile-body { flex: 1; overflow-y: auto; padding: 14px; }
         .store-mobile-link {
-            display: block; padding: 12px 14px; border-radius: 10px;
+            display: flex; align-items: center; gap: 10px;
+            padding: 12px 14px; border-radius: 10px;
             font-size: 15px; font-weight: 600; color: #1e293b;
-            text-decoration: none; transition: background .15s;
+            text-decoration: none; transition: background .15s, color .15s;
         }
-        .store-mobile-link:hover { background: #f8fafc; }
+        .store-mobile-link:hover { background: #f0fdf4; color: var(--store-primary); }
+        .store-mobile-link i { width: 18px; color: var(--store-primary); font-size: 14px; }
+        .store-mobile-divider {
+            height: 1px; background: #f1f5f9; margin: 8px 0;
+        }
+        .store-mobile-wa-btn {
+            display: flex; align-items: center; justify-content: center; gap: 9px;
+            margin: 12px; padding: 13px;
+            background: var(--store-wa); color: #fff;
+            border-radius: 12px; font-size: 14.5px; font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 4px 16px rgba(37,211,102,.3);
+        }
 
-        /* Footer */
+        /* ── Footer ── */
         .store-footer {
             background: #0b1220;
             color: #9ca3af;
-            margin-top: 0;
+            border-top: 3px solid transparent;
+            background-clip: padding-box;
+            position: relative;
+        }
+        .store-footer::before {
+            content: '';
+            position: absolute; top: -3px; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, var(--store-dark), var(--store-primary), var(--store-accent), var(--store-primary), var(--store-dark));
+            background-size: 300% 100%;
+            animation: footer-line 6s ease infinite;
+        }
+        @keyframes footer-line {
+            0%,100% { background-position: 0% 50%; }
+            50%      { background-position: 100% 50%; }
         }
         .store-footer-main {
             max-width: 1280px; margin: 0 auto;
-            padding: 48px 24px 36px;
-            display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 32px;
+            padding: 52px 24px 36px;
+            display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 36px;
         }
         .store-footer-brand-name {
-            font-size: 16px; font-weight: 800; color: #f8fafc;
+            font-size: 17px; font-weight: 800; color: #f8fafc;
             margin-bottom: 10px; letter-spacing: -.3px;
         }
         .store-footer-desc {
-            font-size: 13px; line-height: 1.7; color: #9ca3af; margin-bottom: 16px;
+            font-size: 13px; line-height: 1.75; color: #9ca3af; margin-bottom: 20px;
         }
-        .store-footer-socials { display: flex; gap: 10px; }
+        .store-footer-socials { display: flex; gap: 10px; margin-bottom: 0; }
         .store-footer-social {
-            width: 34px; height: 34px; border-radius: 8px;
+            width: 36px; height: 36px; border-radius: 9px;
             background: rgba(255,255,255,.07); color: #9ca3af;
             display: flex; align-items: center; justify-content: center;
-            font-size: 14px; transition: background .15s, color .15s;
+            font-size: 14px; transition: background .2s, color .2s, transform .2s;
+            text-decoration: none;
         }
-        .store-footer-social:hover { background: #2a7a52; color: #fff; }
+        .store-footer-social:hover {
+            background: var(--store-primary); color: #fff;
+            transform: translateY(-3px);
+        }
         .store-footer-col-title {
-            font-size: 11.5px; font-weight: 700;
-            color: #f8fafc; text-transform: uppercase; letter-spacing: .8px;
-            margin-bottom: 14px;
+            font-size: 11px; font-weight: 800;
+            color: #f8fafc; text-transform: uppercase; letter-spacing: 1px;
+            margin-bottom: 16px; padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255,255,255,.06);
         }
         .store-footer-link {
-            display: block; font-size: 13px; color: #9ca3af; margin-bottom: 9px;
-            text-decoration: none; transition: color .15s;
+            display: block; font-size: 13px; color: #9ca3af; margin-bottom: 10px;
+            text-decoration: none; transition: color .15s, padding-left .15s;
         }
-        .store-footer-link:hover { color: #e2e8f0; }
+        .store-footer-link:hover { color: #e2e8f0; padding-left: 4px; }
         .store-footer-bottom {
             border-top: 1px solid rgba(255,255,255,.06);
             max-width: 1280px; margin: 0 auto;
-            padding: 16px 24px;
+            padding: 18px 24px;
             display: flex; align-items: center; justify-content: space-between;
             font-size: 12px; flex-wrap: wrap; gap: 8px;
         }
         .store-footer-powered { color: #475569; }
         .store-footer-powered a { color: #86efac; text-decoration: none; font-weight: 600; }
+        .store-footer-powered a:hover { color: #4ade80; }
 
-        /* Pagination */
-        .sf-pagination {
-            display: flex; justify-content: center; gap: 6px;
-            margin-top: 36px; flex-wrap: wrap;
-        }
-        .sf-page-btn {
-            min-width: 38px; height: 38px;
-            display: flex; align-items: center; justify-content: center;
-            border: 1.5px solid #e2e8f0; border-radius: 9px;
-            font-size: 13.5px; font-weight: 600; color: #475569;
-            text-decoration: none; transition: all .15s;
-        }
-        .sf-page-btn:hover { border-color: #2a7a52; color: #2a7a52; }
-        .sf-page-btn.active { background: #1e293b; border-color: #1e293b; color: #fff; }
+        /* ── Toast ── */
+        #toastContainer { position: fixed; bottom: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 8px; }
 
-        /* Responsive */
+        /* ── Responsive ── */
         @media (max-width: 1024px) {
             .store-nav-search { display: none; }
             .store-hamburger { display: flex; align-items: center; }
             .store-nav-links { display: none; }
-            .store-footer-main { grid-template-columns: 1fr 1fr; gap: 24px; }
+            .store-footer-main { grid-template-columns: 1fr 1fr; gap: 28px; }
         }
         @media (max-width: 640px) {
             .store-nav-inner { padding: 0 16px; height: 60px; }
             .store-hero-inner { padding: 36px 16px; }
             .store-hero-name { font-size: 24px; }
-            .store-hero-logo-wrap { width: 56px; height: 56px; }
-            .products-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-            .products-wrap { padding: 20px 16px 48px; }
-            .cat-strip { padding: 16px 16px 0; }
+            .store-hero-logo-wrap { width: 58px; height: 58px; }
             .store-trust { display: none; }
             .store-footer-main { grid-template-columns: 1fr; gap: 24px; }
+            .float-wa-btn { bottom: 20px; right: 20px; width: 52px; height: 52px; font-size: 22px; }
         }
     </style>
 </head>
 <body>
 
+<!-- Scroll progress -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
 <?php
-$menuLinks  = is_array($storeTheme['menu']   ?? null) ? $storeTheme['menu']   : [];
-$footer     = is_array($storeTheme['footer'] ?? null) ? $storeTheme['footer'] : [];
-$storeSlug  = $storeData['slug']  ?? '';
-$storeName  = $storeData['name']  ?? 'Tienda';
+$menuLinks    = is_array($storeTheme['menu']   ?? null) ? $storeTheme['menu']   : [];
+$footer       = is_array($storeTheme['footer'] ?? null) ? $storeTheme['footer'] : [];
+$storeSlug    = $storeData['slug']  ?? '';
+$storeName    = $storeData['name']  ?? 'Tienda';
 $storeInitial = strtoupper(substr($storeName, 0, 1));
+$hasWhatsApp  = !empty($storeData['whatsapp_number']);
 ?>
 
 <!-- Announcement bar (optional) -->
 <?php if (!empty($storeTheme['announcement'])): ?>
 <div class="store-announcement">
+    <span class="ann-icon"><i class="fas fa-tag"></i></span>
     <?= htmlspecialchars($storeTheme['announcement']) ?>
 </div>
 <?php endif; ?>
 
 <!-- Navbar -->
-<nav class="store-nav">
+<nav class="store-nav" id="storeNav">
     <div class="store-nav-inner">
         <!-- Logo -->
         <a href="<?= BASE_URL ?>shop/<?= htmlspecialchars($storeSlug) ?>" class="store-nav-logo">
             <?php if (!empty($storeData['logo'])): ?>
                 <img src="<?= htmlspecialchars($storeData['logo']) ?>" alt=""
-                     style="width:36px;height:36px;border-radius:9px;object-fit:cover;flex-shrink:0;">
+                     style="width:38px;height:38px;border-radius:10px;object-fit:cover;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.12);">
             <?php else: ?>
                 <div class="store-nav-logo-icon"><?= $storeInitial ?></div>
             <?php endif; ?>
@@ -493,7 +527,7 @@ $storeInitial = strtoupper(substr($storeName, 0, 1));
         <!-- Desktop nav links -->
         <div class="store-nav-links">
             <a href="<?= BASE_URL ?>shop/<?= htmlspecialchars($storeSlug) ?>" class="store-nav-link">
-                <i class="fas fa-home" style="font-size:11px;margin-right:3px;"></i> Inicio
+                <i class="fas fa-home" style="font-size:11px;margin-right:4px;opacity:.7;"></i> Inicio
             </a>
             <?php foreach ($menuLinks as $item): ?>
                 <?php if (!empty($item['label']) && !empty($item['url'])): ?>
@@ -533,14 +567,28 @@ $storeInitial = strtoupper(substr($storeName, 0, 1));
 <!-- Trust strip (desktop) -->
 <div class="store-trust">
     <div class="store-trust-inner">
-        <div class="store-trust-item"><i class="fas fa-truck"></i> Envío rápido y seguro</div>
-        <div class="store-trust-item"><i class="fas fa-shield-alt"></i> Pago 100% seguro</div>
-        <div class="store-trust-item"><i class="fab fa-whatsapp"></i> Atención por WhatsApp</div>
-        <div class="store-trust-item"><i class="fas fa-undo"></i> Devoluciones fáciles</div>
+        <div class="store-trust-item">
+            <span class="trust-icon"><i class="fas fa-truck"></i></span>
+            Envío rápido y seguro
+        </div>
+        <div class="store-trust-item">
+            <span class="trust-icon"><i class="fas fa-shield-alt"></i></span>
+            Pago 100% seguro
+        </div>
+        <?php if ($hasWhatsApp): ?>
+        <div class="store-trust-item">
+            <span class="trust-icon" style="background:linear-gradient(135deg,#16a34a,#15803d);"><i class="fab fa-whatsapp"></i></span>
+            Atención por WhatsApp
+        </div>
+        <?php endif; ?>
+        <div class="store-trust-item">
+            <span class="trust-icon" style="background:linear-gradient(135deg,#b45309,#92400e);"><i class="fas fa-undo"></i></span>
+            Devoluciones fáciles
+        </div>
     </div>
 </div>
 
-<main>
+<main id="mainContent">
     <?php include VIEWS_PATH . $view_content; ?>
 </main>
 
@@ -550,7 +598,7 @@ $storeInitial = strtoupper(substr($storeName, 0, 1));
         <div>
             <div class="store-footer-brand-name"><?= htmlspecialchars($storeName) ?></div>
             <p class="store-footer-desc">
-                <?= htmlspecialchars($footer['text'] ?? 'Tu tienda online de confianza.') ?>
+                <?= htmlspecialchars($footer['text'] ?? 'Tu tienda online de confianza. Productos de calidad con atención personalizada.') ?>
             </p>
             <div class="store-footer-socials">
                 <?php if (!empty($footer['facebook'])): ?>
@@ -562,15 +610,19 @@ $storeInitial = strtoupper(substr($storeName, 0, 1));
                 <?php if (!empty($footer['tiktok'])): ?>
                 <a href="<?= htmlspecialchars($footer['tiktok']) ?>" target="_blank" rel="noopener" class="store-footer-social"><i class="fab fa-tiktok"></i></a>
                 <?php endif; ?>
-                <?php if (!empty($storeData['whatsapp_number'])): ?>
-                <a href="<?= Helper::getWhatsAppLink($storeData['whatsapp_number']) ?>" target="_blank" rel="noopener" class="store-footer-social"><i class="fab fa-whatsapp"></i></a>
+                <?php if ($hasWhatsApp): ?>
+                <a href="<?= Helper::getWhatsAppLink($storeData['whatsapp_number']) ?>" target="_blank" rel="noopener" class="store-footer-social" style="background:rgba(37,211,102,.15);color:#4ade80;"><i class="fab fa-whatsapp"></i></a>
                 <?php endif; ?>
             </div>
         </div>
         <div>
             <div class="store-footer-col-title">Tienda</div>
-            <a href="<?= BASE_URL ?>shop/<?= htmlspecialchars($storeSlug) ?>" class="store-footer-link">Inicio</a>
-            <a href="<?= BASE_URL ?>shop/<?= htmlspecialchars($storeSlug) ?>/cart" class="store-footer-link">Mi Carrito</a>
+            <a href="<?= BASE_URL ?>shop/<?= htmlspecialchars($storeSlug) ?>" class="store-footer-link">
+                <i class="fas fa-home" style="margin-right:6px;font-size:10px;opacity:.6;"></i>Inicio
+            </a>
+            <a href="<?= BASE_URL ?>shop/<?= htmlspecialchars($storeSlug) ?>/cart" class="store-footer-link">
+                <i class="fas fa-shopping-bag" style="margin-right:6px;font-size:10px;opacity:.6;"></i>Mi Carrito
+            </a>
             <?php foreach ($menuLinks as $item): ?>
                 <?php if (!empty($item['label']) && !empty($item['url'])): ?>
                 <a href="<?= htmlspecialchars($item['url']) ?>" class="store-footer-link"><?= htmlspecialchars($item['label']) ?></a>
@@ -581,30 +633,34 @@ $storeInitial = strtoupper(substr($storeName, 0, 1));
             <div class="store-footer-col-title">Contacto</div>
             <?php if (!empty($footer['contact_email'])): ?>
             <a href="mailto:<?= htmlspecialchars($footer['contact_email']) ?>" class="store-footer-link">
-                <i class="fas fa-envelope" style="margin-right:6px;font-size:11px;"></i><?= htmlspecialchars($footer['contact_email']) ?>
+                <i class="fas fa-envelope" style="margin-right:6px;font-size:10px;opacity:.6;"></i><?= htmlspecialchars($footer['contact_email']) ?>
             </a>
             <?php endif; ?>
             <?php if (!empty($footer['contact_phone'])): ?>
             <a href="tel:<?= htmlspecialchars($footer['contact_phone']) ?>" class="store-footer-link">
-                <i class="fas fa-phone" style="margin-right:6px;font-size:11px;"></i><?= htmlspecialchars($footer['contact_phone']) ?>
+                <i class="fas fa-phone" style="margin-right:6px;font-size:10px;opacity:.6;"></i><?= htmlspecialchars($footer['contact_phone']) ?>
             </a>
             <?php endif; ?>
-            <?php if (!empty($storeData['whatsapp_number'])): ?>
-            <a href="<?= Helper::getWhatsAppLink($storeData['whatsapp_number']) ?>" target="_blank" rel="noopener" class="store-footer-link" style="color:#25D366;">
+            <?php if ($hasWhatsApp): ?>
+            <a href="<?= Helper::getWhatsAppLink($storeData['whatsapp_number']) ?>" target="_blank" rel="noopener" class="store-footer-link" style="color:#4ade80;">
                 <i class="fab fa-whatsapp" style="margin-right:6px;"></i><?= htmlspecialchars($storeData['whatsapp_number']) ?>
             </a>
             <?php endif; ?>
             <?php if (!empty($storeData['city'])): ?>
             <p class="store-footer-link" style="cursor:default;">
-                <i class="fas fa-map-marker-alt" style="margin-right:6px;font-size:11px;"></i>
+                <i class="fas fa-map-marker-alt" style="margin-right:6px;font-size:10px;opacity:.6;"></i>
                 <?= htmlspecialchars($storeData['city']) ?><?= !empty($storeData['country']) ? ', ' . htmlspecialchars($storeData['country']) : '' ?>
             </p>
             <?php endif; ?>
         </div>
         <div>
             <div class="store-footer-col-title">Legal</div>
-            <a href="<?= htmlspecialchars($footer['terms_url'] ?? '#') ?>" class="store-footer-link">Términos y condiciones</a>
-            <a href="<?= htmlspecialchars($footer['privacy_url'] ?? '#') ?>" class="store-footer-link">Política de privacidad</a>
+            <a href="<?= htmlspecialchars($footer['terms_url'] ?? '#') ?>" class="store-footer-link">
+                <i class="fas fa-file-alt" style="margin-right:6px;font-size:10px;opacity:.6;"></i>Términos y condiciones
+            </a>
+            <a href="<?= htmlspecialchars($footer['privacy_url'] ?? '#') ?>" class="store-footer-link">
+                <i class="fas fa-lock" style="margin-right:6px;font-size:10px;opacity:.6;"></i>Política de privacidad
+            </a>
         </div>
     </div>
     <div class="store-footer-bottom">
@@ -613,52 +669,64 @@ $storeInitial = strtoupper(substr($storeName, 0, 1));
     </div>
 </footer>
 
+<!-- Floating WhatsApp Button -->
+<?php if ($hasWhatsApp): ?>
+<a href="<?= Helper::getWhatsAppLink($storeData['whatsapp_number']) ?>"
+   target="_blank" rel="noopener"
+   class="float-wa-btn" aria-label="Contactar por WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+    <span class="float-wa-tooltip">¿Necesitas ayuda?</span>
+</a>
+<?php endif; ?>
+
 <!-- Mobile menu overlay -->
 <div class="store-mobile-overlay" id="storeMobileOverlay" onclick="closeStoreMenu()"></div>
 <div class="store-mobile-drawer" id="storeMobileDrawer">
     <div class="store-mobile-head">
-        <span style="font-size:16px;font-weight:800;color:#1e293b;"><?= htmlspecialchars($storeName) ?></span>
-        <button onclick="closeStoreMenu()" style="background:none;border:none;font-size:18px;color:#94a3b8;cursor:pointer;padding:4px;border-radius:6px;">
+        <span class="store-name-mob"><?= htmlspecialchars($storeName) ?></span>
+        <button class="store-mobile-close" onclick="closeStoreMenu()">
             <i class="fas fa-times"></i>
         </button>
     </div>
     <div class="store-mobile-body">
         <!-- Mobile search -->
-        <form method="GET" action="<?= BASE_URL ?>shop/<?= htmlspecialchars($storeSlug) ?>" style="margin-bottom:12px;">
+        <form method="GET" action="<?= BASE_URL ?>shop/<?= htmlspecialchars($storeSlug) ?>" style="margin-bottom:8px;">
             <div style="position:relative;">
                 <i class="fas fa-search" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#94a3b8;font-size:12px;pointer-events:none;"></i>
                 <input type="search" name="q" placeholder="Buscar productos..."
                        value="<?= htmlspecialchars($_GET['q'] ?? '') ?>"
-                       style="width:100%;box-sizing:border-box;padding:10px 14px 10px 36px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:14px;font-family:'Inter',sans-serif;color:#1e293b;outline:none;">
+                       style="width:100%;box-sizing:border-box;padding:11px 14px 11px 36px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:14px;font-family:'Inter',sans-serif;color:#1e293b;outline:none;">
             </div>
         </form>
+        <div class="store-mobile-divider"></div>
         <a href="<?= BASE_URL ?>shop/<?= htmlspecialchars($storeSlug) ?>" class="store-mobile-link">
-            <i class="fas fa-home" style="width:18px;color:#2a7a52;margin-right:8px;"></i> Inicio
+            <i class="fas fa-home"></i> Inicio
         </a>
         <a href="<?= BASE_URL ?>shop/<?= htmlspecialchars($storeSlug) ?>/cart" class="store-mobile-link">
-            <i class="fas fa-shopping-bag" style="width:18px;color:#2a7a52;margin-right:8px;"></i> Mi Carrito
+            <i class="fas fa-shopping-bag"></i> Mi Carrito
         </a>
         <?php foreach ($menuLinks as $item): ?>
             <?php if (!empty($item['label']) && !empty($item['url'])): ?>
             <a href="<?= htmlspecialchars($item['url']) ?>" class="store-mobile-link">
-                <?= htmlspecialchars($item['label']) ?>
+                <i class="fas fa-link"></i> <?= htmlspecialchars($item['label']) ?>
             </a>
             <?php endif; ?>
         <?php endforeach; ?>
-        <?php if (!empty($storeData['whatsapp_number'])): ?>
-        <a href="<?= Helper::getWhatsAppLink($storeData['whatsapp_number']) ?>" target="_blank" rel="noopener"
-           class="store-mobile-link" style="color:#16a34a;margin-top:8px;">
-            <i class="fab fa-whatsapp" style="width:18px;margin-right:8px;"></i> WhatsApp
+        <?php if ($hasWhatsApp): ?>
+        <div class="store-mobile-divider"></div>
+        <a href="<?= Helper::getWhatsAppLink($storeData['whatsapp_number']) ?>" target="_blank" rel="noopener" class="store-mobile-wa-btn">
+            <i class="fab fa-whatsapp" style="font-size:18px;"></i> Contactar por WhatsApp
         </a>
         <?php endif; ?>
     </div>
 </div>
 
 <!-- Toast container -->
-<div id="toastContainer" style="position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:8px;"></div>
+<div id="toastContainer"></div>
 
 <script src="<?= ASSETS_PATH ?>js/script.js"></script>
 <script>
+/* ── Mobile menu ── */
 function openStoreMenu() {
     document.getElementById('storeMobileOverlay').classList.add('open');
     document.getElementById('storeMobileDrawer').classList.add('open');
@@ -669,6 +737,59 @@ function closeStoreMenu() {
     document.getElementById('storeMobileDrawer').classList.remove('open');
     document.body.style.overflow = '';
 }
+
+/* ── Scroll progress ── */
+(function() {
+    const bar = document.getElementById('scrollProgress');
+    const nav = document.getElementById('storeNav');
+    if (!bar && !nav) return;
+    function onScroll() {
+        const scrolled = window.scrollY;
+        const total = document.documentElement.scrollHeight - window.innerHeight;
+        if (bar && total > 0) bar.style.width = (scrolled / total * 100) + '%';
+        if (nav) nav.classList.toggle('scrolled', scrolled > 12);
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+})();
+
+/* ── Scroll reveal (IntersectionObserver) ── */
+(function() {
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('revealed');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
+
+    /* Observe all elements with .reveal class */
+    document.querySelectorAll('.reveal').forEach(function(el) {
+        observer.observe(el);
+    });
+
+    /* Auto-apply reveal to product cards */
+    document.querySelectorAll('.sf-card').forEach(function(el, i) {
+        el.classList.add('reveal');
+        const delay = Math.min(i % 4, 5);
+        if (delay > 0) el.classList.add('reveal-delay-' + delay);
+        observer.observe(el);
+    });
+})();
+
+/* ── Cart badge init from session ── */
+(function loadCartCount() {
+    fetch('<?= BASE_URL ?>api/cart/count')
+        .then(function(r) { return r.ok ? r.json() : null; })
+        .then(function(data) {
+            if (data && data.count !== undefined) {
+                const badge = document.getElementById('cart-count');
+                if (badge) badge.textContent = data.count;
+            }
+        })
+        .catch(function() {});
+})();
 </script>
 </body>
 </html>

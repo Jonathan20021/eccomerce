@@ -40,7 +40,7 @@
 
         <div style="display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;">
             <a href="<?= BASE_URL ?>shop/<?= htmlspecialchars($storeData['slug']) ?>"
-               style="display:inline-flex;align-items:center;gap:8px;padding:11px 16px;border-radius:10px;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;font-size:14px;font-weight:700;text-decoration:none;">
+               style="display:inline-flex;align-items:center;gap:8px;padding:11px 16px;border-radius:10px;background:linear-gradient(135deg,#2a7a52,#1f5c3d);color:#fff;font-size:14px;font-weight:700;text-decoration:none;box-shadow:0 4px 14px rgba(42,122,82,.3);">
                 <i class="fas fa-store"></i> Volver a la tienda
             </a>
             <a href="<?= BASE_URL ?>shop/<?= htmlspecialchars($storeData['slug']) ?>/cart"
@@ -58,8 +58,8 @@
             <!-- Personal Info -->
             <div style="background:#fff;border:1px solid #e2e8f0;border-radius:16px;overflow:hidden;margin-bottom:16px;">
                 <div style="padding:20px 24px;border-bottom:1px solid #f1f5f9;display:flex;align-items:center;gap:10px;">
-                    <div style="width:32px;height:32px;border-radius:8px;background:#eef2ff;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                        <i class="fas fa-user" style="color:#4f46e5;font-size:13px;"></i>
+                    <div style="width:32px;height:32px;border-radius:8px;background:#ecfdf5;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                        <i class="fas fa-user" style="color:#2a7a52;font-size:13px;"></i>
                     </div>
                     <h3 style="font-size:15px;font-weight:700;color:#1e293b;">Información Personal</h3>
                 </div>
@@ -71,7 +71,7 @@
                         <input type="text" id="name" name="name" required
                                placeholder="Tu nombre completo"
                                style="width:100%;box-sizing:border-box;padding:10px 14px;border:1.5px solid #e2e8f0;border-radius:9px;font-size:14px;font-family:'Inter',sans-serif;color:#1e293b;outline:none;transition:border-color .15s;"
-                               onfocus="this.style.borderColor='#4f46e5'" onblur="this.style.borderColor='#e2e8f0'">
+                               onfocus="this.style.borderColor='#2a7a52';this.style.boxShadow='0 0 0 3px rgba(42,122,82,.1)'" onblur="this.style.borderColor='#e2e8f0';this.style.boxShadow='none'">
                     </div>
                     <div class="form-grid-2">
                         <div>
@@ -81,7 +81,7 @@
                             <input type="email" id="email" name="email" required
                                    placeholder="tu@email.com"
                                    style="width:100%;box-sizing:border-box;padding:10px 14px;border:1.5px solid #e2e8f0;border-radius:9px;font-size:14px;font-family:'Inter',sans-serif;color:#1e293b;outline:none;transition:border-color .15s;"
-                                   onfocus="this.style.borderColor='#4f46e5'" onblur="this.style.borderColor='#e2e8f0'">
+                                   onfocus="this.style.borderColor='#2a7a52';this.style.boxShadow='0 0 0 3px rgba(42,122,82,.1)'" onblur="this.style.borderColor='#e2e8f0';this.style.boxShadow='none'">
                         </div>
                         <div>
                             <label style="display:block;font-size:13px;font-weight:600;color:#374151;margin-bottom:6px;" for="phone">
@@ -90,7 +90,7 @@
                             <input type="tel" id="phone" name="phone" required
                                    placeholder="+1 234 567 8900"
                                    style="width:100%;box-sizing:border-box;padding:10px 14px;border:1.5px solid #e2e8f0;border-radius:9px;font-size:14px;font-family:'Inter',sans-serif;color:#1e293b;outline:none;transition:border-color .15s;"
-                                   onfocus="this.style.borderColor='#4f46e5'" onblur="this.style.borderColor='#e2e8f0'">
+                                   onfocus="this.style.borderColor='#2a7a52';this.style.boxShadow='0 0 0 3px rgba(42,122,82,.1)'" onblur="this.style.borderColor='#e2e8f0';this.style.boxShadow='none'">
                         </div>
                     </div>
                 </div>
@@ -111,7 +111,7 @@
                     <textarea id="address" name="address" required rows="3"
                               placeholder="Calle, número, colonia, ciudad, estado, código postal"
                               style="width:100%;box-sizing:border-box;padding:10px 14px;border:1.5px solid #e2e8f0;border-radius:9px;font-size:14px;font-family:'Inter',sans-serif;color:#1e293b;outline:none;resize:vertical;transition:border-color .15s;"
-                              onfocus="this.style.borderColor='#4f46e5'" onblur="this.style.borderColor='#e2e8f0'"></textarea>
+                              onfocus="this.style.borderColor='#2a7a52';this.style.boxShadow='0 0 0 3px rgba(42,122,82,.1)'" onblur="this.style.borderColor='#e2e8f0';this.style.boxShadow='none'"></textarea>
                 </div>
             </div>
 
@@ -136,8 +136,8 @@
             </div>
 
             <button type="submit"
-                    style="width:100%;padding:14px;border:none;border-radius:12px;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;font-size:15px;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .15s;"
-                    onmouseover="this.style.opacity='.92'" onmouseout="this.style.opacity='1'">
+                    style="width:100%;padding:14px;border:none;border-radius:13px;background:linear-gradient(135deg,#2a7a52,#1f5c3d);color:#fff;font-size:15px;font-weight:800;font-family:'Inter',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;transition:transform .2s,box-shadow .2s;box-shadow:0 8px 24px rgba(42,122,82,.36);"
+                    onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 14px 36px rgba(42,122,82,.48)'" onmouseout="this.style.transform='none';this.style.boxShadow='0 8px 24px rgba(42,122,82,.36)'">
                 <i class="fas fa-check-circle"></i> Confirmar y Crear Orden
             </button>
         </form>
@@ -197,10 +197,10 @@
                 <div style="padding:16px 24px 20px;">
                     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
                         <span style="font-size:15px;font-weight:700;color:#1e293b;">Total</span>
-                        <span style="font-size:20px;font-weight:800;color:#4f46e5;">$<?= number_format($cartTotal, 2) ?></span>
+                        <span style="font-size:22px;font-weight:900;color:#0f172a;letter-spacing:-.5px;">$<?= number_format($cartTotal, 2) ?></span>
                     </div>
-                    <div style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:#f8fafc;border-radius:9px;border:1px solid #e2e8f0;">
-                        <i class="fas fa-shield-alt" style="color:#4f46e5;font-size:13px;flex-shrink:0;"></i>
+                    <div style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:#f0fdf4;border-radius:10px;border:1px solid #bbf7d0;">
+                        <i class="fas fa-shield-alt" style="color:#2a7a52;font-size:13px;flex-shrink:0;"></i>
                         <p style="font-size:12px;color:#64748b;line-height:1.4;">Tus datos están seguros. No almacenamos información de tarjeta.</p>
                     </div>
                 </div>
