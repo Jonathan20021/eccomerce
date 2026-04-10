@@ -1,12 +1,15 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
-    # Producción: forzar dominio canónico con HTTPS + www
+    # Producción: forzar host canónico (apex -> www)
     RewriteCond %{HTTP_HOST} ^store\.kyrosrd\.com$ [NC]
     RewriteRule ^ https://www.store.kyrosrd.com%{REQUEST_URI} [R=301,L]
 
+    # Producción: forzar HTTPS en host canónico
+    # Compatible con setups detrás de proxy que envían X-Forwarded-Proto.
     RewriteCond %{HTTP_HOST} ^www\.store\.kyrosrd\.com$ [NC]
     RewriteCond %{HTTPS} !=on
+    RewriteCond %{HTTP:X-Forwarded-Proto} !https [NC]
     RewriteRule ^ https://www.store.kyrosrd.com%{REQUEST_URI} [R=301,L]
     
     # No procesar archivos o directorios reales
@@ -14,7 +17,7 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     
     # Reescribir todas las peticiones a index.php
-    RewriteRule ^(.*)$ index.php [L,QSA]
+    RewriteRule ^ index.php [L,QSA]
 </IfModule>
 
 # Compresión GZIP
@@ -33,7 +36,4 @@
     ExpiresByType application/x-javascript "access plus 1 year"
 </IfModule>
 
-# Only index.php is allowed to handle requests
-<FilesMatch "^index\.php$">
-    Allow from all
-</FilesMatch>
+# Nota: no restringir archivos aquí; el enrutador y permisos del servidor controlan acceso.
