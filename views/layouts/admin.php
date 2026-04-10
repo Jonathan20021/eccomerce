@@ -97,8 +97,13 @@ if (!$isSuperAdmin && !empty($_SESSION['store_id'])) {
             <div class="nav-section-label" style="margin-top:8px;">Plataforma</div>
             <a href="<?= BASE_URL ?>superadmin/settings"
                data-tooltip="Configuración"
-               class="nav-item <?= strpos($currentUri, '/settings') !== false ? 'active' : '' ?>">
+               class="nav-item <?= (strpos($currentUri, '/settings') !== false && strpos($currentUri, '/emails') === false) ? 'active' : '' ?>">
                 <i class="fas fa-cog"></i><span class="nav-label"> Configuración</span>
+            </a>
+            <a href="<?= BASE_URL ?>superadmin/emails"
+               data-tooltip="Correos"
+               class="nav-item <?= strpos($currentUri, '/emails') !== false ? 'active' : '' ?>">
+                <i class="fas fa-envelope"></i><span class="nav-label"> Correos</span>
             </a>
 
         <?php else: ?>

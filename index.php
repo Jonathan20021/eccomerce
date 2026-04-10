@@ -135,6 +135,13 @@ else if ($parts[0] == 'superadmin') {
     else if (isset($parts[1]) && $parts[1] == 'settings') {
         SuperAdminController::settings();
     }
+    else if (isset($parts[1]) && $parts[1] == 'emails') {
+        if (isset($parts[2]) && $parts[2] == 'preview') {
+            SuperAdminController::previewEmail();
+        } else {
+            SuperAdminController::manageEmails();
+        }
+    }
     else {
         header('Location: ' . BASE_URL . 'superadmin/dashboard');
     }

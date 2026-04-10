@@ -28,6 +28,16 @@ define('APP_ENV', getenv('APP_ENV') ?: 'development');
 define('ENABLE_DEMO_ACCOUNTS', APP_ENV !== 'production');
 define('SHOW_DEMO_PASSWORDS', APP_ENV !== 'production');
 
+// Configuracion base de notificaciones (sobrescribible desde ajustes y cPanel env vars)
+define('NOTIFICATIONS_DEFAULT_ADMIN_RECIPIENT', getenv('NOTIFICATIONS_ADMIN_RECIPIENT') ?: 'notificaciones@kyrosrd.com');
+define('NOTIFICATIONS_DEFAULT_FROM_NAME', getenv('NOTIFICATIONS_FROM_NAME') ?: 'Kyros Commerce');
+define('NOTIFICATIONS_DEFAULT_FROM_EMAIL', getenv('NOTIFICATIONS_FROM_EMAIL') ?: 'notificaciones@kyrosrd.com');
+define('NOTIFICATIONS_DEFAULT_SMTP_HOST', getenv('NOTIFICATIONS_SMTP_HOST') ?: 'mail.kyrosrd.com');
+define('NOTIFICATIONS_DEFAULT_SMTP_PORT', intval(getenv('NOTIFICATIONS_SMTP_PORT') ?: 465));
+define('NOTIFICATIONS_DEFAULT_SMTP_SECURITY', getenv('NOTIFICATIONS_SMTP_SECURITY') ?: 'ssl');
+define('NOTIFICATIONS_DEFAULT_SMTP_USERNAME', getenv('NOTIFICATIONS_SMTP_USERNAME') ?: 'notificaciones@kyrosrd.com');
+define('NOTIFICATIONS_DEFAULT_SMTP_PASSWORD', getenv('NOTIFICATIONS_SMTP_PASSWORD') ?: 'Hacker#2002');
+
 // Rutas
 define('APP_PATH', dirname(dirname(dirname(__FILE__))));
 define('VIEWS_PATH', APP_PATH . '/views/');

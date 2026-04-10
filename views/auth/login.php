@@ -86,7 +86,7 @@ $page_title = "Iniciar Sesión — Kyros Commerce";
             <span style="font-size:17px;font-weight:800;color:#1e293b;">Kyros Commerce</span>
         </a>
 
-        <div style="width:100%;max-width:400px;">
+        <div style="width:100%;max-width:400px;background:#fff;border:1px solid #eef2f7;border-radius:16px;padding:24px;box-shadow:0 12px 28px rgba(15,23,42,0.06);">
             <!-- Header -->
             <div style="margin-bottom:32px;">
                 <h1 style="font-size:26px;font-weight:800;color:#1e293b;letter-spacing:-0.7px;margin-bottom:7px;">Bienvenido de vuelta</h1>
@@ -200,7 +200,7 @@ $page_title = "Iniciar Sesión — Kyros Commerce";
 
         <!-- Footer -->
         <div style="margin-top:40px;text-align:center;">
-            <p style="font-size:12px;color:#cbd5e1;">
+            <p style="font-size:12px;color:#94a3b8;">
                 &copy; <?= date('Y') ?> Kyros Commerce ·
                 <a href="<?= BASE_URL ?>terms" style="color:#94a3b8;text-decoration:none;">Términos</a> ·
                 <a href="<?= BASE_URL ?>privacy" style="color:#94a3b8;text-decoration:none;">Privacidad</a>

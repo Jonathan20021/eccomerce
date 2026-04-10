@@ -6,6 +6,7 @@ require_once __DIR__ . '/../models/Store.php';
 require_once __DIR__ . '/../models/License.php';
 require_once __DIR__ . '/../models/Setting.php';
 require_once __DIR__ . '/../helpers/Helper.php';
+require_once __DIR__ . '/../helpers/NotificationService.php';
 require_once __DIR__ . '/../middleware/Auth.php';
 
 class AuthController {
@@ -274,6 +275,9 @@ class AuthController {
 
         $store->assignLicense($store_id, $license_id);
 
+        // Notificacion no bloqueante: no debe romper el flujo de registro si falla SMTP.
+        NotificationService::notifyNewRegistration($name, $email, $store->name, $plan_id);
+
         Helper::redirect(BASE_URL . 'auth/login?success=' . urlencode('Cuenta creada exitosamente. Ya puedes iniciar sesión.'));
     }
 
@@ -347,6 +351,9 @@ class AuthController {
         if (!$email || !Helper::validateEmail($email)) {
             Helper::redirect(BASE_URL . 'auth/forgot-password?error=' . urlencode('Ingresa un email valido'));
         }
+
+        // Notificacion no bloqueante: avisa al buzón de plataforma y al correo solicitado.
+        NotificationService::notifyForgotPasswordRequest($email);
 
         // Por seguridad, respondemos con el mismo mensaje exista o no la cuenta.
         Helper::redirect(BASE_URL . 'auth/forgot-password?success=' . urlencode('Si el email existe, te enviaremos instrucciones para recuperar tu acceso.'));

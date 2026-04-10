@@ -8,6 +8,7 @@ require_once __DIR__ . '/../models/Cart.php';
 require_once __DIR__ . '/../models/Order.php';
 require_once __DIR__ . '/../models/Setting.php';
 require_once __DIR__ . '/../helpers/Helper.php';
+require_once __DIR__ . '/../helpers/NotificationService.php';
 require_once __DIR__ . '/../middleware/Auth.php';
 
 class PublicController {
@@ -367,6 +368,15 @@ class PublicController {
 
                 // Limpiar carrito
                 $cart->clearCart(Auth::getUserId());
+
+                // Notificacion no bloqueante para nueva orden.
+                NotificationService::notifyNewOrder(
+                    $order->order_number,
+                    $storeData['name'] ?? 'Tienda',
+                    $name,
+                    $email,
+                    Helper::formatPrice($cartTotal)
+                );
 
                 if (!empty($storeData['whatsapp_number'])) {
                     $whatsappLink = Helper::getWhatsAppLink($storeData['whatsapp_number'], 

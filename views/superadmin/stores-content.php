@@ -80,7 +80,7 @@
 
                 <a href="<?= BASE_URL ?>superadmin/stores/<?= $store['id'] ?>"
                    style="display:flex;align-items:center;justify-content:center;gap:7px;padding:9px;border-radius:8px;border:1.5px solid #e2e8f0;color:#2a7a52;font-size:13px;font-weight:700;text-decoration:none;transition:all .15s;"
-                   onmouseover="this.style.background='#eef2ff';this.style.borderColor='#c7d2fe'"
+                         onmouseover="this.style.background='#ecfdf5';this.style.borderColor='#bbf7d0'"
                    onmouseout="this.style.background='transparent';this.style.borderColor='#e2e8f0'">
                     <i class="fas fa-eye text-xs"></i> Ver Detalles
                 </a>
