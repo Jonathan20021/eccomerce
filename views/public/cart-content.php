@@ -1,5 +1,5 @@
 <!-- Cart Content -->
-<div style="max-width:1100px;margin:0 auto;padding:40px 24px;">
+<div class="store-page-wrap">
 
     <div style="margin-bottom:28px;">
         <a href="javascript:history.back()"
@@ -24,7 +24,7 @@
     </div>
 
     <?php else: ?>
-    <div style="display:grid;grid-template-columns:1fr 340px;gap:24px;" class="max-md:grid-cols-1">
+    <div class="store-grid-main">
 
         <!-- Cart Items -->
         <div>
@@ -89,7 +89,7 @@
         </div>
 
         <!-- Order Summary -->
-        <div>
+        <div class="store-summary-col">
             <div style="background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:24px;position:sticky;top:80px;">
                 <h3 style="font-size:16px;font-weight:800;color:#1e293b;margin-bottom:20px;">Resumen del Pedido</h3>
 

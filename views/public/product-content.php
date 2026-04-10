@@ -1,5 +1,5 @@
 <!-- Product Detail Content -->
-<div style="max-width:1100px;margin:0 auto;padding:40px 24px;">
+<div class="store-page-wrap">
 
     <div style="margin-bottom:20px;">
         <a href="<?= BASE_URL ?>shop/<?= htmlspecialchars($storeData['slug']) ?>"
@@ -8,7 +8,7 @@
         </a>
     </div>
 
-    <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;" class="max-md:grid-cols-1">
+    <div class="store-product-grid">
         <div style="background:#fff;border:1px solid #e2e8f0;border-radius:14px;overflow:hidden;">
             <?php if (!empty($productData['image'])): ?>
               <img src="<?= htmlspecialchars(Helper::resolvePublicFileUrl($productData['image'])) ?>"

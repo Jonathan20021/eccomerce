@@ -345,6 +345,19 @@ a, button, input, textarea, select { transition: all 0.2s ease; }
     flex-shrink: 0;
 }
 
+.topbar-user-info {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.3;
+}
+
+.topbar-divider {
+    width: 1px;
+    height: 20px;
+    background: #e2e8f0;
+    flex-shrink: 0;
+}
+
 .admin-page-wrap { padding: 24px; }
 
 .page-header {
@@ -368,6 +381,7 @@ a, button, input, textarea, select { transition: all 0.2s ease; }
     padding: 20px;
     display: flex; align-items: flex-start; gap: 16px;
     transition: box-shadow 0.2s, transform 0.2s;
+    min-width: 0; /* allow shrinking inside grid */
 }
 .stat-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
 
@@ -1043,20 +1057,28 @@ a, button, input, textarea, select { transition: all 0.2s ease; }
     .section-subtitle { font-size: 15px; }
 
     .admin-page-wrap { padding: 14px; }
-    .admin-topbar { padding: 0 12px; gap: 8px; }
+    .admin-topbar { padding: 0 12px; }
     .topbar-right { gap: 8px; }
+
+    /* Hide user name and divider on mobile */
+    .topbar-user-info { display: none; }
+    .topbar-divider { display: none; }
 
     /* Truncate page title on mobile */
     .admin-topbar h1 {
-        max-width: 130px;
+        max-width: 110px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
     }
 
-    /* Compact "Ver tienda" button on mobile */
+    /* Compact "Ver tienda" button: icon only on mobile */
     .topbar-store-link span { display: none; }
-    .topbar-store-link { padding: 5px 8px !important; gap: 0 !important; }
+    .topbar-store-link {
+        padding: 7px 9px !important;
+        gap: 0 !important;
+        border-radius: 8px !important;
+    }
 
     /* Tables scroll on mobile */
     .overflow-x, .table-responsive { overflow-x: auto; -webkit-overflow-scrolling: touch; }
@@ -1064,6 +1086,7 @@ a, button, input, textarea, select { transition: all 0.2s ease; }
 
     /* Cards stack on mobile */
     .stat-cards-grid { grid-template-columns: repeat(2, 1fr) !important; }
+    .stat-cards-grid-auto { grid-template-columns: repeat(2, 1fr) !important; }
 
     /* Page header stack */
     .page-header { flex-wrap: wrap; gap: 10px; }
@@ -1085,6 +1108,13 @@ a, button, input, textarea, select { transition: all 0.2s ease; }
     .hero { padding: 48px 0 60px; }
     .stat-cards-grid { grid-template-columns: 1fr 1fr !important; }
     .admin-page-wrap { padding: 12px; }
+
+    /* Compact stat cards on small mobile */
+    .stat-card { padding: 14px; gap: 10px; }
+    .stat-icon { width: 36px; height: 36px; font-size: 15px; border-radius: 9px; }
+    .stat-value { font-size: 20px; }
+    .stat-label { font-size: 11px; }
+    .stat-meta { font-size: 11px; }
 
     /* Stack top action buttons */
     .page-header { flex-direction: column; align-items: flex-start; }
@@ -1146,6 +1176,54 @@ a, button, input, textarea, select { transition: all 0.2s ease; }
     .stat-cards-grid-auto {
         grid-template-columns: repeat(2, 1fr);
     }
+}
+
+/* ---- Store public page wrapper ---- */
+.store-page-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 24px;
+}
+@media (max-width: 768px) {
+    .store-page-wrap {
+        padding: 24px 16px;
+    }
+}
+@media (max-width: 480px) {
+    .store-page-wrap {
+        padding: 20px 14px;
+    }
+}
+
+/* ---- Store public page responsive layouts ---- */
+/* Cart / Checkout: main content + summary sidebar */
+.store-grid-main {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 24px;
+    align-items: start;
+}
+.store-checkout-grid {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 24px;
+    align-items: start;
+}
+/* Product detail: image + info */
+.store-product-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+}
+@media (max-width: 768px) {
+    .store-grid-main,
+    .store-checkout-grid,
+    .store-product-grid {
+        grid-template-columns: 1fr;
+    }
+    /* On mobile cart/checkout: summary goes FIRST (above items) via order */
+    .store-grid-main .store-summary-col { order: -1; }
+    .store-checkout-grid .store-summary-col { order: -1; }
 }
 
 /* ---- Filter / search form bar ---- */

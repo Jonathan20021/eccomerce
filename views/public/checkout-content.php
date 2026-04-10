@@ -1,5 +1,5 @@
 <!-- Checkout Content -->
-<div style="max-width:960px;margin:0 auto;padding:40px 20px;">
+<div class="store-page-wrap">
 
     <?php $checkoutSuccess = isset($_GET['success']) && trim((string)$_GET['success']) !== ''; ?>
 
@@ -51,7 +51,7 @@
     </div>
     <?php else: ?>
 
-    <div style="display:grid;grid-template-columns:1fr 360px;gap:24px;align-items:start;">
+    <div class="store-checkout-grid">
 
         <!-- Checkout Form -->
         <form method="POST">
@@ -73,7 +73,7 @@
                                style="width:100%;box-sizing:border-box;padding:10px 14px;border:1.5px solid #e2e8f0;border-radius:9px;font-size:14px;font-family:'Inter',sans-serif;color:#1e293b;outline:none;transition:border-color .15s;"
                                onfocus="this.style.borderColor='#4f46e5'" onblur="this.style.borderColor='#e2e8f0'">
                     </div>
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+                    <div class="form-grid-2">
                         <div>
                             <label style="display:block;font-size:13px;font-weight:600;color:#374151;margin-bottom:6px;" for="email">
                                 Email <span style="color:#ef4444;">*</span>
@@ -143,7 +143,7 @@
         </form>
 
         <!-- Order Summary -->
-        <div style="position:sticky;top:90px;">
+        <div class="store-summary-col" style="position:sticky;top:90px;">
             <div style="background:#fff;border:1px solid #e2e8f0;border-radius:16px;overflow:hidden;">
                 <div style="padding:20px 24px;border-bottom:1px solid #f1f5f9;">
                     <h3 style="font-size:15px;font-weight:700;color:#1e293b;">Resumen de Orden</h3>

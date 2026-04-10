@@ -203,13 +203,13 @@ if (!$isSuperAdmin && !empty($_SESSION['store_id'])) {
                 </a>
             <?php endif; ?>
 
-            <div style="width:1px;height:20px;background:#e2e8f0;"></div>
+            <div class="topbar-divider"></div>
 
             <div style="display:flex;align-items:center;gap:10px;">
                 <div class="user-avatar">
                     <?= strtoupper(substr($_SESSION['user_name'] ?? 'U', 0, 1)) ?>
                 </div>
-                <div style="display:flex;flex-direction:column;line-height:1.3;" class="hidden md:flex">
+                <div class="topbar-user-info">
                     <span style="font-size:13px;font-weight:600;color:#1e293b;">
                         <?= htmlspecialchars($_SESSION['user_name'] ?? '') ?>
                     </span>
