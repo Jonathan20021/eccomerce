@@ -183,6 +183,11 @@ $page_title = "Kyros Commerce — Crea tu Tienda Online Profesional";
         .fade-in-up { animation: fadeInUp .6s ease-out both; }
 
         .home-compare-table { overflow: hidden; }
+        .home-compare-head,
+        .home-compare-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+        }
 
         @media (max-width: 768px) {
             .hero-v2 { padding: 72px 0 80px; }
@@ -283,11 +288,39 @@ $page_title = "Kyros Commerce — Crea tu Tienda Online Profesional";
                 justify-content: center;
             }
             .home-compare-table {
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
+                max-width: 100% !important;
+                border-radius: 16px !important;
             }
-            .home-compare-table > div {
-                min-width: 620px;
+            .home-compare-head,
+            .home-compare-row {
+                grid-template-columns: minmax(0, 1fr) 62px 62px !important;
+            }
+            .home-compare-head-feature {
+                padding: 12px 12px !important;
+                font-size: 10px !important;
+            }
+            .home-compare-head-kyros,
+            .home-compare-head-other {
+                padding: 10px 8px !important;
+            }
+            .home-compare-head-kyros > div:first-child,
+            .home-compare-head-other > div:first-child {
+                font-size: 11px !important;
+            }
+            .home-compare-head-kyros > div:last-child {
+                font-size: 9px !important;
+            }
+            .home-compare-feature {
+                padding: 12px !important;
+                font-size: 13px !important;
+                line-height: 1.35;
+            }
+            .home-compare-kyros,
+            .home-compare-other {
+                padding: 12px 6px !important;
+            }
+            .home-compare-icon {
+                font-size: 15px !important;
             }
             .home-cta-btn {
                 width: 100%;
@@ -383,6 +416,7 @@ $page_title = "Kyros Commerce — Crea tu Tienda Online Profesional";
             .home-process-mobile-preview-body {
                 gap: 8px;
                 padding: 10px;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
             }
             .home-process-mobile-preview-card {
                 padding: 8px;
@@ -390,6 +424,13 @@ $page_title = "Kyros Commerce — Crea tu Tienda Online Profesional";
             .home-process-mobile-preview-thumb {
                 height: 36px;
                 margin-bottom: 7px;
+            }
+            .home-process-mobile-preview-name {
+                font-size: 10.5px;
+                line-height: 1.3;
+            }
+            .home-process-mobile-preview-price {
+                font-size: 11px;
             }
         }
     </style>
@@ -768,13 +809,13 @@ $page_title = "Kyros Commerce — Crea tu Tienda Online Profesional";
 
         <div class="home-compare-table" style="max-width:780px;margin:0 auto;border:1.5px solid #e2e8f0;border-radius:20px;overflow:hidden;box-shadow:var(--shadow-lg);">
             <!-- Table header -->
-            <div style="display:grid;grid-template-columns:2fr 1fr 1fr;background:#f8fafc;border-bottom:2px solid #e2e8f0;">
-                <div style="padding:16px 20px;font-size:12px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;">Característica</div>
-                <div style="padding:16px 20px;text-align:center;background:#ecfdf5;border-left:1px solid #d1fae5;">
+            <div class="home-compare-head" style="display:grid;grid-template-columns:2fr 1fr 1fr;background:#f8fafc;border-bottom:2px solid #e2e8f0;">
+                <div class="home-compare-head-feature" style="padding:16px 20px;font-size:12px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;">Característica</div>
+                <div class="home-compare-head-kyros" style="padding:16px 20px;text-align:center;background:#ecfdf5;border-left:1px solid #d1fae5;">
                     <div style="font-size:13px;font-weight:800;color:#2a7a52;">Kyros</div>
                     <div style="font-size:10px;color:#86efac;font-weight:600;margin-top:2px;">★ Recomendado</div>
                 </div>
-                <div style="padding:16px 20px;text-align:center;border-left:1px solid #e2e8f0;">
+                <div class="home-compare-head-other" style="padding:16px 20px;text-align:center;border-left:1px solid #e2e8f0;">
                     <div style="font-size:13px;font-weight:700;color:#94a3b8;">Otros</div>
                 </div>
             </div>
@@ -790,13 +831,13 @@ $page_title = "Kyros Commerce — Crea tu Tienda Online Profesional";
                 ['feat'=>'Analytics integrado',         'kyros'=>true,  'other'=>true],
             ];
             foreach ($compare as $i => $row): ?>
-            <div style="display:grid;grid-template-columns:2fr 1fr 1fr;border-top:1px solid #f1f5f9;background:<?= $i%2===0 ? '#fff' : '#fafafa' ?>;">
-                <div style="padding:14px 20px;font-size:14px;color:#334155;font-weight:500;"><?= $row['feat'] ?></div>
-                <div style="padding:14px 20px;text-align:center;background:rgba(236,253,245,.5);border-left:1px solid #d1fae5;">
-                    <i class="fas fa-<?= $row['kyros'] ? 'check-circle' : 'times-circle' ?>" style="color:<?= $row['kyros'] ? '#2a7a52' : '#fca5a5' ?>;font-size:16px;"></i>
+            <div class="home-compare-row" style="display:grid;grid-template-columns:2fr 1fr 1fr;border-top:1px solid #f1f5f9;background:<?= $i%2===0 ? '#fff' : '#fafafa' ?>;">
+                <div class="home-compare-feature" style="padding:14px 20px;font-size:14px;color:#334155;font-weight:500;"><?= $row['feat'] ?></div>
+                <div class="home-compare-kyros" style="padding:14px 20px;text-align:center;background:rgba(236,253,245,.5);border-left:1px solid #d1fae5;">
+                    <i class="home-compare-icon fas fa-<?= $row['kyros'] ? 'check-circle' : 'times-circle' ?>" style="color:<?= $row['kyros'] ? '#2a7a52' : '#fca5a5' ?>;font-size:16px;"></i>
                 </div>
-                <div style="padding:14px 20px;text-align:center;border-left:1px solid #f1f5f9;">
-                    <i class="fas fa-<?= $row['other'] ? 'check-circle' : 'times-circle' ?>" style="color:<?= $row['other'] ? '#94a3b8' : '#fca5a5' ?>;font-size:16px;"></i>
+                <div class="home-compare-other" style="padding:14px 20px;text-align:center;border-left:1px solid #f1f5f9;">
+                    <i class="home-compare-icon fas fa-<?= $row['other'] ? 'check-circle' : 'times-circle' ?>" style="color:<?= $row['other'] ? '#94a3b8' : '#fca5a5' ?>;font-size:16px;"></i>
                 </div>
             </div>
             <?php endforeach; ?>
