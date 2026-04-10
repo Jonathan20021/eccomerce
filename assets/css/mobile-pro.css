@@ -35,6 +35,30 @@
     }
 }
 
+/* ── MOBILE SIDEBAR ── */
+@media (max-width: 1024px) {
+    /* Sidebar: slide in from left, cover most of the screen */
+    .admin-sidebar {
+        width: min(280px, 82vw) !important;
+        z-index: 200;
+        box-shadow: 4px 0 32px rgba(0,0,0,0.35);
+    }
+    /* Topbar stays below overlay when sidebar is open */
+    .admin-topbar {
+        z-index: 100;
+    }
+    /* When sidebar is open, a body class disables topbar stacking */
+    body.sidebar-open .admin-topbar {
+        z-index: 80 !important;
+    }
+}
+@media (max-width: 480px) {
+    /* On very narrow phones fill most of the screen */
+    .admin-sidebar {
+        width: 88vw !important;
+    }
+}
+
 /* ── QUICK ACTIONS: 2-col grid on mobile ── */
 @media (max-width: 640px) {
     .quick-actions {

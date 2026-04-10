@@ -231,7 +231,7 @@ if (!$isSuperAdmin && !empty($_SESSION['store_id'])) {
 
 <!-- Mobile overlay -->
 <div id="sidebarOverlay"
-     style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:150;"></div>
+     style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:190;backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);transition:opacity 0.25s ease;opacity:0;"></div>
 
 <script src="<?= ASSETS_PATH ?>js/script.js"></script>
 <script>
@@ -299,12 +299,16 @@ if (!$isSuperAdmin && !empty($_SESSION['store_id'])) {
     function openMobileSidebar() {
         sidebar.classList.add('open');
         overlay.style.display = 'block';
+        requestAnimationFrame(function() { overlay.style.opacity = '1'; });
         document.body.style.overflow = 'hidden';
+        document.body.classList.add('sidebar-open');
     }
     function closeMobileSidebar() {
         sidebar.classList.remove('open');
-        overlay.style.display = 'none';
+        overlay.style.opacity = '0';
         document.body.style.overflow = '';
+        document.body.classList.remove('sidebar-open');
+        setTimeout(function() { overlay.style.display = 'none'; }, 250);
     }
 
     if (mobileBtn) {
