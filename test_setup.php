@@ -57,7 +57,7 @@ try {
         echo "   [\033[32m✓\033[0m] Conexión a BD exitosa\n";
         
         // Contar tablas
-        $query = "SELECT COUNT(*) as count FROM information_schema.tables WHERE table_schema = 'kyros_saas'";
+        $query = "SELECT COUNT(*) as count FROM information_schema.tables WHERE table_schema = 'neetjbte_eccomerce'";
         $stmt = $conn->prepare($query);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);

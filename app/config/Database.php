@@ -1,10 +1,10 @@
 <?php
 
 class Database {
-    private $host = 'localhost';
-    private $db_name = 'kyros_saas';
-    private $user = 'root';
-    private $pass = '';
+    private $host = '129.121.81.172';
+    private $db_name = 'neetjbte_eccomerce';
+    private $user = 'neetjbte_eccomerce';
+    private $pass = 'Hacker#2002';
     private $conn;
 
     public function connect() {
@@ -12,7 +12,7 @@ class Database {
 
         try {
             $this->conn = new PDO(
-                'mysql:host=' . $this->host . ';dbname=' . $this->db_name,
+                'mysql:host=' . $this->host . ';dbname=' . $this->db_name . ';charset=utf8mb4',
                 $this->user,
                 $this->pass
             );
