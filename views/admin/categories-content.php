@@ -22,7 +22,7 @@
         </div>
     </div>
 
-    <div style="display:grid;grid-template-columns:1.1fr 1.9fr;gap:16px;" class="max-md:grid-cols-1">
+    <div class="admin-grid-form-table">
         <div class="card">
             <div class="card-header">
                 <h3><i class="fas fa-folder-plus" style="color:#4f46e5;margin-right:7px;"></i>Nueva Categoria</h3>

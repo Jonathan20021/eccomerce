@@ -1043,7 +1043,20 @@ a, button, input, textarea, select { transition: all 0.2s ease; }
     .section-subtitle { font-size: 15px; }
 
     .admin-page-wrap { padding: 14px; }
-    .admin-topbar { padding: 0 14px; }
+    .admin-topbar { padding: 0 12px; gap: 8px; }
+    .topbar-right { gap: 8px; }
+
+    /* Truncate page title on mobile */
+    .admin-topbar h1 {
+        max-width: 130px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    /* Compact "Ver tienda" button on mobile */
+    .topbar-store-link span { display: none; }
+    .topbar-store-link { padding: 5px 8px !important; gap: 0 !important; }
 
     /* Tables scroll on mobile */
     .overflow-x, .table-responsive { overflow-x: auto; -webkit-overflow-scrolling: touch; }
@@ -1087,4 +1100,96 @@ a, button, input, textarea, select { transition: all 0.2s ease; }
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 16px;
+}
+
+/* ---- Admin responsive grid layouts ---- */
+/* 2fr + 1fr two-column grid (Quick Actions / Store Info, etc.) */
+.admin-grid-2-1 {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 16px;
+}
+/* ~1fr + ~2fr two-column grid (Form + Table, Categories, etc.) */
+.admin-grid-form-table {
+    display: grid;
+    grid-template-columns: 1.1fr 1.9fr;
+    gap: 16px;
+}
+/* Generic equal two-column grid */
+.admin-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+/* Three-column grid */
+.admin-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+@media (max-width: 768px) {
+    .admin-grid-2-1,
+    .admin-grid-form-table,
+    .admin-grid-2,
+    .admin-grid-3 {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ---- Stat cards: 2 cols on mobile, 4+ on desktop ---- */
+.stat-cards-grid-auto {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px;
+}
+@media (max-width: 640px) {
+    .stat-cards-grid-auto {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ---- Filter / search form bar ---- */
+.admin-filter-form {
+    display: grid;
+    grid-template-columns: 2fr 1fr auto;
+    gap: 10px;
+    align-items: end;
+}
+@media (max-width: 640px) {
+    .admin-filter-form {
+        grid-template-columns: 1fr;
+    }
+    .admin-filter-form button[type="submit"] {
+        width: 100%;
+    }
+}
+
+/* ---- Form field grids (inside cards) ---- */
+.form-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+.form-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+}
+.form-grid-2-1 {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 14px;
+}
+.form-grid-1-2 {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 14px;
+}
+@media (max-width: 640px) {
+    .form-grid-2,
+    .form-grid-3,
+    .form-grid-2-1,
+    .form-grid-1-2 {
+        grid-template-columns: 1fr;
+    }
 }

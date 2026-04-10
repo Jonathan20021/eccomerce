@@ -31,7 +31,7 @@
                         <i class="fas fa-tag"></i> Información Básica
                     </div>
                     <div style="display:grid;gap:16px;">
-                        <div style="display:grid;grid-template-columns:2fr 1fr;gap:14px;">
+                        <div class="form-grid-2-1">
                             <div class="form-group" style="margin-bottom:0;">
                                 <label class="form-label" for="name">Nombre del Producto <span style="color:#ef4444;">*</span></label>
                                 <input type="text" id="name" name="name" required
@@ -67,7 +67,7 @@
                     <div class="form-section-title">
                         <i class="fas fa-dollar-sign"></i> Precios
                     </div>
-                    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;">
+                    <div class="form-grid-3">
                         <div class="form-group" style="margin-bottom:0;">
                             <label class="form-label" for="price">Precio de Venta <span style="color:#ef4444;">*</span></label>
                             <div class="input-group">

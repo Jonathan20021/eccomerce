@@ -2,7 +2,7 @@
 <div style="display:flex;flex-direction:column;gap:24px;">
 
     <!-- Stat Cards -->
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;">
+    <div class="stat-cards-grid-auto">
 
         <div class="stat-card">
             <div class="stat-icon indigo"><i class="fas fa-box-open"></i></div>
@@ -83,7 +83,7 @@
     </div>
 
     <!-- Quick Actions + Store Info -->
-    <div style="display:grid;grid-template-columns:2fr 1fr;gap:16px;" class="max-md:grid-cols-1">
+    <div class="admin-grid-2-1">
 
         <!-- Quick Actions -->
         <div class="card">

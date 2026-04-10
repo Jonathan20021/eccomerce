@@ -44,7 +44,7 @@
                     <h3><i class="fas fa-user" style="color:#4f46e5;margin-right:8px;"></i>Información del Cliente</h3>
                 </div>
                 <div class="card-body">
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                    <div class="form-grid-2" style="gap:16px;">
                         <div>
                             <p style="font-size:12px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;">Nombre</p>
                             <p style="font-size:14px;font-weight:600;color:#1e293b;"><?= htmlspecialchars($orderData['customer_name']) ?></p>

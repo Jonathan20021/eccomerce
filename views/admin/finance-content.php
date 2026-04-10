@@ -86,7 +86,7 @@ foreach ($dailyRevenue as $value) {
         </div>
     </div>
 
-    <div style="display:grid;grid-template-columns:1fr 2fr;gap:14px;" class="max-md:grid-cols-1">
+    <div class="admin-grid-form-table" style="grid-template-columns:1fr 2fr;">
         <div class="card">
             <div class="card-header">
                 <h3><i class="fas fa-layer-group" style="color:#334155;margin-right:7px;"></i>Órdenes por Estado</h3>

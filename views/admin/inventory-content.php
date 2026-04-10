@@ -51,7 +51,7 @@
 
     <div class="card">
         <div class="card-body" style="padding:14px;">
-            <form method="GET" action="<?= BASE_URL ?>admin/inventory" style="display:grid;grid-template-columns:2fr 1fr auto;gap:10px;align-items:end;">
+            <form method="GET" action="<?= BASE_URL ?>admin/inventory" class="admin-filter-form">
                 <div>
                     <label class="form-label" for="q">Buscar producto o SKU</label>
                     <input type="text" id="q" name="q" class="form-input" placeholder="Ej: camiseta o SKU-001" value="<?= htmlspecialchars($search) ?>">

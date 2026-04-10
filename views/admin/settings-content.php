@@ -42,7 +42,7 @@
                             <textarea id="description" name="description" rows="3" class="form-input"
                                       placeholder="Describe brevemente tu tienda y lo que vendes..."><?= htmlspecialchars($storeData['description'] ?? '') ?></textarea>
                         </div>
-                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+                        <div class="form-grid-2">
                             <div class="form-group" style="margin-bottom:0;">
                                 <label class="form-label" for="email">Email de Contacto</label>
                                 <input type="email" id="email" name="email" class="form-input"
@@ -103,7 +103,7 @@
                                    value="<?= htmlspecialchars($storeData['address'] ?? '') ?>"
                                    placeholder="Calle Principal 123">
                         </div>
-                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+                        <div class="form-grid-2">
                             <div class="form-group" style="margin-bottom:0;">
                                 <label class="form-label" for="city">Ciudad</label>
                                 <input type="text" id="city" name="city" class="form-input"
@@ -117,7 +117,7 @@
                                        placeholder="Comunidad de Madrid">
                             </div>
                         </div>
-                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+                        <div class="form-grid-2">
                             <div class="form-group" style="margin-bottom:0;">
                                 <label class="form-label" for="country">País</label>
                                 <input type="text" id="country" name="country" class="form-input"
@@ -160,7 +160,7 @@
                     <?php for ($i = 1; $i <= 4; $i++):
                         $menuItem = $menuSettings[$i - 1] ?? ['label' => '', 'url' => ''];
                     ?>
-                    <div style="display:grid;grid-template-columns:1fr 1.6fr;gap:10px;margin-bottom:10px;">
+                    <div class="form-grid-1-2" style="gap:10px;margin-bottom:10px;">
                         <input type="text" name="menu_link_<?= $i ?>_label" class="form-input"
                                placeholder="Etiqueta #<?= $i ?>"
                                value="<?= htmlspecialchars($menuItem['label'] ?? '') ?>">
@@ -178,7 +178,7 @@
                     <div style="display:grid;gap:12px;">
                         <textarea name="footer_text" rows="2" class="form-input"
                                   placeholder="Texto principal del footer"><?= htmlspecialchars($footerSettings['text'] ?? '') ?></textarea>
-                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                        <div class="form-grid-2" style="gap:10px;">
                             <input type="email" name="footer_contact_email" class="form-input"
                                    placeholder="Email de contacto"
                                    value="<?= htmlspecialchars($footerSettings['contact_email'] ?? '') ?>">
@@ -186,7 +186,7 @@
                                    placeholder="Teléfono de contacto"
                                    value="<?= htmlspecialchars($footerSettings['contact_phone'] ?? '') ?>">
                         </div>
-                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                        <div class="form-grid-2" style="gap:10px;">
                             <input type="text" name="footer_terms_url" class="form-input"
                                    placeholder="URL términos"
                                    value="<?= htmlspecialchars($footerSettings['terms_url'] ?? '') ?>">
@@ -194,7 +194,7 @@
                                    placeholder="URL privacidad"
                                    value="<?= htmlspecialchars($footerSettings['privacy_url'] ?? '') ?>">
                         </div>
-                        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+                        <div class="form-grid-3" style="gap:10px;">
                             <input type="text" name="footer_facebook" class="form-input"
                                    placeholder="URL Facebook"
                                    value="<?= htmlspecialchars($footerSettings['facebook'] ?? '') ?>">

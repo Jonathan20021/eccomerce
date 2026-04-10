@@ -196,9 +196,10 @@ if (!$isSuperAdmin && !empty($_SESSION['store_id'])) {
         <div class="topbar-right">
             <?php if (!$isSuperAdmin && isset($storeData)): ?>
                 <a href="<?= BASE_URL ?>shop/<?= $storeData['slug'] ?>" target="_blank"
+                   class="topbar-store-link"
                    style="font-size:13px;color:#4f46e5;font-weight:600;display:flex;align-items:center;gap:5px;text-decoration:none;padding:5px 10px;border-radius:7px;border:1px solid #e0e7ff;background:#f5f3ff;transition:all .15s;">
                     <i class="fas fa-external-link-alt" style="font-size:11px;"></i>
-                    Ver tienda
+                    <span>Ver tienda</span>
                 </a>
             <?php endif; ?>
 

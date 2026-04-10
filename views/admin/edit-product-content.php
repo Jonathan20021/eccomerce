@@ -22,7 +22,7 @@
             </div>
             <div class="card-body" style="display:flex;flex-direction:column;gap:16px;">
 
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+                <div class="form-grid-2">
                     <div class="form-group" style="margin-bottom:0;">
                         <label class="form-label" for="name">Nombre del Producto <span style="color:#ef4444;">*</span></label>
                         <input type="text" id="name" name="name" required
@@ -65,7 +65,7 @@
                 <h3><i class="fas fa-dollar-sign" style="color:#16a34a;margin-right:8px;"></i>Precios</h3>
             </div>
             <div class="card-body">
-                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;">
+                <div class="form-grid-3">
                     <div class="form-group" style="margin-bottom:0;">
                         <label class="form-label" for="price">Precio <span style="color:#ef4444;">*</span></label>
                         <div style="position:relative;">
@@ -103,7 +103,7 @@
                 <h3><i class="fas fa-boxes" style="color:#f59e0b;margin-right:8px;"></i>Inventario</h3>
             </div>
             <div class="card-body">
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:end;">
+                <div class="form-grid-2" style="align-items:end;">
                     <div class="form-group" style="margin-bottom:0;">
                         <label class="form-label" for="stock">Stock <span style="color:#ef4444;">*</span></label>
                         <input type="number" id="stock" name="stock" required min="0"
