@@ -4,6 +4,7 @@ require_once __DIR__ . '/../config/Config.php';
 require_once __DIR__ . '/../models/Store.php';
 require_once __DIR__ . '/../models/License.php';
 require_once __DIR__ . '/../models/User.php';
+require_once __DIR__ . '/../models/PlanChangeRequest.php';
 require_once __DIR__ . '/../models/Setting.php';
 require_once __DIR__ . '/../helpers/Helper.php';
 require_once __DIR__ . '/../helpers/NotificationService.php';
@@ -225,6 +226,110 @@ class SuperAdminController {
         $stores = $store->getAll($limit, $offset);
 
         include VIEWS_PATH . 'superadmin/stores.php';
+    }
+
+    public static function managePlanRequests() {
+        Auth::requireSuperAdmin();
+
+        $page = max(1, intval($_GET['page'] ?? 1));
+        $limit = 25;
+        $offset = ($page - 1) * $limit;
+        $status = Helper::sanitizeInput($_GET['status'] ?? '');
+
+        $planRequest = new PlanChangeRequest();
+        $requests = $planRequest->getAllWithStore($limit, $offset, $status);
+        $totalRequests = $planRequest->countAll($status);
+        $totalPages = max(1, intval(ceil($totalRequests / $limit)));
+
+        include VIEWS_PATH . 'superadmin/plan-requests.php';
+    }
+
+    public static function approvePlanRequest($request_id) {
+        Auth::requireSuperAdmin();
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            Helper::redirect(BASE_URL . 'superadmin/plan-requests');
+        }
+
+        $planRequest = new PlanChangeRequest();
+        $requestData = $planRequest->findById($request_id);
+        if (!$requestData || ($requestData['status'] ?? '') !== 'pending') {
+            Helper::redirect(BASE_URL . 'superadmin/plan-requests?error=' . urlencode('La solicitud no existe o ya fue procesada'));
+        }
+
+        $requestedPlanId = intval($requestData['requested_plan_id'] ?? 0);
+        if (!in_array($requestedPlanId, [1, 2, 3], true)) {
+            Helper::redirect(BASE_URL . 'superadmin/plan-requests?error=' . urlencode('La solicitud contiene un plan no válido'));
+        }
+
+        $store = new Store();
+        $storeData = $store->findById(intval($requestData['store_id'] ?? 0));
+        if (!$storeData) {
+            Helper::redirect(BASE_URL . 'superadmin/plan-requests?error=' . urlencode('No se encontró la tienda asociada a la solicitud'));
+        }
+
+        $licenseModel = new License();
+        $licenseData = $licenseModel->findActiveByStoreId(intval($storeData['id']));
+        if (!$licenseData) {
+            $licenseData = $licenseModel->findLatestByStoreId(intval($storeData['id']));
+        }
+
+        if (!$licenseData) {
+            Helper::redirect(BASE_URL . 'superadmin/plan-requests?error=' . urlencode('La tienda no tiene licencia para actualizar'));
+        }
+
+        $newFeatures = Helper::getLicensePlan($requestedPlanId);
+        $currentFeatures = json_decode($licenseData['features'] ?? '', true);
+        if (is_array($currentFeatures)) {
+            if (array_key_exists('storage', $currentFeatures)) {
+                $newFeatures['storage'] = floatval($currentFeatures['storage']);
+            }
+            if (array_key_exists('module_inventory', $currentFeatures)) {
+                $newFeatures['module_inventory'] = !empty($currentFeatures['module_inventory']) ? 1 : 0;
+            }
+            if (array_key_exists('module_finance', $currentFeatures)) {
+                $newFeatures['module_finance'] = !empty($currentFeatures['module_finance']) ? 1 : 0;
+            }
+            if (isset($currentFeatures['features']) && is_array($currentFeatures['features'])) {
+                $newFeatures['features'] = $currentFeatures['features'];
+            }
+        }
+
+        if (!$licenseModel->updatePlanAndFeaturesById(intval($licenseData['id']), $requestedPlanId, $newFeatures)) {
+            Helper::redirect(BASE_URL . 'superadmin/plan-requests?error=' . urlencode('No se pudo actualizar el plan de la licencia'));
+        }
+
+        if (!$store->updatePlan(intval($storeData['id']), $requestedPlanId)) {
+            Helper::redirect(BASE_URL . 'superadmin/plan-requests?error=' . urlencode('No se pudo sincronizar el plan de la tienda'));
+        }
+
+        $decisionNote = Helper::sanitizeInput($_POST['decision_note'] ?? 'Aprobada por superadmin');
+        if (!$planRequest->markApproved($request_id, intval($_SESSION['user_id'] ?? 0), $decisionNote)) {
+            Helper::redirect(BASE_URL . 'superadmin/plan-requests?error=' . urlencode('Se aplicó el plan, pero no se pudo cerrar la solicitud'));
+        }
+
+        Helper::redirect(BASE_URL . 'superadmin/plan-requests?success=' . urlencode('Solicitud aprobada y plan actualizado exitosamente'));
+    }
+
+    public static function rejectPlanRequest($request_id) {
+        Auth::requireSuperAdmin();
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            Helper::redirect(BASE_URL . 'superadmin/plan-requests');
+        }
+
+        $planRequest = new PlanChangeRequest();
+        $requestData = $planRequest->findById($request_id);
+        if (!$requestData || ($requestData['status'] ?? '') !== 'pending') {
+            Helper::redirect(BASE_URL . 'superadmin/plan-requests?error=' . urlencode('La solicitud no existe o ya fue procesada'));
+        }
+
+        $decisionNote = Helper::sanitizeInput($_POST['decision_note'] ?? 'Solicitud rechazada por superadmin');
+        if ($planRequest->markRejected($request_id, intval($_SESSION['user_id'] ?? 0), $decisionNote)) {
+            Helper::redirect(BASE_URL . 'superadmin/plan-requests?success=' . urlencode('Solicitud rechazada exitosamente'));
+        }
+
+        Helper::redirect(BASE_URL . 'superadmin/plan-requests?error=' . urlencode('No se pudo rechazar la solicitud'));
     }
 
     public static function manageUsers() {

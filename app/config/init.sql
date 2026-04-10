@@ -195,6 +195,25 @@ CREATE TABLE IF NOT EXISTS settings (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- Tabla de solicitudes de cambio de plan
+CREATE TABLE IF NOT EXISTS plan_change_requests (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    store_id INT NOT NULL,
+    requested_by_user_id INT NOT NULL,
+    current_plan_id INT NOT NULL,
+    requested_plan_id INT NOT NULL,
+    reason TEXT,
+    status ENUM('pending', 'approved', 'rejected') DEFAULT 'pending',
+    reviewed_by_user_id INT,
+    reviewed_at TIMESTAMP NULL,
+    decision_note TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (store_id) REFERENCES stores(id) ON DELETE CASCADE,
+    FOREIGN KEY (requested_by_user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (reviewed_by_user_id) REFERENCES users(id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- Crear índices
 CREATE INDEX idx_store_owner ON stores(owner_id);
 CREATE INDEX idx_product_store ON products(store_id);
@@ -202,5 +221,7 @@ CREATE INDEX idx_category_store ON categories(store_id);
 CREATE INDEX idx_cart_user ON cart_items(user_id);
 CREATE INDEX idx_order_store ON orders(store_id);
 CREATE INDEX idx_review_product ON reviews(product_id);
+CREATE INDEX idx_plan_change_store ON plan_change_requests(store_id);
+CREATE INDEX idx_plan_change_status ON plan_change_requests(status);
 
 SET FOREIGN_KEY_CHECKS=1;

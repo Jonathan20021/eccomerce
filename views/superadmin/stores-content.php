@@ -1,5 +1,24 @@
 <!-- SuperAdmin Stores Content -->
 <?php $planNames = ['Starter', 'Professional', 'Enterprise']; ?>
+<style>
+@media (max-width: 768px) {
+    .stores-header-search {
+        width: 100%;
+    }
+
+    .stores-header-search input {
+        width: 100% !important;
+    }
+
+    .stores-grid-mobile {
+        grid-template-columns: 1fr !important;
+    }
+
+    .store-card-content {
+        padding: 28px 16px 16px !important;
+    }
+}
+</style>
 <div style="display:flex;flex-direction:column;gap:20px;">
 
     <?php if (isset($_GET['success'])): ?>
@@ -21,7 +40,7 @@
             <h2 style="font-size:22px;font-weight:800;color:#1e293b;letter-spacing:-0.5px;">Tiendas Registradas</h2>
             <p style="font-size:13.5px;color:#64748b;margin-top:3px;"><?= count($stores ?? []) ?> tiendas en la plataforma</p>
         </div>
-        <div style="position:relative;">
+        <div class="stores-header-search" style="position:relative;">
             <input type="search" id="storeSearch" placeholder="Buscar tienda..."
                    oninput="filterStores(this.value)"
                    style="padding:9px 14px 9px 38px;border:1.5px solid #e2e8f0;border-radius:9px;font-size:13.5px;font-family:'Inter',sans-serif;color:#1e293b;background:#fff;outline:none;transition:border-color .15s;width:220px;"
@@ -31,7 +50,7 @@
     </div>
 
     <?php if (!empty($stores)): ?>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;" id="storesGrid">
+    <div class="stores-grid-mobile" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;" id="storesGrid">
         <?php $count = 0; foreach ($stores as $store): if ($count++ >= 30) break; ?>
         <div class="store-card" data-name="<?= strtolower(htmlspecialchars($store['name'])) ?>"
              style="background:#fff;border:1px solid #e2e8f0;border-radius:14px;overflow:hidden;transition:all .2s;"
@@ -50,7 +69,7 @@
                 </div>
             </div>
 
-            <div style="padding:30px 20px 20px;">
+            <div class="store-card-content" style="padding:30px 20px 20px;">
                 <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px;">
                     <h3 style="font-size:15px;font-weight:700;color:#1e293b;line-height:1.3;"><?= htmlspecialchars($store['name']) ?></h3>
                     <span class="badge <?= $store['is_active'] ? 'badge-green' : 'badge-red' ?>" style="margin-left:8px;flex-shrink:0;">

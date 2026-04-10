@@ -52,7 +52,7 @@ else if ($parts[0] == 'auth') {
 else if ($parts[0] == 'admin') {
     Auth::requireStoreOwner();
     // Permitir configuración de tienda sin bloquear por licencia para casos de recuperación.
-    if (!isset($parts[1]) || $parts[1] !== 'settings') {
+    if (!isset($parts[1]) || !in_array($parts[1], ['settings', 'plan-change'], true)) {
         Auth::requireValidStoreLicense();
     }
     require_once __DIR__ . '/app/controllers/AdminController.php';
@@ -96,6 +96,13 @@ else if ($parts[0] == 'admin') {
     }
     else if (isset($parts[1]) && $parts[1] == 'settings') {
         AdminController::storeSettings();
+    }
+    else if (isset($parts[1]) && $parts[1] == 'plan-change') {
+        if (isset($parts[2]) && $parts[2] == 'request') {
+            AdminController::requestPlanChange();
+        } else {
+            header('Location: ' . BASE_URL . 'admin/settings');
+        }
     }
     else {
         header('Location: ' . BASE_URL . 'admin/dashboard');
@@ -143,6 +150,15 @@ else if ($parts[0] == 'superadmin') {
             SuperAdminController::deleteUser(intval($parts[3]));
         } else {
             SuperAdminController::manageUsers();
+        }
+    }
+    else if (isset($parts[1]) && $parts[1] == 'plan-requests') {
+        if (isset($parts[2]) && $parts[2] == 'approve' && isset($parts[3])) {
+            SuperAdminController::approvePlanRequest(intval($parts[3]));
+        } else if (isset($parts[2]) && $parts[2] == 'reject' && isset($parts[3])) {
+            SuperAdminController::rejectPlanRequest(intval($parts[3]));
+        } else {
+            SuperAdminController::managePlanRequests();
         }
     }
     else if (isset($parts[1]) && $parts[1] == 'settings') {

@@ -81,6 +81,15 @@ class License {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function findLatestByStoreId($store_id) {
+        $query = "SELECT * FROM " . $this->table . " WHERE store_id = :store_id ORDER BY created_at DESC LIMIT 1";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':store_id', $store_id);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     public function findById($id) {
         $query = "SELECT * FROM " . $this->table . " WHERE id = :id LIMIT 1";
         $stmt = $this->db->prepare($query);
@@ -194,6 +203,21 @@ class License {
         $payload = json_encode($features);
         $stmt->bindParam(':features', $payload);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+        return $stmt->execute();
+    }
+
+    public function updatePlanAndFeaturesById($id, $planId, $features) {
+        $query = "UPDATE " . $this->table . "
+                  SET plan_id = :plan_id,
+                      features = :features,
+                      updated_at = CURRENT_TIMESTAMP
+                  WHERE id = :id";
+        $stmt = $this->db->prepare($query);
+        $payload = json_encode($features);
+        $stmt->bindValue(':plan_id', intval($planId), PDO::PARAM_INT);
+        $stmt->bindValue(':features', $payload);
+        $stmt->bindValue(':id', intval($id), PDO::PARAM_INT);
 
         return $stmt->execute();
     }

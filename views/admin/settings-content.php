@@ -1,4 +1,22 @@
 <!-- Admin Settings Content -->
+<style>
+@media (max-width: 768px) {
+    .plan-change-history-row {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 6px !important;
+    }
+
+    .admin-settings-actions {
+        flex-direction: column;
+    }
+
+    .admin-settings-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+</style>
 <div style="max-width:720px;">
 
     <div style="margin-bottom:24px;">
@@ -154,6 +172,83 @@
 
                 <div class="form-section" style="margin-top:18px;">
                     <div class="form-section-title">
+                        <i class="fas fa-exchange-alt"></i> Plan de Suscripción
+                    </div>
+                    <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:12px 14px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;">
+                        <div>
+                            <div style="font-size:12px;color:#64748b;font-weight:700;text-transform:uppercase;letter-spacing:.6px;">Plan actual</div>
+                            <div style="font-size:15px;font-weight:800;color:#1e3a8a;margin-top:2px;">
+                                <?= htmlspecialchars($currentPlanName ?? 'Starter') ?>
+                            </div>
+                        </div>
+                        <?php if (!empty($pendingPlanRequest)): ?>
+                        <span class="badge badge-yellow" style="font-size:11px;">Solicitud pendiente</span>
+                        <?php endif; ?>
+                    </div>
+
+                    <?php if (!empty($pendingPlanRequest)): ?>
+                    <?php $planNamesMap = [1 => 'Starter', 2 => 'Professional', 3 => 'Enterprise']; ?>
+                    <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+                        <div style="font-size:12px;color:#92400e;font-weight:700;">Ya tienes una solicitud en revisión</div>
+                        <div style="font-size:13px;color:#78350f;margin-top:4px;">
+                            <?= htmlspecialchars($planNamesMap[intval($pendingPlanRequest['current_plan_id'] ?? 1)] ?? 'Plan') ?>
+                            <i class="fas fa-arrow-right" style="font-size:10px;color:#92400e;margin:0 4px;"></i>
+                            <?= htmlspecialchars($planNamesMap[intval($pendingPlanRequest['requested_plan_id'] ?? 1)] ?? 'Plan') ?>
+                            | <?= htmlspecialchars(Helper::formatDate($pendingPlanRequest['created_at'] ?? 'now')) ?>
+                        </div>
+                    </div>
+                    <?php else: ?>
+                    <div style="display:grid;gap:10px;">
+                        <div class="form-grid-2" style="gap:10px;">
+                            <div class="form-group" style="margin-bottom:0;">
+                                <label class="form-label" for="requested_plan_id">Nuevo plan solicitado</label>
+                                <select id="requested_plan_id" name="requested_plan_id" class="form-input">
+                                    <option value="1" <?= intval($currentPlanId ?? 1) === 1 ? 'disabled' : '' ?>>Starter</option>
+                                    <option value="2" <?= intval($currentPlanId ?? 1) === 2 ? 'disabled' : '' ?>>Professional</option>
+                                    <option value="3" <?= intval($currentPlanId ?? 1) === 3 ? 'disabled' : '' ?>>Enterprise</option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="margin-bottom:0;">
+                                <label class="form-label" for="reason">Motivo</label>
+                                <input type="text" id="reason" name="reason" class="form-input" placeholder="Ej: necesito más capacidad y módulos">
+                            </div>
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-primary btn-sm" formaction="<?= BASE_URL ?>admin/plan-change/request" formmethod="POST">
+                                <i class="fas fa-paper-plane"></i> Enviar solicitud a superadmin
+                            </button>
+                        </div>
+                    </div>
+                    <?php endif; ?>
+
+                    <?php if (!empty($planChangeHistory)): ?>
+                    <div style="margin-top:12px;">
+                        <div style="font-size:12px;color:#64748b;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px;">Historial reciente</div>
+                        <div style="display:flex;flex-direction:column;gap:6px;">
+                            <?php
+                            $planNamesMap = [1 => 'Starter', 2 => 'Professional', 3 => 'Enterprise'];
+                            foreach ($planChangeHistory as $historyItem):
+                                $historyStatus = strval($historyItem['status'] ?? 'pending');
+                                $statusClass = $historyStatus === 'approved' ? 'badge-green' : ($historyStatus === 'rejected' ? 'badge-red' : 'badge-yellow');
+                                $statusText = $historyStatus === 'approved' ? 'Aprobada' : ($historyStatus === 'rejected' ? 'Rechazada' : 'Pendiente');
+                            ?>
+                            <div class="plan-change-history-row" style="display:flex;align-items:center;justify-content:space-between;gap:8px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:8px 10px;">
+                                <div style="font-size:12.5px;color:#334155;">
+                                    <?= htmlspecialchars($planNamesMap[intval($historyItem['current_plan_id'] ?? 1)] ?? 'Plan') ?>
+                                    <i class="fas fa-arrow-right" style="font-size:10px;color:#94a3b8;margin:0 4px;"></i>
+                                    <?= htmlspecialchars($planNamesMap[intval($historyItem['requested_plan_id'] ?? 1)] ?? 'Plan') ?>
+                                    <span style="color:#94a3b8;margin-left:6px;">(<?= htmlspecialchars(Helper::formatDate($historyItem['created_at'] ?? 'now')) ?>)</span>
+                                </div>
+                                <span class="badge <?= $statusClass ?>" style="font-size:11px;"><?= $statusText ?></span>
+                            </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                    <?php endif; ?>
+                </div>
+
+                <div class="form-section" style="margin-top:18px;">
+                    <div class="form-section-title">
                         <i class="fas fa-bars"></i> Menú Público de la Tienda
                     </div>
                     <p style="font-size:12.5px;color:#64748b;margin-bottom:12px;">Configura enlaces del menú de tu storefront (máximo 4).</p>
@@ -212,7 +307,7 @@
         </div><!-- /card -->
 
         <!-- Action buttons -->
-        <div style="display:flex;gap:10px;margin-top:20px;">
+        <div class="admin-settings-actions" style="display:flex;gap:10px;margin-top:20px;">
             <button type="submit" class="btn btn-primary btn-lg">
                 <i class="fas fa-save"></i> Guardar Cambios
             </button>

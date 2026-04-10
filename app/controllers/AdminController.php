@@ -7,6 +7,7 @@ require_once __DIR__ . '/../models/Category.php';
 require_once __DIR__ . '/../models/Cart.php';
 require_once __DIR__ . '/../models/Order.php';
 require_once __DIR__ . '/../models/License.php';
+require_once __DIR__ . '/../models/PlanChangeRequest.php';
 require_once __DIR__ . '/../models/Setting.php';
 require_once __DIR__ . '/../helpers/Helper.php';
 require_once __DIR__ . '/../middleware/Auth.php';
@@ -487,6 +488,15 @@ class AdminController {
 
         $store = new Store();
         $storeData = $store->findById($store_id);
+        $licenseModel = new License();
+        $activeLicense = $licenseModel->findActiveByStoreId($store_id);
+        $currentPlanId = intval($activeLicense['plan_id'] ?? ($storeData['plan_id'] ?? 1));
+        $planNames = [1 => 'Starter', 2 => 'Professional', 3 => 'Enterprise'];
+        $currentPlanName = $planNames[$currentPlanId] ?? ('Plan ' . $currentPlanId);
+
+        $planRequestModel = new PlanChangeRequest();
+        $pendingPlanRequest = $planRequestModel->getLatestPendingByStore($store_id);
+        $planChangeHistory = $planRequestModel->getByStore($store_id, 10, 0);
         $setting = new Setting();
 
         $storeTheme = $setting->getStoreTheme($store_id);
@@ -537,6 +547,56 @@ class AdminController {
         }
 
         include VIEWS_PATH . 'admin/settings.php';
+    }
+
+    public static function requestPlanChange() {
+        Auth::requireStoreOwner();
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            Helper::redirect(BASE_URL . 'admin/settings');
+        }
+
+        $store_id = Auth::getStoreId();
+        $requestedPlanId = intval($_POST['requested_plan_id'] ?? 0);
+        $reason = Helper::sanitizeInput($_POST['reason'] ?? '');
+
+        if (!in_array($requestedPlanId, [1, 2, 3], true)) {
+            Helper::redirect(BASE_URL . 'admin/settings?error=' . urlencode('Selecciona un plan válido para solicitar el cambio'));
+        }
+
+        $store = new Store();
+        $storeData = $store->findById($store_id);
+        if (!$storeData) {
+            Helper::redirect(BASE_URL . 'admin/settings?error=' . urlencode('No se encontró la tienda'));
+        }
+
+        $licenseModel = new License();
+        $activeLicense = $licenseModel->findActiveByStoreId($store_id);
+        $currentPlanId = intval($activeLicense['plan_id'] ?? ($storeData['plan_id'] ?? 1));
+
+        if ($requestedPlanId === $currentPlanId) {
+            Helper::redirect(BASE_URL . 'admin/settings?error=' . urlencode('Tu tienda ya está en ese plan'));
+        }
+
+        $planRequestModel = new PlanChangeRequest();
+        $pendingRequest = $planRequestModel->getLatestPendingByStore($store_id);
+        if ($pendingRequest) {
+            Helper::redirect(BASE_URL . 'admin/settings?error=' . urlencode('Ya tienes una solicitud pendiente de revisión'));
+        }
+
+        $payload = [
+            'store_id' => $store_id,
+            'requested_by_user_id' => intval($_SESSION['user_id'] ?? 0),
+            'current_plan_id' => $currentPlanId,
+            'requested_plan_id' => $requestedPlanId,
+            'reason' => $reason
+        ];
+
+        if ($planRequestModel->createRequest($payload)) {
+            Helper::redirect(BASE_URL . 'admin/settings?success=' . urlencode('Solicitud de cambio de plan enviada. Será revisada por superadmin.'));
+        }
+
+        Helper::redirect(BASE_URL . 'admin/settings?error=' . urlencode('No se pudo enviar la solicitud de cambio de plan'));
     }
 
     public static function orders() {

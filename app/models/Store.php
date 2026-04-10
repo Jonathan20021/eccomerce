@@ -168,4 +168,13 @@ class Store {
 
         return $stmt->execute();
     }
+
+    public function updatePlan($store_id, $plan_id) {
+        $query = "UPDATE " . $this->table . " SET plan_id = :plan_id, updated_at = CURRENT_TIMESTAMP WHERE id = :id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':plan_id', $plan_id, PDO::PARAM_INT);
+        $stmt->bindParam(':id', $store_id, PDO::PARAM_INT);
+
+        return $stmt->execute();
+    }
 }

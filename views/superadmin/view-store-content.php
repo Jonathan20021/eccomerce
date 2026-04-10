@@ -5,6 +5,28 @@ $isActive = !empty($storeData['is_active']);
 $storePublicUrl = BASE_URL . 'shop/' . ($storeData['slug'] ?? '');
 ?>
 
+<style>
+@media (max-width: 768px) {
+    .store-detail-actions {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch !important;
+        justify-content: flex-start !important;
+    }
+
+    .store-detail-actions .btn,
+    .store-detail-actions button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .store-users-table td,
+    .store-users-table th {
+        white-space: nowrap;
+    }
+}
+</style>
+
 <div style="display:flex;flex-direction:column;gap:20px;">
 
     <?php if (isset($_GET['success'])): ?>
@@ -26,7 +48,7 @@ $storePublicUrl = BASE_URL . 'shop/' . ($storeData['slug'] ?? '');
             <h2 style="font-size:22px;font-weight:800;color:#1e293b;letter-spacing:-0.5px;margin-bottom:4px;">Detalle de Tienda</h2>
             <p style="font-size:13.5px;color:#64748b;">Revisa informacion general, propietario y usuarios asociados.</p>
         </div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;">
+        <div class="store-detail-actions" style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;">
             <a href="<?= BASE_URL ?>superadmin/licenses?store_id=<?= intval($storeData['id'] ?? 0) ?>" class="btn btn-ghost">
                 <i class="fas fa-certificate"></i> Ver licencia
             </a>
@@ -114,7 +136,7 @@ $storePublicUrl = BASE_URL . 'shop/' . ($storeData['slug'] ?? '');
             <h3><i class="fas fa-users" style="margin-right:7px;color:#d4973a;"></i>Usuarios asociados</h3>
         </div>
         <div class="overflow-x">
-            <table class="data-table">
+            <table class="data-table store-users-table">
                 <thead>
                     <tr>
                         <th class="col-hide-sm">ID</th>

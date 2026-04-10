@@ -3,10 +3,41 @@
 $planNames  = ['Starter', 'Professional', 'Enterprise'];
 $statusMap  = ['active'=>['badge-green','Activa'], 'expired'=>['badge-red','Expirada'], 'suspended'=>['badge-yellow','Suspendida'], 'cancelled'=>['badge-slate','Cancelada']];
 ?>
+
+<style>
+@media (max-width: 768px) {
+    .licenses-store-banner {
+        flex-direction: column;
+        align-items: flex-start !important;
+    }
+
+    .license-row-actions {
+        flex-direction: column;
+        align-items: stretch !important;
+        min-width: 116px;
+    }
+
+    .license-row-actions form,
+    .license-row-actions .btn {
+        width: 100%;
+    }
+
+    .license-row-actions form {
+        display: flex;
+        gap: 6px;
+    }
+
+    .license-row-actions form input {
+        flex: 1;
+        min-width: 0;
+    }
+}
+</style>
+
 <div style="display:flex;flex-direction:column;gap:20px;">
 
     <?php if (!empty($_GET['store_id'])): ?>
-    <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px;">
+    <div class="licenses-store-banner" style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px;">
         <p style="font-size:13.5px;color:#1d4ed8;font-weight:600;">Mostrando licencias de la tienda #<?= intval($_GET['store_id']) ?></p>
         <a href="<?= BASE_URL ?>superadmin/licenses" style="font-size:13px;font-weight:700;color:#1d4ed8;text-decoration:none;">Ver todas</a>
     </div>
@@ -146,7 +177,7 @@ $statusMap  = ['active'=>['badge-green','Activa'], 'expired'=>['badge-red','Expi
                         <td><span class="badge <?= $sb[0] ?>"><?= $sb[1] ?></span></td>
                         <td class="col-hide-sm"><span style="font-size:13px;color:#64748b;"><?= Helper::formatDate($license['created_at']) ?></span></td>
                         <td>
-                            <div style="display:flex;align-items:center;gap:6px;">
+                            <div class="license-row-actions" style="display:flex;align-items:center;gap:6px;">
                                 <form method="POST" action="<?= BASE_URL ?>superadmin/licenses/storage/<?= intval($license['id']) ?>" style="display:flex;align-items:center;gap:4px;">
                                     <input type="number" name="storage_gb" min="1" step="0.5" value="<?= number_format(floatval($license['storage_gb'] ?? 0), 1, '.', '') ?>"
                                            style="width:78px;height:30px;border:1px solid #e2e8f0;border-radius:6px;padding:0 8px;font-size:12px;color:#1e293b;">

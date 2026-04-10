@@ -11,6 +11,39 @@ $currentSearch = $searchFilter ?? '';
 $currentStore = intval($storeFilterId ?? 0);
 ?>
 
+<style>
+@media (max-width: 768px) {
+    .users-filter-actions {
+        flex-direction: column;
+    }
+
+    .users-filter-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .user-row-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .user-row-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .user-edit-actions {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .user-edit-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+</style>
+
 <div style="display:flex;flex-direction:column;gap:20px;">
 
     <?php if (isset($_GET['success'])): ?>
@@ -66,7 +99,7 @@ $currentStore = intval($storeFilterId ?? 0);
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <div style="display:flex;gap:8px;">
+                <div class="users-filter-actions" style="display:flex;gap:8px;">
                     <button type="submit" class="btn btn-primary" style="flex:1;justify-content:center;">
                         <i class="fas fa-filter"></i> Filtrar
                     </button>
@@ -126,7 +159,7 @@ $currentStore = intval($storeFilterId ?? 0);
                                 <span class="badge <?= $isActive ? 'badge-green' : 'badge-red' ?>"><?= $isActive ? 'Sí' : 'No' ?></span>
                             </td>
                             <td>
-                                <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                                <div class="user-row-actions" style="display:flex;gap:6px;flex-wrap:wrap;">
                                     <button type="button" class="btn btn-ghost btn-sm" onclick="toggleEditRow(<?= $uid ?>)">
                                         <i class="fas fa-pen"></i> Editar
                                     </button>
@@ -184,7 +217,7 @@ $currentStore = intval($storeFilterId ?? 0);
                                         <label style="display:inline-flex;align-items:center;gap:8px;font-size:13px;color:#334155;font-weight:600;">
                                             <input type="checkbox" name="is_active" value="1" <?= $isActive ? 'checked' : '' ?>> Cuenta activa
                                         </label>
-                                        <div style="display:flex;gap:8px;">
+                                        <div class="user-edit-actions" style="display:flex;gap:8px;">
                                             <button type="button" class="btn btn-ghost" onclick="toggleEditRow(<?= $uid ?>)">Cancelar</button>
                                             <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Guardar cambios</button>
                                         </div>
