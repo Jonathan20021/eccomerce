@@ -81,6 +81,55 @@ $page_title = "Kyros Commerce — Crea tu Tienda Online Profesional";
             left: 23px; top: 52px; width: 2px; height: calc(100% + 20px);
             background: linear-gradient(to bottom, rgba(42,122,82,.3), transparent);
         }
+        .process-step-number {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+        .process-step-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 5px;
+            line-height: 1.3;
+        }
+        .process-step-desc {
+            font-size: 13.5px;
+            color: #64748b;
+            line-height: 1.6;
+        }
+        .home-process-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+        .home-process-lead {
+            font-size: 16px;
+            color: #64748b;
+            line-height: 1.7;
+            margin-bottom: 40px;
+            max-width: 62ch;
+        }
+        .home-process-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        .home-process-mobile-preview {
+            display: none;
+        }
+        .home-process-mockup-shell {
+            border-radius: 24px;
+            padding: 32px;
+        }
 
         .integration-pill {
             display: inline-flex; align-items: center; gap: 8px;
@@ -139,6 +188,65 @@ $page_title = "Kyros Commerce — Crea tu Tienda Online Profesional";
             .hero-v2 { padding: 72px 0 80px; }
             .grid-footer { grid-template-columns: 1fr 1fr !important; gap: 32px !important; }
             .process-step:not(:last-child)::after { display: none; }
+            .home-process-grid {
+                grid-template-columns: 1fr;
+                gap: 28px;
+            }
+            .home-process-mobile-preview {
+                display: block;
+                margin-top: 18px;
+                border: 1px solid #dbe8e1;
+                border-radius: 18px;
+                overflow: hidden;
+                background: #ffffff;
+                box-shadow: 0 12px 26px rgba(15, 23, 42, 0.08);
+            }
+            .home-process-mobile-preview-head {
+                background: linear-gradient(135deg, #0f2a19 0%, #1f5c3d 100%);
+                padding: 10px 12px;
+                color: #d1fae5;
+                font-size: 11px;
+                font-weight: 700;
+                letter-spacing: 0.4px;
+                text-transform: uppercase;
+            }
+            .home-process-mobile-preview-body {
+                padding: 12px;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+            .home-process-mobile-preview-card {
+                border: 1px solid #e2e8f0;
+                border-radius: 12px;
+                padding: 9px;
+                background: #f8fafc;
+            }
+            .home-process-mobile-preview-thumb {
+                height: 40px;
+                border-radius: 8px;
+                background: linear-gradient(135deg, #d1fae5 0%, #fef3c7 100%);
+                margin-bottom: 8px;
+            }
+            .home-process-mobile-preview-name {
+                font-size: 11px;
+                font-weight: 700;
+                color: #1e293b;
+                line-height: 1.3;
+            }
+            .home-process-mobile-preview-price {
+                font-size: 12px;
+                font-weight: 800;
+                color: #2a7a52;
+                margin-top: 3px;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .home-process-mockup-shell {
+                border-radius: 20px !important;
+                padding: 24px !important;
+            }
         }
 
         @media (max-width: 640px) {
@@ -187,6 +295,40 @@ $page_title = "Kyros Commerce — Crea tu Tienda Online Profesional";
                 padding: 14px 20px !important;
                 font-size: 15px !important;
             }
+            .home-process-lead {
+                font-size: 18px;
+                line-height: 1.75;
+                margin-bottom: 28px;
+            }
+            .home-process-steps {
+                gap: 14px;
+            }
+            .process-step {
+                gap: 14px;
+                align-items: flex-start;
+                padding: 14px 14px 14px 12px;
+                border-radius: 18px;
+                background: linear-gradient(160deg, #ffffff 0%, #f9fcfb 100%);
+                border: 1px solid #e2ece7;
+                box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+            }
+            .process-step-number {
+                width: 56px;
+                height: 56px;
+                border-radius: 16px;
+                font-size: 30px;
+                line-height: 1;
+            }
+            .process-step-title {
+                font-size: 18px;
+                line-height: 1.3;
+                margin-bottom: 6px;
+                letter-spacing: -0.2px;
+            }
+            .process-step-desc {
+                font-size: 16px;
+                line-height: 1.7;
+            }
         }
 
         @media (max-width: 480px) {
@@ -201,6 +343,53 @@ $page_title = "Kyros Commerce — Crea tu Tienda Online Profesional";
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
+            }
+            .home-process-grid {
+                gap: 22px;
+            }
+            .home-process-lead {
+                font-size: 15px;
+                line-height: 1.65;
+                margin-bottom: 22px;
+            }
+            .home-process-steps {
+                gap: 12px;
+            }
+            .process-step {
+                gap: 12px;
+                padding: 12px 12px 12px 10px;
+                border-radius: 16px;
+            }
+            .process-step-number {
+                width: 42px;
+                height: 42px;
+                border-radius: 12px;
+                font-size: 17px;
+            }
+            .process-step-title {
+                font-size: 16px;
+                line-height: 1.28;
+                margin-bottom: 4px;
+                letter-spacing: -0.1px;
+            }
+            .process-step-desc {
+                font-size: 14px;
+                line-height: 1.62;
+            }
+            .home-process-mobile-preview {
+                margin-top: 14px;
+                border-radius: 16px;
+            }
+            .home-process-mobile-preview-body {
+                gap: 8px;
+                padding: 10px;
+            }
+            .home-process-mobile-preview-card {
+                padding: 8px;
+            }
+            .home-process-mobile-preview-thumb {
+                height: 36px;
+                margin-bottom: 7px;
             }
         }
     </style>
@@ -473,13 +662,13 @@ $page_title = "Kyros Commerce — Crea tu Tienda Online Profesional";
 <!-- =========== CÓMO FUNCIONA =========== -->
 <section class="section" id="como-funciona" style="background:#f8fafc;">
     <div class="section-inner">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;" class="block md:grid">
+        <div class="home-process-grid">
             <div>
                 <div class="section-label" style="margin-bottom:14px;"><i class="fas fa-route"></i> Proceso</div>
                 <h2 class="section-title" style="text-align:left;margin-bottom:16px;">De 0 a ventas<br>en 4 pasos simples</h2>
-                <p style="font-size:16px;color:#64748b;line-height:1.7;margin-bottom:40px;">No necesitas experiencia técnica. En menos de 15 minutos tienes tu tienda lista para recibir pedidos.</p>
+                <p class="home-process-lead">No necesitas experiencia técnica. En menos de 15 minutos tienes tu tienda lista para recibir pedidos.</p>
 
-                <div style="display:flex;flex-direction:column;gap:24px;">
+                <div class="home-process-steps">
                     <?php
                     $steps = [
                         ['num'=>1,'title'=>'Crea tu cuenta',       'desc'=>'Regístrate en menos de 2 minutos. Solo necesitas tu correo electrónico.', 'color'=>'#2a7a52'],
@@ -489,21 +678,37 @@ $page_title = "Kyros Commerce — Crea tu Tienda Online Profesional";
                     ];
                     foreach ($steps as $i => $step): ?>
                     <div class="process-step fade-in-up" style="animation-delay:<?= $i * 0.1 ?>s;">
-                        <div style="width:48px;height:48px;background:<?= $step['color'] ?>;border-radius:14px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:800;flex-shrink:0;">
+                        <div class="process-step-number" style="background:<?= $step['color'] ?>;">
                             <?= $step['num'] ?>
                         </div>
                         <div>
-                            <h3 style="font-size:15px;font-weight:700;color:#1e293b;margin-bottom:5px;"><?= $step['title'] ?></h3>
-                            <p style="font-size:13.5px;color:#64748b;line-height:1.6;"><?= $step['desc'] ?></p>
+                            <h3 class="process-step-title"><?= $step['title'] ?></h3>
+                            <p class="process-step-desc"><?= $step['desc'] ?></p>
                         </div>
                     </div>
                     <?php endforeach; ?>
+                </div>
+
+                <div class="home-process-mobile-preview">
+                    <div class="home-process-mobile-preview-head">Vista previa de tu tienda</div>
+                    <div class="home-process-mobile-preview-body">
+                        <div class="home-process-mobile-preview-card">
+                            <div class="home-process-mobile-preview-thumb"></div>
+                            <div class="home-process-mobile-preview-name">Producto Premium</div>
+                            <div class="home-process-mobile-preview-price">$49.99</div>
+                        </div>
+                        <div class="home-process-mobile-preview-card">
+                            <div class="home-process-mobile-preview-thumb"></div>
+                            <div class="home-process-mobile-preview-name">Oferta del Dia</div>
+                            <div class="home-process-mobile-preview-price">$19.99</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <!-- Store mockup -->
             <div class="hidden md:block">
-                <div style="background:linear-gradient(135deg,#0c1f12,#1a4a2e);border-radius:24px;padding:32px;position:relative;">
+                <div class="home-process-mockup-shell" style="background:linear-gradient(135deg,#0c1f12,#1a4a2e);border-radius:24px;padding:32px;position:relative;">
                     <!-- Browser chrome -->
                     <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;overflow:hidden;">
                         <div style="background:rgba(255,255,255,.08);padding:10px 16px;display:flex;align-items:center;gap:6px;border-bottom:1px solid rgba(255,255,255,.08);">
