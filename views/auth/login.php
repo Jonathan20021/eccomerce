@@ -21,12 +21,11 @@ $page_title = "Iniciar Sesión — Kyros Commerce";
 </head>
 <body>
 
-<div style="min-height:100vh;display:grid;grid-template-columns:1fr 1fr;" class="max-lg:block">
+<div class="auth-split-layout">
 
     <!-- ====== LEFT PANEL (brand) ====== -->
-    <div style="background:linear-gradient(145deg,#1e1b4b 0%,#312e81 40%,#4c1d95 70%,#1e40af 100%);
-                position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;padding:48px;"
-         class="hidden lg:flex">
+    <div class="auth-brand-panel" style="background:linear-gradient(145deg,#1e1b4b 0%,#312e81 40%,#4c1d95 70%,#1e40af 100%);
+                position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;padding:48px;">
 
         <!-- Background decorations -->
         <div style="position:absolute;top:-20%;right:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(139,92,246,.25) 0%,transparent 60%);border-radius:50%;pointer-events:none;"></div>
@@ -79,10 +78,10 @@ $page_title = "Iniciar Sesión — Kyros Commerce";
     </div>
 
     <!-- ====== RIGHT PANEL (form) ====== -->
-    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 24px;background:#fff;min-height:100vh;">
+    <div class="auth-form-panel" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 24px;background:#fff;min-height:100vh;">
 
-        <!-- Mobile logo -->
-        <a href="<?= BASE_URL ?>" style="display:flex;align-items:center;gap:9px;text-decoration:none;margin-bottom:40px;" class="lg:hidden">
+        <!-- Mobile logo (hidden on desktop via CSS since left panel is visible there) -->
+        <a href="<?= BASE_URL ?>" class="auth-mobile-logo" style="display:flex;align-items:center;gap:9px;text-decoration:none;margin-bottom:40px;">
             <div style="width:32px;height:32px;background:linear-gradient(135deg,#4f46e5,#7c3aed);border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;color:#fff;">K</div>
             <span style="font-size:17px;font-weight:800;color:#1e293b;">Kyros Commerce</span>
         </a>
